@@ -1,0 +1,7 @@
+package uet.oop.bomberman.enumeration;
+
+public enum BombermanObject {
+    PLAYER, WALL, BRICK, BOMB, FLAME,
+    SPEED_ITEM, BOMB_ITEM, FLAME_ITEM,
+    PORTAL, GRASS
+}
