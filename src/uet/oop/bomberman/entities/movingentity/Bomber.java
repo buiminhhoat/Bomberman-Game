@@ -5,6 +5,9 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.enumeration.Direction;
 import uet.oop.bomberman.graphics.Sprite;
 
+import static uet.oop.bomberman.BombermanGame.HEIGHT;
+import static uet.oop.bomberman.BombermanGame.WIDTH;
+
 public class Bomber extends MovingEntity {
 
     public Bomber() {
@@ -15,12 +18,12 @@ public class Bomber extends MovingEntity {
         super(x, y, img, 8, 0, 2, false, 3, Direction.DOWN);
     }
 
+
     @Override
     public void update() {
         if (this.animations) {
             switch (this.direction) {
                 case UP:
-                    System.out.println(this.currentFrame);
                     switch (this.currentFrame) {
                         case 0:
                             this.img = Sprite.player_up_1.getFxImage();
