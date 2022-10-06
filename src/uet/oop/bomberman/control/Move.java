@@ -82,6 +82,9 @@ public abstract class Move {
         if (Objects.equals(gameMap.getObjectMap(y, x), BombermanObject.WALL)) {
             return true;
         }
+        if (Objects.equals(gameMap.getObjectMap(y, x), BombermanObject.BRICK)) {
+            return true;
+        }
         return false;
     }
 

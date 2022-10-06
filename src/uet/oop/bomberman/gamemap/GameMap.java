@@ -1,8 +1,13 @@
 package uet.oop.bomberman.gamemap;
 
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.block.Brick;
 import uet.oop.bomberman.entities.block.Grass;
 import uet.oop.bomberman.entities.block.Wall;
+import uet.oop.bomberman.entities.movingentity.Balloon;
+import uet.oop.bomberman.entities.movingentity.Bomber;
+import uet.oop.bomberman.entities.movingentity.MovingEntity;
+import uet.oop.bomberman.entities.movingentity.Oneal;
 import uet.oop.bomberman.enumeration.BombermanObject;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -37,7 +42,7 @@ public class GameMap {
             case 'x':
                 return BombermanObject.PORTAL;
             case 'p':
-                return BombermanObject.PLAYER;
+                return BombermanObject.BOMBERMAN;
             case '1':
                 return BombermanObject.BALLOON;
             case '2':
@@ -53,7 +58,7 @@ public class GameMap {
         }
     }
 
-    private void initMap(int level) {
+    public void initMap(int level) {
         this.level = level;
         try {
             String levelPath = "./res/levels/Level" + level + ".txt";
@@ -61,8 +66,8 @@ public class GameMap {
 
             Scanner scanner = new Scanner(file);
             level = scanner.nextInt();
-            row = scanner.nextInt();
-            col = scanner.nextInt();
+            this.row = scanner.nextInt();
+            this.col = scanner.nextInt();
 
             map = new BombermanObject[row][col];
             scanner.nextLine();
@@ -81,9 +86,8 @@ public class GameMap {
         }
     }
 
-    public List<Entity> getListStillObjects(int level) {
-        initMap(level);
-        List<Entity> stillObjects = new ArrayList<>();
+    public List <Entity> getListStillObjects() {
+        List <Entity> stillObjects = new ArrayList<>();
         for (int i = 0; i < row; ++i) {
             for (int j = 0; j < col; ++j) {
                 Entity object;
@@ -91,6 +95,9 @@ public class GameMap {
                 switch (bombermanObject) {
                     case WALL:
                         object = new Wall(j, i, Sprite.wall.getFxImage());
+                        break;
+                    case BRICK:
+                        object = new Brick(j, i, Sprite.brick.getFxImage());
                         break;
                     default:
                         object = new Grass(j, i, Sprite.grass.getFxImage());
@@ -100,5 +107,30 @@ public class GameMap {
             }
         }
         return stillObjects;
+    }
+
+    public List <Entity> getListMovingEntity() {
+        List <Entity> movingEntities = new ArrayList<>();
+        for (int i = 0; i < row; ++i) {
+            for (int j = 0; j < col; ++j) {
+                Entity movingEntity = null;
+                BombermanObject bombermanObject = map[i][j];
+                System.out.println(bombermanObject);
+                switch (bombermanObject) {
+                    case BOMBERMAN:
+                        movingEntity = new Bomber(j, i, Sprite.player_up.getFxImage());
+                        break;
+                    case BALLOON:
+                        movingEntity = new Balloon(j, i, Sprite.balloom_left1.getFxImage());
+                        break;
+                    case ONEAL:
+                        movingEntity = new Oneal(j, i, Sprite.oneal_left1.getFxImage());
+                        break;
+                }
+                if (movingEntity == null) continue;
+                movingEntities.add(movingEntity);
+            }
+        }
+        return movingEntities;
     }
 }

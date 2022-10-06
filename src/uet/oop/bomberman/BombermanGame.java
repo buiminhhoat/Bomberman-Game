@@ -24,8 +24,8 @@ import uet.oop.bomberman.gamemap.GameMap;
 
 public class BombermanGame extends Application {
 
-    public static final int WIDTH = 31;
-    public static final int HEIGHT = 15;
+    public static final int WIDTH = 25;
+    public static final int HEIGHT = 20;
 
     public static final int MAXSIZE = 100;
     public static final String TITLE = "Bomberman Game";
@@ -34,8 +34,8 @@ public class BombermanGame extends Application {
 
     private GraphicsContext gc;
     private Canvas canvas;
-    private List<Entity> entities = new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
+    private List <Entity> movingEntities = new ArrayList<>();
+    private List <Entity> stillObjects = new ArrayList<>();
 
     private MovingEntity bomberman;
 
@@ -102,20 +102,27 @@ public class BombermanGame extends Application {
         timer.start();
 
         gameMap = new GameMap();
-        stillObjects = gameMap.getListStillObjects(1);
-
-        bomberman = new Bomber(1, 1, Sprite.player_down.getFxImage());
-        entities.add(bomberman);
+        gameMap.initMap(1);
+        stillObjects = gameMap.getListStillObjects();
+        movingEntities = gameMap.getListMovingEntity();
+        for (Entity entity: movingEntities) {
+            if (entity instanceof Bomber) {
+                bomberman = (MovingEntity) entity;
+                break;
+            }
+        }
+//        bomberman = new Bomber(1, 1, Sprite.player_down.getFxImage());
+        movingEntities.add(bomberman);
     }
 
     public void update() {
         Move.checkRun(bomberman);
-        entities.forEach(Entity::update);
+        movingEntities.forEach(Entity::update);
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
-        entities.forEach(g -> g.render(gc));
+        movingEntities.forEach(g -> g.render(gc));
     }
 }
