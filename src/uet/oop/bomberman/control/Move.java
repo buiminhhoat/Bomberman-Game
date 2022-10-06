@@ -10,8 +10,6 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import static uet.oop.bomberman.BombermanGame.gameMap;
-
 public abstract class Move {
     public static void checkRun(MovingEntity entity) {
         if (!entity.getAnimations()) {
@@ -22,10 +20,10 @@ public abstract class Move {
         }
     }
 
-    public static void up(MovingEntity entity) {
+    public static void up(MovingEntity entity, GameMap gameMap) {
         if (!entity.getAnimations() ) {
             entity.setDirection(Direction.UP);
-            if (checkBlocked(entity.getX(), entity.getY() - Sprite.SCALED_SIZE)) {
+            if (gameMap.checkBlocked(entity.getX(), entity.getY() - Sprite.SCALED_SIZE)) {
                 return;
             }
             if (entity instanceof Bomber) {
@@ -34,10 +32,10 @@ public abstract class Move {
         }
     }
 
-    public static void down(MovingEntity entity) {
+    public static void down(MovingEntity entity, GameMap gameMap) {
         if (!entity.getAnimations()) {
             entity.setDirection(Direction.DOWN);
-            if (checkBlocked(entity.getX(), entity.getY() + Sprite.SCALED_SIZE)) {
+            if (gameMap.checkBlocked(entity.getX(), entity.getY() + Sprite.SCALED_SIZE)) {
                 return;
             }
             if (entity instanceof Bomber) {
@@ -46,10 +44,10 @@ public abstract class Move {
         }
     }
 
-    public static void left(MovingEntity entity) {
+    public static void left(MovingEntity entity, GameMap gameMap) {
         if (!entity.getAnimations()) {
             entity.setDirection(Direction.LEFT);
-            if (checkBlocked(entity.getX() - Sprite.SCALED_SIZE, entity.getY())) {
+            if (gameMap.checkBlocked(entity.getX() - Sprite.SCALED_SIZE, entity.getY())) {
                 return;
             }
             if (entity instanceof Bomber) {
@@ -58,10 +56,10 @@ public abstract class Move {
         }
     }
 
-    public static void right(MovingEntity entity) {
+    public static void right(MovingEntity entity, GameMap gameMap) {
         if (!entity.getAnimations()) {
             entity.setDirection(Direction.RIGHT);
-            if (checkBlocked(entity.getX() + Sprite.SCALED_SIZE, entity.getY())) {
+            if (gameMap.checkBlocked(entity.getX() + Sprite.SCALED_SIZE, entity.getY())) {
                 return;
             }
             if (entity instanceof Bomber) {
@@ -76,21 +74,9 @@ public abstract class Move {
         }
     }
 
-    public static boolean checkBlocked(int x, int y) {
-        x /= Sprite.SCALED_SIZE;
-        y /= Sprite.SCALED_SIZE;
-        if (Objects.equals(gameMap.getObjectMap(y, x), BombermanObject.WALL)) {
-            return true;
-        }
-        if (Objects.equals(gameMap.getObjectMap(y, x), BombermanObject.BRICK)) {
-            return true;
-        }
-        return false;
-    }
-
     private static void run(MovingEntity entity) {
         try {
-            Thread.sleep(50);
+            Thread.sleep(40);
         }
         catch(InterruptedException ex)
         {

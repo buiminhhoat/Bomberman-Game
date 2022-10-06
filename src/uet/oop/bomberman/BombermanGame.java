@@ -39,9 +39,9 @@ public class BombermanGame extends Application {
 
     private MovingEntity bomberman;
 
-    public static Scene scene = null;
+    public Scene scene = null;
 
-    public static GameMap gameMap;
+    private GameMap gameMap;
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -63,19 +63,19 @@ public class BombermanGame extends Application {
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case UP:
-                    Move.up(bomberman);
+                    Move.up(bomberman, gameMap);
                     System.out.println("UP");
                     break;
                 case DOWN:
-                    Move.down(bomberman);
+                    Move.down(bomberman, gameMap);
                     System.out.println("DOWN");
                     break;
                 case RIGHT:
-                    Move.right(bomberman);
+                    Move.right(bomberman, gameMap);
                     System.out.println("RIGHT");
                     break;
                 case LEFT:
-                    Move.left(bomberman);
+                    Move.left(bomberman, gameMap);
                     System.out.println("LEFT");
                     break;
                 case SPACE:
@@ -111,8 +111,6 @@ public class BombermanGame extends Application {
                 break;
             }
         }
-//        bomberman = new Bomber(1, 1, Sprite.player_down.getFxImage());
-        movingEntities.add(bomberman);
     }
 
     public void update() {

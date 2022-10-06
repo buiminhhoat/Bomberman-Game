@@ -33,6 +33,19 @@ public class GameMap {
         }
         return map[x][y];
     }
+
+    public boolean checkBlocked(int x, int y) {
+        x /= Sprite.SCALED_SIZE;
+        y /= Sprite.SCALED_SIZE;
+        if (Objects.equals(getObjectMap(y, x), BombermanObject.WALL)) {
+            return true;
+        }
+        if (Objects.equals(getObjectMap(y, x), BombermanObject.BRICK)) {
+            return true;
+        }
+        return false;
+    }
+
     private BombermanObject convertEntity(char c) {
         switch (c) {
             case '#':
@@ -115,7 +128,6 @@ public class GameMap {
             for (int j = 0; j < col; ++j) {
                 Entity movingEntity = null;
                 BombermanObject bombermanObject = map[i][j];
-                System.out.println(bombermanObject);
                 switch (bombermanObject) {
                     case BOMBERMAN:
                         movingEntity = new Bomber(j, i, Sprite.player_up.getFxImage());
