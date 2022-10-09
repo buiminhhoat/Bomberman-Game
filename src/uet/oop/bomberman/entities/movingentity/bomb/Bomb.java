@@ -1,22 +1,59 @@
 package uet.oop.bomberman.entities.movingentity.bomb;
 
+import javafx.scene.canvas.GraphicsContext;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.movingentity.MovingEntity;
+import uet.oop.bomberman.entities.movingentity.bomber.Bomber;
 import uet.oop.bomberman.enumeration.Direction;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Bomb extends MovingEntity {
 
-    private final int DEFAULT_TIMEBOMB = 50; // 25 = 1s
+    private final int DEFAULT_TIME_BOMB = 50; // 25 = 1s
 
-    private int timeBomb = DEFAULT_TIMEBOMB;
+    private int timeBomb = DEFAULT_TIME_BOMB;
+
+    private Flame flame_center;
+    private List<Flame> listFlame = new ArrayList<>();
+
+    private Entity bomber;
 
     public Bomb() {
     }
 
+    public Bomb(Entity bomber) {
+        super(bomber.getX() / Sprite.SCALED_SIZE, bomber.getY() / Sprite.SCALED_SIZE,
+                Sprite.bomb.getFxImage(), 8, 3, true, 3, Direction.DOWN);
+        this.bomber = bomber;
 
-    public Bomb(int x, int y) {
-        super(x, y, Sprite.bomb.getFxImage(), 4, 3,
-                true, 3, Direction.DOWN);
+        int x = bomber.getX() / Sprite.SCALED_SIZE;
+        int y = bomber.getY() / Sprite.SCALED_SIZE;
+        int lth = ((Bomber) bomber).getLengthExplosionOfBomb();
+
+        flame_center = new Flame(x, y, lth);
+
+        for (int i = y - 1; i < y - lth + 1; ++i) {
+            listFlame.add(new Flame(x, i, lth, Direction.UP, false));
+        }
+        listFlame.add(new Flame(x, y - lth + 1, lth, Direction.UP, true));
+
+        for (int i = y + 1; i < y + lth - 1; ++i) {
+            listFlame.add(new Flame(x, i, lth, Direction.DOWN, false));
+        }
+        listFlame.add(new Flame(x, y + lth - 1, lth, Direction.DOWN, true));
+
+        for (int i = x - 1; i < x - lth + 1; ++i) {
+            listFlame.add(new Flame(i, y, lth, Direction.LEFT, false));
+        }
+        listFlame.add(new Flame(x - lth + 1, y, lth, Direction.LEFT, true));
+
+        for (int i = x + 1; i < x + lth - 1; ++i) {
+            listFlame.add(new Flame(i, y, lth, Direction.RIGHT, false));
+        }
+        listFlame.add(new Flame(x + lth - 1, y, lth, Direction.RIGHT, true));
     }
 
     public int getTimeBomb() {
@@ -27,16 +64,27 @@ public class Bomb extends MovingEntity {
         this.timeBomb = timeBomb;
     }
 
-    public void countdown() {
-        this.timeBomb--;
+    private void countdown() {
+        this.timeBomb = Math.max(0, this.timeBomb - 1);
     }
 
-    public void readyExplode() {
+    public void checkExplosion() {
         this.nextTimeline();
         this.countdown();
         if (this.timeBomb == 0) {
+            this.explode();
+        }
+    }
+
+    private void explode() {
+        flame_center.flaming();
+        for (Flame flame : listFlame) {
+            flame.flaming();
+        }
+
+        if (flame_center.getTimeFlame() == 0) {
             this.setAnimations(false);
-            this.setTimeBomb(DEFAULT_TIMEBOMB);
+            this.setTimeBomb(DEFAULT_TIME_BOMB);
         }
     }
 
@@ -50,10 +98,22 @@ public class Bomb extends MovingEntity {
                 case 1:
                     this.img = Sprite.bomb_1.getFxImage();
                     break;
-                case 3:
+                case 2:
                     this.img = Sprite.bomb_2.getFxImage();
                     break;
             }
+        }
+    }
+
+    @Override
+    public void render(GraphicsContext gc) {
+        if (this.timeBomb == 0) {
+            flame_center.render(gc);
+            for (Flame flame : listFlame) {
+                flame.render(gc);
+            }
+        } else {
+            gc.drawImage(img, x, y);
         }
     }
 }

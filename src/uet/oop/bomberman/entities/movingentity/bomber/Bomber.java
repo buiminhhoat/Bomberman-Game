@@ -11,6 +11,12 @@ import static uet.oop.bomberman.BombermanGame.HEIGHT;
 import static uet.oop.bomberman.BombermanGame.WIDTH;
 
 public class Bomber extends MovingEntity {
+    public static final int DEFAULT_NUMBER_BOMBS = 1;
+    public static final int DEFAULT_LENGTH_EXPLOSION_OF_BOMB = 2;
+
+    private int numberBombs = DEFAULT_NUMBER_BOMBS;
+    private int lengthExplosionOfBomb = DEFAULT_LENGTH_EXPLOSION_OF_BOMB;
+
     public Bomber() {
     }
 
@@ -20,6 +26,21 @@ public class Bomber extends MovingEntity {
                 false, 3, Direction.DOWN);
     }
 
+    public int getNumberBombs() {
+        return numberBombs;
+    }
+
+    public void setNumberBombs(int numberBombs) {
+        this.numberBombs = numberBombs;
+    }
+
+    public int getLengthExplosionOfBomb() {
+        return lengthExplosionOfBomb;
+    }
+
+    public void setLengthExplosionOfBomb(int lengthExplosionOfBomb) {
+        this.lengthExplosionOfBomb = lengthExplosionOfBomb;
+    }
 
     @Override
     public void update() {

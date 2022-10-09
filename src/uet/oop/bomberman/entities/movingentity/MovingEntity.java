@@ -106,7 +106,7 @@ public abstract class MovingEntity extends Entity {
         int timeToTransitionFrame = 1;
         switch (levelSpeed) {
             case 16:
-                timeToTransitionFrame = 6;
+                timeToTransitionFrame = 5;
                 break;
             case 8:
                 timeToTransitionFrame = 4;
@@ -118,7 +118,6 @@ public abstract class MovingEntity extends Entity {
         if (this.timeline % timeToTransitionFrame == 0) {
             this.currentFrame = (this.currentFrame + 1) % this.maxFrame;
         }
-
     }
 
     @Override

@@ -30,7 +30,7 @@ public class BombermanGame extends Application {
     private Canvas canvas;
     private List <Entity> movingEntities = new ArrayList<>();
     private List <Entity> stillObjects = new ArrayList<>();
-    private List <Entity> listBombs = new ArrayList<>();
+    private List <Bomb> listBombs = new ArrayList<>();
 
     private MovingEntity bomberman;
 
@@ -75,8 +75,12 @@ public class BombermanGame extends Application {
                     break;
                 case SPACE:
                     System.out.println("SPACE");
-                    Entity bomb = new Bomb(bomberman.getX() / Sprite.SCALED_SIZE,
-                            bomberman.getY() / Sprite.SCALED_SIZE);
+                    int numBomb = ((Bomber) bomberman).getNumberBombs();
+                    if (numBomb == 0) {
+                        break;
+                    }
+                    ((Bomber) bomberman).setNumberBombs(numBomb - 1);
+                    Bomb bomb = new Bomb(bomberman);
                     listBombs.add(bomb);
                     break;
                 case P:
@@ -127,10 +131,17 @@ public class BombermanGame extends Application {
             Move.checkRun((MovingEntity) entity);
         }
 
-        listBombs.removeIf(bomb -> !((Bomb) bomb).getAnimations());
-        for (Entity bomb : listBombs) {
-            ((Bomb) bomb).readyExplode();
+        for (Bomb bomb : listBombs) {
+            bomb.checkExplosion();
         }
+
+        for (Bomb bomb : listBombs) {
+           if (!bomb.getAnimations()) {
+               int numBomb = ((Bomber) bomberman).getNumberBombs();
+               ((Bomber) bomberman).setNumberBombs(numBomb + 1);
+           }
+        }
+        listBombs.removeIf(bomb -> !bomb.getAnimations());
 
         Move.checkRun(bomberman);
         BreadthFirstSearch.CalculatorBreadthFirstSearch(bomberman.getY() / Sprite.SCALED_SIZE,
