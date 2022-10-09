@@ -1,5 +1,6 @@
 package uet.oop.bomberman.gamemap;
 
+import java.util.Vector;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.block.Brick;
 import uet.oop.bomberman.entities.block.Grass;
@@ -23,6 +24,7 @@ public class GameMap {
     private int col;
 
     private BombermanObject[][] map;
+    private boolean [][] isBlocked;
 
     public BombermanObject getObjectMap(int x, int y) {
         if (x < 0 || y < 0) {
@@ -80,12 +82,20 @@ public class GameMap {
             this.col = scanner.nextInt();
 
             map = new BombermanObject[row][col];
+            isBlocked = new boolean[row][col];
             scanner.nextLine();
 
             for (int i = 0; i < row; ++i) {
                 String c = scanner.nextLine();
                 for (int j = 0; j < col; ++j) {
                     map[i][j] = convertEntity(c.charAt(j));
+                    if (map[i][j] == BombermanObject.BRICK
+                        || map[i][j] == BombermanObject.WALL) {
+                        isBlocked[i][j] = true;
+                    }
+                    else {
+                        isBlocked[i][j] = false;
+                    }
                 }
             }
             
@@ -94,6 +104,66 @@ public class GameMap {
             System.out.println("File not found exception!");
             e.printStackTrace();
         }
+    }
+
+    public void setPosIsBlocked(int x, int y) {
+        isBlocked[x][y] = true;
+    }
+
+    public boolean getPosIsBlocked(int x, int y) {
+        return isBlocked[x][y];
+    }
+
+    public int getIdPos(int x, int y) {
+        return x * col + y;
+    }
+
+    public int getIdX(int id) {
+        return (int) id / col;
+    }
+
+    public int getIdY(int id) {
+        return id - getIdX(id) * col;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
+    public BombermanObject[][] getMap() {
+        return map;
+    }
+
+    public void setMap(BombermanObject[][] map) {
+        this.map = map;
+    }
+
+    public boolean[][] getIsBlocked() {
+        return isBlocked;
+    }
+
+    public void setIsBlocked(boolean[][] isBlocked) {
+        this.isBlocked = isBlocked;
     }
 
     public List <Entity> getListStillObjects() {

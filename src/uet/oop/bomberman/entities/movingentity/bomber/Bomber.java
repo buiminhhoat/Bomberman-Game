@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities.movingentity.bomber;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.algorithm.BreadthFirstSearch;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.movingentity.MovingEntity;
 import uet.oop.bomberman.enumeration.Direction;
@@ -10,7 +11,6 @@ import static uet.oop.bomberman.BombermanGame.HEIGHT;
 import static uet.oop.bomberman.BombermanGame.WIDTH;
 
 public class Bomber extends MovingEntity {
-
     public Bomber() {
     }
 

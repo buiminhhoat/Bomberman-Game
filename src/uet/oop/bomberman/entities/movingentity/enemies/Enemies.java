@@ -11,6 +11,8 @@ public abstract class Enemies extends MovingEntity {
     protected Direction faceDirection = Direction.LEFT;
     protected int maxStep;
 
+    GameMap gameMap;
+
     Enemies() {
 
     };
@@ -34,6 +36,10 @@ public abstract class Enemies extends MovingEntity {
 
     public void setMaxStep(int maxStep) {
         this.maxStep = maxStep;
+    }
+
+    void setGameMap(GameMap gameMap) {
+        this.gameMap = gameMap;
     }
 
     public void randomDirection(GameMap gameMap) {

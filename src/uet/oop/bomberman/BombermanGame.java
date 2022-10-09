@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
+import uet.oop.bomberman.algorithm.BreadthFirstSearch;
 import uet.oop.bomberman.control.Move;
 import uet.oop.bomberman.entities.movingentity.bomber.Bomber;
 import uet.oop.bomberman.entities.Entity;
@@ -22,11 +23,7 @@ public class BombermanGame extends Application {
 
     public static final int WIDTH = 25;
     public static final int HEIGHT = 20;
-
-    public static final int MAXSIZE = 100;
     public static final String TITLE = "Bomberman Game";
-
-    private int currentLevel = 1;
 
     private GraphicsContext gc;
     private Canvas canvas;
@@ -98,7 +95,8 @@ public class BombermanGame extends Application {
         timer.start();
 
         gameMap = new GameMap();
-        gameMap.initMap(1);
+        int currentLevel = 1;
+        gameMap.initMap(currentLevel);
         stillObjects = gameMap.getListStillObjects();
         movingEntities = gameMap.getListMovingEntity();
         for (Entity entity: movingEntities) {
@@ -107,6 +105,7 @@ public class BombermanGame extends Application {
                 break;
             }
         }
+        BreadthFirstSearch.initBreadthFirstSearch(gameMap);
     }
 
     public void update() {
@@ -117,25 +116,22 @@ public class BombermanGame extends Application {
         {
             Thread.currentThread().interrupt();
         }
-        ///
 
-        System.out.println(movingEntities.size());
-        for (int i = 0; i < movingEntities.size(); ++i) {
-            Entity entity = movingEntities.get(i);
+        for (Entity entity : movingEntities) {
             if (entity instanceof Bomber) {
                 continue;
             }
             if (entity instanceof Balloon) {
-                entity = (Balloon) entity;
                 ((Balloon) entity).randomDirection(gameMap);
             }
             if (entity instanceof Oneal) {
-                entity = (Oneal) entity;
                 ((Oneal) entity).randomDirection(gameMap);
             }
             Move.checkRun((MovingEntity) entity);
         }
         Move.checkRun(bomberman);
+        BreadthFirstSearch.CalculatorBreadthFirstSearch(bomberman.getY() / Sprite.SCALED_SIZE,
+            bomberman.getX() / Sprite.SCALED_SIZE, gameMap);
         movingEntities.forEach(Entity::update);
     }
 

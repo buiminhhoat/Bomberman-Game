@@ -20,6 +20,9 @@ public class Balloon extends Enemies {
         if (this.animations) {
             switch (this.direction) {
                 case LEFT:
+                    if (faceDirection != Direction.LEFT) {
+                        faceDirection = Direction.LEFT;
+                    }
                     switch (this.currentFrame) {
                         case 0:
                             this.img = Sprite.balloom_left2.getFxImage();
@@ -30,6 +33,9 @@ public class Balloon extends Enemies {
                     }
                     break;
                 case RIGHT:
+                    if (faceDirection != Direction.RIGHT) {
+                        faceDirection = Direction.RIGHT;
+                    }
                     switch (this.currentFrame) {
                         case 0:
                             this.img = Sprite.balloom_right2.getFxImage();
