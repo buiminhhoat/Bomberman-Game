@@ -110,7 +110,16 @@ public class BombermanGame extends Application {
     }
 
     public void update() {
-        Move.checkRun(bomberman);
+        try {
+            Thread.sleep(40);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
+        ///
+
+        System.out.println(movingEntities.size());
         for (int i = 0; i < movingEntities.size(); ++i) {
             Entity entity = movingEntities.get(i);
             if (entity instanceof Bomber) {
@@ -118,16 +127,15 @@ public class BombermanGame extends Application {
             }
             if (entity instanceof Balloon) {
                 entity = (Balloon) entity;
-                ((Balloon) entity).setGameMap(gameMap);
-                ((Balloon) entity).randomDirection();
+                ((Balloon) entity).randomDirection(gameMap);
             }
             if (entity instanceof Oneal) {
                 entity = (Oneal) entity;
-                ((Oneal) entity).setGameMap(gameMap);
-                ((Oneal) entity).randomDirection();
+                ((Oneal) entity).randomDirection(gameMap);
             }
             Move.checkRun((MovingEntity) entity);
         }
+        Move.checkRun(bomberman);
         movingEntities.forEach(Entity::update);
     }
 

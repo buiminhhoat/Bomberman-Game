@@ -5,7 +5,7 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.enumeration.Direction;
 
 public abstract class MovingEntity extends Entity {
-    protected int speed;
+    protected int levelSpeed;
     protected int currentFrame;
     protected int maxFrame;
     protected Boolean animations;
@@ -19,8 +19,8 @@ public abstract class MovingEntity extends Entity {
         super(xUnit, yUnit, img);
     }
 
-    public MovingEntity(int speed, int currentFrame, int maxFrame, Boolean animations, int lives, Direction direction) {
-        this.speed = speed;
+    public MovingEntity(int levelSpeed, int currentFrame, int maxFrame, Boolean animations, int lives, Direction direction) {
+        this.levelSpeed = levelSpeed;
         this.currentFrame = currentFrame;
         this.maxFrame = maxFrame;
         this.animations = animations;
@@ -29,9 +29,9 @@ public abstract class MovingEntity extends Entity {
     }
 
     public MovingEntity(int xUnit, int yUnit, Image img,
-                        int speed, int currentFrame, int maxFrame, Boolean animations, int lives, Direction direction) {
+                        int levelSpeed, int currentFrame, int maxFrame, Boolean animations, int lives, Direction direction) {
         super(xUnit, yUnit, img);
-        this.speed = speed;
+        this.levelSpeed = levelSpeed;
         this.currentFrame = currentFrame;
         this.maxFrame = maxFrame;
         this.animations = animations;
@@ -39,12 +39,12 @@ public abstract class MovingEntity extends Entity {
         this.direction = direction;
     }
 
-    public int getSpeed() {
-        return speed;
+    public int getLevelSpeed() {
+        return levelSpeed;
     }
 
-    public void setSpeed(int speed) {
-        this.speed = speed;
+    public void setLevelSpeed(int levelSpeed) {
+        this.levelSpeed = levelSpeed;
     }
 
     public int getCurrentFrame() {

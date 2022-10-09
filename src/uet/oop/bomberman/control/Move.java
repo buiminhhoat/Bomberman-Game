@@ -60,16 +60,6 @@ public abstract class Move {
     }
 
     private static void run(MovingEntity entity) {
-        try {
-            Thread.sleep(40);
-        }
-        catch(InterruptedException ex)
-        {
-            Thread.currentThread().interrupt();
-        }
-
-        ///
-
         if (entity.getDirection() == null) {
             return;
         }
@@ -77,16 +67,16 @@ public abstract class Move {
         step(entity);
         switch (entity.getDirection()) {
             case UP:
-                entity.setY(entity.getY() - Sprite.SCALED_SIZE / 4);
+                entity.setY(entity.getY() - Sprite.SCALED_SIZE / entity.getLevelSpeed());
                 break;
             case DOWN:
-                entity.setY(entity.getY() + Sprite.SCALED_SIZE / 4);
+                entity.setY(entity.getY() + Sprite.SCALED_SIZE / entity.getLevelSpeed());
                 break;
             case LEFT:
-                entity.setX(entity.getX() - Sprite.SCALED_SIZE / 4);
+                entity.setX(entity.getX() - Sprite.SCALED_SIZE / entity.getLevelSpeed());
                 break;
             case RIGHT:
-                entity.setX(entity.getX() + Sprite.SCALED_SIZE / 4);
+                entity.setX(entity.getX() + Sprite.SCALED_SIZE / entity.getLevelSpeed());
                 break;
         }
 

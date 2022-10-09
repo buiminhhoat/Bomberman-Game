@@ -16,7 +16,8 @@ public class Bomber extends MovingEntity {
 
 
     public Bomber(int x, int y, Image img) {
-        super(x, y, img, 8, 0, 2, false, 3, Direction.DOWN);
+        super(x, y, img, 4, 0, 2,
+                false, 3, Direction.DOWN);
     }
 
 

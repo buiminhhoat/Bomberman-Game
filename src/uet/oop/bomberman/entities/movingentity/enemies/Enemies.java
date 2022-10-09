@@ -10,7 +10,6 @@ import uet.oop.bomberman.gamemap.GameMap;
 public abstract class Enemies extends MovingEntity {
     protected Direction faceDirection = Direction.LEFT;
     protected int maxStep;
-    protected GameMap gameMap;
 
     Enemies() {
 
@@ -37,15 +36,7 @@ public abstract class Enemies extends MovingEntity {
         this.maxStep = maxStep;
     }
 
-    public GameMap getGameMap() {
-        return gameMap;
-    }
-
-    public void setGameMap(GameMap gameMap) {
-        this.gameMap = gameMap;
-    }
-
-    public void randomDirection() {
+    public void randomDirection(GameMap gameMap) {
         if (animations) {
             return;
         }
