@@ -1,9 +1,6 @@
 package uet.oop.bomberman;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -13,14 +10,13 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import uet.oop.bomberman.control.Move;
-import uet.oop.bomberman.entities.movingentity.Bomber;
+import uet.oop.bomberman.entities.movingentity.bomber.Bomber;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.block.Grass;
-import uet.oop.bomberman.entities.block.Wall;
 import uet.oop.bomberman.entities.movingentity.MovingEntity;
+import uet.oop.bomberman.entities.movingentity.enemies.Balloon;
+import uet.oop.bomberman.entities.movingentity.enemies.Oneal;
 import uet.oop.bomberman.gamemap.GameMap;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.gamemap.GameMap;
 
 public class BombermanGame extends Application {
 
@@ -115,6 +111,23 @@ public class BombermanGame extends Application {
 
     public void update() {
         Move.checkRun(bomberman);
+        for (int i = 0; i < movingEntities.size(); ++i) {
+            Entity entity = movingEntities.get(i);
+            if (entity instanceof Bomber) {
+                continue;
+            }
+            if (entity instanceof Balloon) {
+                entity = (Balloon) entity;
+                ((Balloon) entity).setGameMap(gameMap);
+                ((Balloon) entity).randomDirection();
+            }
+            if (entity instanceof Oneal) {
+                entity = (Oneal) entity;
+                ((Oneal) entity).setGameMap(gameMap);
+                ((Oneal) entity).randomDirection();
+            }
+            Move.checkRun((MovingEntity) entity);
+        }
         movingEntities.forEach(Entity::update);
     }
 

@@ -1,34 +1,27 @@
 package uet.oop.bomberman.control;
 
-import uet.oop.bomberman.enumeration.BombermanObject;
+import uet.oop.bomberman.entities.movingentity.enemies.Balloon;
 import uet.oop.bomberman.enumeration.Direction;
-import uet.oop.bomberman.entities.movingentity.Bomber;
+import uet.oop.bomberman.entities.movingentity.bomber.Bomber;
 import uet.oop.bomberman.entities.movingentity.MovingEntity;
 import uet.oop.bomberman.gamemap.GameMap;
 import uet.oop.bomberman.graphics.Sprite;
-
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 public abstract class Move {
     public static void checkRun(MovingEntity entity) {
         if (!entity.getAnimations()) {
             return;
         }
-        if (entity instanceof Bomber) {
-            run(entity);
-        }
+        run(entity);
     }
 
     public static void up(MovingEntity entity, GameMap gameMap) {
-        if (!entity.getAnimations() ) {
+        if (!entity.getAnimations()) {
             entity.setDirection(Direction.UP);
             if (gameMap.checkBlocked(entity.getX(), entity.getY() - Sprite.SCALED_SIZE)) {
                 return;
             }
-            if (entity instanceof Bomber) {
-                entity.setAnimations(true);
-            }
+            entity.setAnimations(true);
         }
     }
 
@@ -38,9 +31,7 @@ public abstract class Move {
             if (gameMap.checkBlocked(entity.getX(), entity.getY() + Sprite.SCALED_SIZE)) {
                 return;
             }
-            if (entity instanceof Bomber) {
-                entity.setAnimations(true);
-            }
+            entity.setAnimations(true);
         }
     }
 
@@ -50,9 +41,7 @@ public abstract class Move {
             if (gameMap.checkBlocked(entity.getX() - Sprite.SCALED_SIZE, entity.getY())) {
                 return;
             }
-            if (entity instanceof Bomber) {
-                entity.setAnimations(true);
-            }
+            entity.setAnimations(true);
         }
     }
 
@@ -62,16 +51,12 @@ public abstract class Move {
             if (gameMap.checkBlocked(entity.getX() + Sprite.SCALED_SIZE, entity.getY())) {
                 return;
             }
-            if (entity instanceof Bomber) {
-                entity.setAnimations(true);
-            }
+            entity.setAnimations(true);
         }
     }
 
     private static void step(MovingEntity entity) {
-        if (entity instanceof Bomber) {
-            entity.nextFrame();
-        }
+        entity.nextFrame();
     }
 
     private static void run(MovingEntity entity) {

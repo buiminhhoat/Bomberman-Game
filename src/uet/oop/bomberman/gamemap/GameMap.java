@@ -4,10 +4,9 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.block.Brick;
 import uet.oop.bomberman.entities.block.Grass;
 import uet.oop.bomberman.entities.block.Wall;
-import uet.oop.bomberman.entities.movingentity.Balloon;
-import uet.oop.bomberman.entities.movingentity.Bomber;
-import uet.oop.bomberman.entities.movingentity.MovingEntity;
-import uet.oop.bomberman.entities.movingentity.Oneal;
+import uet.oop.bomberman.entities.movingentity.enemies.Balloon;
+import uet.oop.bomberman.entities.movingentity.bomber.Bomber;
+import uet.oop.bomberman.entities.movingentity.enemies.Oneal;
 import uet.oop.bomberman.enumeration.BombermanObject;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -17,8 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
-
-import static uet.oop.bomberman.BombermanGame.*;
 
 public class GameMap {
     private int level;

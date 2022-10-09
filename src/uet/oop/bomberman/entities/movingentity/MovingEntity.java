@@ -9,7 +9,7 @@ public abstract class MovingEntity extends Entity {
     protected int currentFrame;
     protected int maxFrame;
     protected Boolean animations;
-    protected int life;
+    protected int lives;
     protected Direction direction;
 
     public MovingEntity() {
@@ -19,23 +19,23 @@ public abstract class MovingEntity extends Entity {
         super(xUnit, yUnit, img);
     }
 
-    public MovingEntity(int speed, int currentFrame, int maxFrame, Boolean animations, int life, Direction direction) {
+    public MovingEntity(int speed, int currentFrame, int maxFrame, Boolean animations, int lives, Direction direction) {
         this.speed = speed;
         this.currentFrame = currentFrame;
         this.maxFrame = maxFrame;
         this.animations = animations;
-        this.life = life;
+        this.lives = lives;
         this.direction = direction;
     }
 
     public MovingEntity(int xUnit, int yUnit, Image img,
-                        int speed, int currentFrame, int maxFrame, Boolean animations, int life, Direction direction) {
+                        int speed, int currentFrame, int maxFrame, Boolean animations, int lives, Direction direction) {
         super(xUnit, yUnit, img);
         this.speed = speed;
         this.currentFrame = currentFrame;
         this.maxFrame = maxFrame;
         this.animations = animations;
-        this.life = life;
+        this.lives = lives;
         this.direction = direction;
     }
 
@@ -63,12 +63,12 @@ public abstract class MovingEntity extends Entity {
         this.maxFrame = maxFrame;
     }
 
-    public int getLife() {
-        return life;
+    public int getlives() {
+        return lives;
     }
 
-    public void setLife(int life) {
-        this.life = life;
+    public void setlives(int lives) {
+        this.lives = lives;
     }
 
     public Direction getDirection() {
