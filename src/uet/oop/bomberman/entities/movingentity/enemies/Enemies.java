@@ -18,7 +18,7 @@ public abstract class Enemies extends MovingEntity {
     };
 
     public Enemies(int xUnit, int yUnit, Image img) {
-        super(xUnit, yUnit, img, 8, 0, 2,
+        super(xUnit, yUnit, img, 8,2,
             false, 1, Direction.LEFT);
     }
 

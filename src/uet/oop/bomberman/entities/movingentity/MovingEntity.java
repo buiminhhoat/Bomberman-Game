@@ -5,8 +5,9 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.enumeration.Direction;
 
 public abstract class MovingEntity extends Entity {
-    protected int levelSpeed;
-    protected int currentFrame;
+    protected int levelSpeed; // {16, 8, 4, 2}
+    protected int timeline = 0;
+    protected int currentFrame = 0;
     protected int maxFrame;
     protected Boolean animations;
     protected int lives;
@@ -19,9 +20,8 @@ public abstract class MovingEntity extends Entity {
         super(xUnit, yUnit, img);
     }
 
-    public MovingEntity(int levelSpeed, int currentFrame, int maxFrame, Boolean animations, int lives, Direction direction) {
+    public MovingEntity(int levelSpeed, int maxFrame, Boolean animations, int lives, Direction direction) {
         this.levelSpeed = levelSpeed;
-        this.currentFrame = currentFrame;
         this.maxFrame = maxFrame;
         this.animations = animations;
         this.lives = lives;
@@ -29,10 +29,9 @@ public abstract class MovingEntity extends Entity {
     }
 
     public MovingEntity(int xUnit, int yUnit, Image img,
-                        int levelSpeed, int currentFrame, int maxFrame, Boolean animations, int lives, Direction direction) {
+                        int levelSpeed, int maxFrame, Boolean animations, int lives, Direction direction) {
         super(xUnit, yUnit, img);
         this.levelSpeed = levelSpeed;
-        this.currentFrame = currentFrame;
         this.maxFrame = maxFrame;
         this.animations = animations;
         this.lives = lives;
@@ -45,6 +44,14 @@ public abstract class MovingEntity extends Entity {
 
     public void setLevelSpeed(int levelSpeed) {
         this.levelSpeed = levelSpeed;
+    }
+
+    public int getTimeline() {
+        return timeline;
+    }
+
+    public void setTimeline(int timeline) {
+        this.timeline = timeline;
     }
 
     public int getCurrentFrame() {
@@ -89,11 +96,29 @@ public abstract class MovingEntity extends Entity {
 
     public void finishAnimations() {
         animations = false;
+        timeline = 0;
         currentFrame = 0;
     }
 
-    public void nextFrame() {
-        this.currentFrame = (this.currentFrame + 1) % this.maxFrame;
+    public void nextTimeline() {
+        ++this.timeline;
+
+        int timeToTransitionFrame = 1;
+        switch (levelSpeed) {
+            case 16:
+                timeToTransitionFrame = 6;
+                break;
+            case 8:
+                timeToTransitionFrame = 4;
+                break;
+            case 4:
+                timeToTransitionFrame = 1;
+                break;
+        }
+        if (this.timeline % timeToTransitionFrame == 0) {
+            this.currentFrame = (this.currentFrame + 1) % this.maxFrame;
+        }
+
     }
 
     @Override

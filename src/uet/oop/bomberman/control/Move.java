@@ -1,8 +1,6 @@
 package uet.oop.bomberman.control;
 
-import uet.oop.bomberman.entities.movingentity.enemies.Balloon;
 import uet.oop.bomberman.enumeration.Direction;
-import uet.oop.bomberman.entities.movingentity.bomber.Bomber;
 import uet.oop.bomberman.entities.movingentity.MovingEntity;
 import uet.oop.bomberman.gamemap.GameMap;
 import uet.oop.bomberman.graphics.Sprite;
@@ -56,7 +54,7 @@ public abstract class Move {
     }
 
     private static void step(MovingEntity entity) {
-        entity.nextFrame();
+        entity.nextTimeline();
     }
 
     private static void run(MovingEntity entity) {

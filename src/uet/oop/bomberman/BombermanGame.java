@@ -11,6 +11,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import uet.oop.bomberman.algorithm.BreadthFirstSearch;
 import uet.oop.bomberman.control.Move;
+import uet.oop.bomberman.entities.movingentity.bomb.Bomb;
 import uet.oop.bomberman.entities.movingentity.bomber.Bomber;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.movingentity.MovingEntity;
@@ -29,6 +30,7 @@ public class BombermanGame extends Application {
     private Canvas canvas;
     private List <Entity> movingEntities = new ArrayList<>();
     private List <Entity> stillObjects = new ArrayList<>();
+    private List <Entity> listBombs = new ArrayList<>();
 
     private MovingEntity bomberman;
 
@@ -73,6 +75,9 @@ public class BombermanGame extends Application {
                     break;
                 case SPACE:
                     System.out.println("SPACE");
+                    Entity bomb = new Bomb(bomberman.getX() / Sprite.SCALED_SIZE,
+                            bomberman.getY() / Sprite.SCALED_SIZE);
+                    listBombs.add(bomb);
                     break;
                 case P:
                     System.out.println("P");
@@ -109,14 +114,6 @@ public class BombermanGame extends Application {
     }
 
     public void update() {
-        try {
-            Thread.sleep(40);
-        }
-        catch(InterruptedException ex)
-        {
-            Thread.currentThread().interrupt();
-        }
-
         for (Entity entity : movingEntities) {
             if (entity instanceof Bomber) {
                 continue;
@@ -129,15 +126,33 @@ public class BombermanGame extends Application {
             }
             Move.checkRun((MovingEntity) entity);
         }
+
+        listBombs.removeIf(bomb -> !((Bomb) bomb).getAnimations());
+        for (Entity bomb : listBombs) {
+            ((Bomb) bomb).readyExplode();
+        }
+
         Move.checkRun(bomberman);
         BreadthFirstSearch.CalculatorBreadthFirstSearch(bomberman.getY() / Sprite.SCALED_SIZE,
             bomberman.getX() / Sprite.SCALED_SIZE, gameMap);
+
         movingEntities.forEach(Entity::update);
+        listBombs.forEach(Entity::update);
+
+        ///
+        try {
+            Thread.sleep(40);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
+        listBombs.forEach(g -> g.render(gc));
         movingEntities.forEach(g -> g.render(gc));
     }
 }
