@@ -1,10 +1,10 @@
-package uet.oop.bomberman.entities.dynamicentity.enemies;
+package entities.dynamicentity.enemies;
 
 import java.util.Random;
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.dynamicentity.DynamicEntity;
-import uet.oop.bomberman.enumeration.Direction;
-import uet.oop.bomberman.gamemap.GameMap;
+import entities.dynamicentity.DynamicEntity;
+import enumeration.Direction;
+import gamemap.GameMap;
 
 public abstract class Enemies extends DynamicEntity {
 
@@ -44,7 +44,7 @@ public abstract class Enemies extends DynamicEntity {
         this.gameMap = gameMap;
     }
 
-    public void randomDirection(GameMap gameMap) {
+    public void chooseDirection(GameMap gameMap) {
         if (animations) {
             return;
         }

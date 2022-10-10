@@ -1,15 +1,15 @@
-package uet.oop.bomberman.entities.dynamicentity.bomb;
+package entities.dynamicentity.bomb;
 
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.canvas.GraphicsContext;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.dynamicentity.DynamicEntity;
-import uet.oop.bomberman.entities.dynamicentity.bomber.Bomber;
-import uet.oop.bomberman.enumeration.BombermanObject;
-import uet.oop.bomberman.enumeration.Direction;
-import uet.oop.bomberman.gamemap.GameMap;
-import uet.oop.bomberman.graphics.Sprite;
+import entities.Entity;
+import entities.dynamicentity.DynamicEntity;
+import entities.dynamicentity.bomber.Bomber;
+import enumeration.BombermanObject;
+import enumeration.Direction;
+import gamemap.GameMap;
+import graphics.Sprite;
 
 public class Bomb extends DynamicEntity {
 

@@ -1,4 +1,4 @@
-package uet.oop.bomberman.enumeration;
+package enumeration;
 
 public enum Axis {
     CENTER, VERTICAL, HORIZONTAL

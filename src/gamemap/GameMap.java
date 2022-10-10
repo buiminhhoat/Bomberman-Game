@@ -1,21 +1,21 @@
-package uet.oop.bomberman.gamemap;
+package gamemap;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.block.Brick;
-import uet.oop.bomberman.entities.block.Grass;
-import uet.oop.bomberman.entities.block.Wall;
-import uet.oop.bomberman.entities.dynamicentity.bomb.Bomb;
-import uet.oop.bomberman.entities.dynamicentity.bomber.Bomber;
-import uet.oop.bomberman.entities.dynamicentity.enemies.Balloon;
-import uet.oop.bomberman.entities.dynamicentity.enemies.Ghost;
-import uet.oop.bomberman.entities.dynamicentity.enemies.Oneal;
-import uet.oop.bomberman.enumeration.BombermanObject;
-import uet.oop.bomberman.graphics.Sprite;
+import entities.Entity;
+import entities.block.Brick;
+import entities.block.Grass;
+import entities.block.Wall;
+import entities.dynamicentity.bomb.Bomb;
+import entities.dynamicentity.bomber.Bomber;
+import entities.dynamicentity.enemies.Balloon;
+import entities.dynamicentity.enemies.Ghost;
+import entities.dynamicentity.enemies.Oneal;
+import enumeration.BombermanObject;
+import graphics.Sprite;
 
 public class GameMap {
 

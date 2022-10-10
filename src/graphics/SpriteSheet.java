@@ -1,4 +1,4 @@
-package uet.oop.bomberman.graphics;
+package graphics;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

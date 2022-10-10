@@ -1,12 +1,12 @@
-package uet.oop.bomberman.entities.dynamicentity.enemies;
+package entities.dynamicentity.enemies;
 
 import java.util.Random;
 import javafx.scene.image.Image;
-import uet.oop.bomberman.algorithm.BreadthFirstSearch;
-import uet.oop.bomberman.entities.dynamicentity.bomber.Bomber;
-import uet.oop.bomberman.enumeration.Direction;
-import uet.oop.bomberman.gamemap.GameMap;
-import uet.oop.bomberman.graphics.Sprite;
+import algorithm.BreadthFirstSearch;
+import entities.dynamicentity.bomber.Bomber;
+import enumeration.Direction;
+import gamemap.GameMap;
+import graphics.Sprite;
 
 public class Oneal extends Enemies {
 
@@ -31,7 +31,7 @@ public class Oneal extends Enemies {
     }
 
     @Override
-    public void randomDirection(GameMap gameMap) {
+    public void chooseDirection(GameMap gameMap) {
         if (animations) {
             return;
         }
@@ -62,7 +62,7 @@ public class Oneal extends Enemies {
         }
 
         if (saveDirection == -1) {
-            super.randomDirection(gameMap);
+            super.chooseDirection(gameMap);
             return;
         }
 

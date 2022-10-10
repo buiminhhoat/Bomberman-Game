@@ -19,7 +19,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>uet.oop.bomberman.BombermanGame</mainClass>
+              <mainClass>BombermanGame</mainClass>
             </manifest>
           </archive>
         </configuration>

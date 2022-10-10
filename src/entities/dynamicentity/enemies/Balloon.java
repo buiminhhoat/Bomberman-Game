@@ -1,8 +1,8 @@
-package uet.oop.bomberman.entities.dynamicentity.enemies;
+package entities.dynamicentity.enemies;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.enumeration.Direction;
-import uet.oop.bomberman.graphics.Sprite;
+import enumeration.Direction;
+import graphics.Sprite;
 
 public class Balloon extends Enemies {
 

@@ -1,9 +1,9 @@
-package uet.oop.bomberman.entities.dynamicentity.bomb;
+package entities.dynamicentity.bomb;
 
-import uet.oop.bomberman.entities.dynamicentity.DynamicEntity;
-import uet.oop.bomberman.enumeration.Axis;
-import uet.oop.bomberman.enumeration.Direction;
-import uet.oop.bomberman.graphics.Sprite;
+import entities.dynamicentity.DynamicEntity;
+import enumeration.Axis;
+import enumeration.Direction;
+import graphics.Sprite;
 
 public class Flame extends DynamicEntity {
 

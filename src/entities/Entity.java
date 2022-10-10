@@ -1,8 +1,8 @@
-package uet.oop.bomberman.entities;
+package entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import uet.oop.bomberman.graphics.Sprite;
+import graphics.Sprite;
 
 public abstract class Entity {
 

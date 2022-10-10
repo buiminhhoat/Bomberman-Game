@@ -1,9 +1,9 @@
-package uet.oop.bomberman.entities.dynamicentity.bomber;
+package entities.dynamicentity.bomber;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.dynamicentity.DynamicEntity;
-import uet.oop.bomberman.enumeration.Direction;
-import uet.oop.bomberman.graphics.Sprite;
+import entities.dynamicentity.DynamicEntity;
+import enumeration.Direction;
+import graphics.Sprite;
 
 public class Bomber extends DynamicEntity {
 

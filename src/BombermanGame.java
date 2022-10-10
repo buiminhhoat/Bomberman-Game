@@ -1,5 +1,3 @@
-package uet.oop.bomberman;
-
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.AnimationTimer;
@@ -9,17 +7,17 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
-import uet.oop.bomberman.algorithm.BreadthFirstSearch;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.block.Brick;
-import uet.oop.bomberman.entities.dynamicentity.DynamicEntity;
-import uet.oop.bomberman.entities.dynamicentity.bomb.Bomb;
-import uet.oop.bomberman.entities.dynamicentity.bomber.Bomber;
-import uet.oop.bomberman.entities.dynamicentity.enemies.Balloon;
-import uet.oop.bomberman.entities.dynamicentity.enemies.Ghost;
-import uet.oop.bomberman.entities.dynamicentity.enemies.Oneal;
-import uet.oop.bomberman.gamemap.GameMap;
-import uet.oop.bomberman.graphics.Sprite;
+import algorithm.BreadthFirstSearch;
+import entities.Entity;
+import entities.block.Brick;
+import entities.dynamicentity.DynamicEntity;
+import entities.dynamicentity.bomb.Bomb;
+import entities.dynamicentity.bomber.Bomber;
+import entities.dynamicentity.enemies.Balloon;
+import entities.dynamicentity.enemies.Ghost;
+import entities.dynamicentity.enemies.Oneal;
+import gamemap.GameMap;
+import graphics.Sprite;
 
 public class BombermanGame extends Application {
 
@@ -121,13 +119,13 @@ public class BombermanGame extends Application {
                 continue;
             }
             if (entity instanceof Balloon) {
-                ((Balloon) entity).randomDirection(gameMap);
+                ((Balloon) entity).chooseDirection(gameMap);
             }
             if (entity instanceof Oneal) {
-                ((Oneal) entity).randomDirection(gameMap);
+                ((Oneal) entity).chooseDirection(gameMap);
             }
             if (entity instanceof Ghost) {
-                ((Ghost) entity).randomDirection(gameMap);
+                ((Ghost) entity).chooseDirection(gameMap);
             }
             ((DynamicEntity) entity).checkRun();
         }

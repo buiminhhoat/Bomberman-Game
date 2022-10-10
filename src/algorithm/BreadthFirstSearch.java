@@ -1,7 +1,7 @@
-package uet.oop.bomberman.algorithm;
+package algorithm;
 
 import java.util.LinkedList;
-import uet.oop.bomberman.gamemap.GameMap;
+import gamemap.GameMap;
 
 public abstract class BreadthFirstSearch {
 
