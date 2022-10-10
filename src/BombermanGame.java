@@ -1,4 +1,5 @@
 import entities.dynamicentity.enemies.Creeper;
+import entities.dynamicentity.enemies.Enemies;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.AnimationTimer;
@@ -104,7 +105,12 @@ public class BombermanGame extends Application {
                 break;
             }
         }
-        listBombingEntity.add(bomberman);
+        for (Entity entity : movingEntities) {
+            if (entity instanceof Bomber
+                || entity instanceof Creeper) {
+                listBombingEntity.add(entity);
+            }
+        }
         BreadthFirstSearch.initBreadthFirstSearch(gameMap);
     }
 
@@ -113,17 +119,8 @@ public class BombermanGame extends Application {
             if (entity instanceof Bomber) {
                 continue;
             }
-            if (entity instanceof Balloon) {
-                ((Balloon) entity).chooseDirection(gameMap);
-            }
-            if (entity instanceof Oneal) {
-                ((Oneal) entity).chooseDirection(gameMap);
-            }
-            if (entity instanceof Ghost) {
-                ((Ghost) entity).chooseDirection(gameMap);
-            }
-            if (entity instanceof Creeper) {
-                ((Creeper) entity).chooseDirection(gameMap);
+            if (entity instanceof Enemies) {
+                ((Enemies) entity).chooseDirection(gameMap);
             }
             ((DynamicEntity) entity).checkRun();
         }
@@ -171,12 +168,12 @@ public class BombermanGame extends Application {
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
-        movingEntities.forEach(g -> g.render(gc));
         for (Entity entity: listBombingEntity) {
             if (entity instanceof DynamicEntity) {
                 List<Bomb> bombList = ((DynamicEntity) entity).getBombList();
                 bombList.forEach(g -> g.render(gc));
             }
         }
+        movingEntities.forEach(g -> g.render(gc));
     }
 }

@@ -20,19 +20,20 @@ public class Bomb extends DynamicEntity {
     private Flame flame_center;
     private List<Flame> listFlame = new ArrayList<>();
 
-    private Entity entity;
+    private DynamicEntity dynamicEntity;
 
     public Bomb() {
     }
 
-    public Bomb(Entity entity, GameMap gameMap) {
-        super(entity.getX() / Sprite.SCALED_SIZE, entity.getY() / Sprite.SCALED_SIZE,
+    public Bomb(DynamicEntity dynamicEntity, GameMap gameMap) {
+        super(dynamicEntity.getX() / Sprite.SCALED_SIZE,
+            dynamicEntity.getY() / Sprite.SCALED_SIZE,
             Sprite.bomb.getFxImage(), 8, 3, true, 3, Direction.DOWN);
-        this.entity = entity;
+        this.dynamicEntity = dynamicEntity;
 
-        int x = entity.getX() / Sprite.SCALED_SIZE;
-        int y = entity.getY() / Sprite.SCALED_SIZE;
-        int lth = ((Bomber) entity).getLengthExplosionOfBomb();
+        int x = dynamicEntity.getX() / Sprite.SCALED_SIZE;
+        int y = dynamicEntity.getY() / Sprite.SCALED_SIZE;
+        int lth = dynamicEntity.getLengthExplosionOfBomb();
 
         flame_center = new Flame(x, y);
 
@@ -88,7 +89,7 @@ public class Bomb extends DynamicEntity {
     private void explode(GameMap gameMap) {
         int x = this.getX() / Sprite.SCALED_SIZE;
         int y = this.getY() / Sprite.SCALED_SIZE;
-        int lth = ((Bomber) entity).getLengthExplosionOfBomb();
+        int lth = ((DynamicEntity) dynamicEntity).getLengthExplosionOfBomb();
 
         for (int i = y - 1; i >= y - lth; --i) {
             if (gameMap.checkBlockedPixel(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {

@@ -105,6 +105,14 @@ public class Sprite {
     public static Sprite ghost_right2 = new Sprite(DEFAULT_SIZE, 7, 6, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
     public static Sprite ghost_right3 = new Sprite(DEFAULT_SIZE, 7, 7, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
     public static Sprite ghost_dead = new Sprite(DEFAULT_SIZE, 6, 8, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    //Creeper
+    public static Sprite creeper_left1 = new Sprite(DEFAULT_SIZE, 8, 9, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite creeper_left2 = new Sprite(DEFAULT_SIZE, 8, 10, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite creeper_left3 = new Sprite(DEFAULT_SIZE, 8, 11, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite creeper_right1 = new Sprite(DEFAULT_SIZE, 9, 9, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite creeper_right2 = new Sprite(DEFAULT_SIZE, 9, 10, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite creeper_right3 = new Sprite(DEFAULT_SIZE, 9, 11, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite creeper_dead = new Sprite(DEFAULT_SIZE, 8, 12, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
     //ALL
     public static Sprite mob_dead1 = new Sprite(DEFAULT_SIZE, 15, 0, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
     public static Sprite mob_dead2 = new Sprite(DEFAULT_SIZE, 15, 1, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
