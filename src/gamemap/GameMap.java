@@ -1,5 +1,6 @@
 package gamemap;
 
+import entities.dynamicentity.enemies.Creeper;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -22,16 +23,11 @@ public class GameMap {
     private int level;
     private int row;
     private int col;
-    private List<Bomb> listBombs;
     private List<Entity> stillObjects = new ArrayList<>();
     private List<Entity> movingEntities = new ArrayList<>();
 
     private BombermanObject[][] map;
     private boolean[][] isBlocked;
-
-    public GameMap(List<Bomb> listBombs) {
-        this.listBombs = listBombs;
-    }
 
     public GameMap() {
 
@@ -49,13 +45,13 @@ public class GameMap {
             return true;
         }
 
-        for (Bomb bomb : listBombs) {
-            int xB = bomb.getX() / Sprite.SCALED_SIZE;
-            int yB = bomb.getY() / Sprite.SCALED_SIZE;
-            if (y == xB && x == yB) {
-                return true;
-            }
-        }
+//        for (Bomb bomb : listBombs) {
+//            int xB = bomb.getX() / Sprite.SCALED_SIZE;
+//            int yB = bomb.getY() / Sprite.SCALED_SIZE;
+//            if (y == xB && x == yB) {
+//                return true;
+//            }
+//        }
         return false;
     }
 
@@ -66,13 +62,13 @@ public class GameMap {
             return true;
         }
 
-        for (Bomb bomb : listBombs) {
-            int xB = bomb.getX() / Sprite.SCALED_SIZE;
-            int yB = bomb.getY() / Sprite.SCALED_SIZE;
-            if (x == xB && y == yB) {
-                return true;
-            }
-        }
+//        for (Bomb bomb : listBombs) {
+//            int xB = bomb.getX() / Sprite.SCALED_SIZE;
+//            int yB = bomb.getY() / Sprite.SCALED_SIZE;
+//            if (x == xB && y == yB) {
+//                return true;
+//            }
+//        }
         return false;
     }
 
@@ -105,6 +101,8 @@ public class GameMap {
                 return BombermanObject.ONEAL;
             case '3':
                 return BombermanObject.GHOST;
+            case '4':
+                return BombermanObject.CREEPER;
             case 'b':
                 return BombermanObject.BOMB_ITEM;
             case 'f':
@@ -153,6 +151,10 @@ public class GameMap {
 
     public void setPosIsBlocked(int x, int y) {
         isBlocked[x][y] = true;
+    }
+
+    public void setPosIsOpened(int x, int y) {
+        isBlocked[x][y] = false;
     }
 
     public int getIdPos(int x, int y) {
@@ -246,6 +248,8 @@ public class GameMap {
                         break;
                     case GHOST:
                         movingEntity = new Ghost(j, i, Sprite.ghost_left1.getFxImage());
+                    case CREEPER:
+                        movingEntity = new Creeper(j, i, Sprite.ghost_left1.getFxImage());
                 }
                 if (movingEntity == null) {
                     continue;

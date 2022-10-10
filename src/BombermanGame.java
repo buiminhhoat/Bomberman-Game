@@ -1,3 +1,4 @@
+import entities.dynamicentity.enemies.Creeper;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.AnimationTimer;
@@ -29,7 +30,7 @@ public class BombermanGame extends Application {
     private Canvas canvas;
     private List<Entity> movingEntities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
-    private List<Bomb> listBombs = new ArrayList<>();
+    private List<Entity> listBombingEntity = new ArrayList<>();
     private DynamicEntity bomberman;
     private GameMap gameMap;
 
@@ -70,14 +71,7 @@ public class BombermanGame extends Application {
                     break;
                 case SPACE:
                     System.out.println("SPACE");
-                    int numBomb = ((Bomber) bomberman).getNumberBombs();
-                    if (numBomb == 0 || gameMap.checkBlockedPixel(bomberman.getX(),
-                        bomberman.getY())) {
-                        break;
-                    }
-                    ((Bomber) bomberman).setNumberBombs(numBomb - 1);
-                    Bomb bomb = new Bomb(bomberman, gameMap);
-                    listBombs.add(bomb);
+                    ((Bomber) bomberman).createBomb(gameMap);
                     break;
                 case P:
                     System.out.println("P");
@@ -99,7 +93,7 @@ public class BombermanGame extends Application {
         };
         timer.start();
 
-        gameMap = new GameMap(listBombs);
+        gameMap = new GameMap();
         int currentLevel = 1;
         gameMap.initMap(currentLevel);
         stillObjects = gameMap.getListStillObjects();
@@ -110,6 +104,7 @@ public class BombermanGame extends Application {
                 break;
             }
         }
+        listBombingEntity.add(bomberman);
         BreadthFirstSearch.initBreadthFirstSearch(gameMap);
     }
 
@@ -127,20 +122,31 @@ public class BombermanGame extends Application {
             if (entity instanceof Ghost) {
                 ((Ghost) entity).chooseDirection(gameMap);
             }
+            if (entity instanceof Creeper) {
+                ((Creeper) entity).chooseDirection(gameMap);
+            }
             ((DynamicEntity) entity).checkRun();
         }
 
-        for (Bomb bomb : listBombs) {
-            bomb.checkExplosion(gameMap);
-        }
-
-        for (Bomb bomb : listBombs) {
-            if (!bomb.getAnimations()) {
-                int numBomb = ((Bomber) bomberman).getNumberBombs();
-                ((Bomber) bomberman).setNumberBombs(numBomb + 1);
+        for (Entity entity: listBombingEntity) {
+            if (entity instanceof DynamicEntity) {
+                List<Bomb> bombList = ((DynamicEntity) entity).getBombList();
+                for (Bomb bomb: bombList) {
+                    bomb.checkExplosion(gameMap);
+                }
+                for (Bomb bomb: bombList) {
+                    if (!bomb.getAnimations()) {
+                        int numBomb = ((DynamicEntity) entity).getNumberBombs();
+                        ((DynamicEntity) entity).setNumberBombs(numBomb + 1);
+                        ((DynamicEntity) entity).explodeBomb(bomb, gameMap);
+                    }
+                }
+                bombList.removeIf(bomb -> !bomb.getAnimations());
+                for (Bomb bomb: bombList) {
+                    bomb.update();
+                }
             }
         }
-        listBombs.removeIf(bomb -> !bomb.getAnimations());
 
         for (int i = 0; i < stillObjects.size(); ++i) {
             Entity brick = stillObjects.get(i);
@@ -158,9 +164,7 @@ public class BombermanGame extends Application {
 
         stillObjects.forEach(Entity::update);
         movingEntities.forEach(Entity::update);
-        listBombs.forEach(Entity::update);
 
-        ///
         try {
             Thread.sleep(40);
         } catch (InterruptedException ex) {
@@ -171,7 +175,12 @@ public class BombermanGame extends Application {
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
-        listBombs.forEach(g -> g.render(gc));
         movingEntities.forEach(g -> g.render(gc));
+        for (Entity entity: listBombingEntity) {
+            if (entity instanceof DynamicEntity) {
+                List<Bomb> bombList = ((DynamicEntity) entity).getBombList();
+                bombList.forEach(g -> g.render(gc));
+            }
+        }
     }
 }

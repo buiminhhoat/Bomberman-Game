@@ -20,19 +20,19 @@ public class Bomb extends DynamicEntity {
     private Flame flame_center;
     private List<Flame> listFlame = new ArrayList<>();
 
-    private Entity bomber;
+    private Entity entity;
 
     public Bomb() {
     }
 
-    public Bomb(Entity bomber, GameMap gameMap) {
-        super(bomber.getX() / Sprite.SCALED_SIZE, bomber.getY() / Sprite.SCALED_SIZE,
+    public Bomb(Entity entity, GameMap gameMap) {
+        super(entity.getX() / Sprite.SCALED_SIZE, entity.getY() / Sprite.SCALED_SIZE,
             Sprite.bomb.getFxImage(), 8, 3, true, 3, Direction.DOWN);
-        this.bomber = bomber;
+        this.entity = entity;
 
-        int x = bomber.getX() / Sprite.SCALED_SIZE;
-        int y = bomber.getY() / Sprite.SCALED_SIZE;
-        int lth = ((Bomber) bomber).getLengthExplosionOfBomb();
+        int x = entity.getX() / Sprite.SCALED_SIZE;
+        int y = entity.getY() / Sprite.SCALED_SIZE;
+        int lth = ((Bomber) entity).getLengthExplosionOfBomb();
 
         flame_center = new Flame(x, y);
 
@@ -88,7 +88,7 @@ public class Bomb extends DynamicEntity {
     private void explode(GameMap gameMap) {
         int x = this.getX() / Sprite.SCALED_SIZE;
         int y = this.getY() / Sprite.SCALED_SIZE;
-        int lth = ((Bomber) bomber).getLengthExplosionOfBomb();
+        int lth = ((Bomber) entity).getLengthExplosionOfBomb();
 
         for (int i = y - 1; i >= y - lth; --i) {
             if (gameMap.checkBlockedPixel(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
@@ -168,5 +168,25 @@ public class Bomb extends DynamicEntity {
         } else {
             gc.drawImage(img, x, y);
         }
+    }
+
+    public int getDEFAULT_TIME_BOMB() {
+        return DEFAULT_TIME_BOMB;
+    }
+
+    public Flame getFlame_center() {
+        return flame_center;
+    }
+
+    public void setFlame_center(Flame flame_center) {
+        this.flame_center = flame_center;
+    }
+
+    public List<Flame> getListFlame() {
+        return listFlame;
+    }
+
+    public void setListFlame(List<Flame> listFlame) {
+        this.listFlame = listFlame;
     }
 }

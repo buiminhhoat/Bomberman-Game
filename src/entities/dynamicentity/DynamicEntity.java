@@ -1,5 +1,8 @@
 package entities.dynamicentity;
 
+import entities.dynamicentity.bomb.Bomb;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.image.Image;
 import entities.Entity;
 import enumeration.Direction;
@@ -7,6 +10,14 @@ import gamemap.GameMap;
 import graphics.Sprite;
 
 public abstract class DynamicEntity extends Entity {
+    public static final int DEFAULT_NUMBER_BOMBS = 3;
+    public static final int DEFAULT_LENGTH_EXPLOSION_OF_BOMB = 2;
+
+    private int numberBombs = DEFAULT_NUMBER_BOMBS;
+
+    private int lengthExplosionOfBomb = DEFAULT_LENGTH_EXPLOSION_OF_BOMB;
+
+    private List<Bomb> bombList = new ArrayList<>();
 
     protected int levelSpeed; // {16, 8, 4, 2}
     protected int timeline = 0;
@@ -14,6 +25,7 @@ public abstract class DynamicEntity extends Entity {
     protected int maxFrame;
     protected Boolean animations;
     protected int lives;
+
     protected Direction direction;
 
     public DynamicEntity() {
@@ -96,6 +108,30 @@ public abstract class DynamicEntity extends Entity {
 
     public void setAnimations(Boolean animations) {
         this.animations = animations;
+    }
+
+    public int getNumberBombs() {
+        return numberBombs;
+    }
+
+    public void setNumberBombs(int numberBombs) {
+        this.numberBombs = numberBombs;
+    }
+
+    public int getLengthExplosionOfBomb() {
+        return lengthExplosionOfBomb;
+    }
+
+    public void setLengthExplosionOfBomb(int lengthExplosionOfBomb) {
+        this.lengthExplosionOfBomb = lengthExplosionOfBomb;
+    }
+
+    public List<Bomb> getBombList() {
+        return bombList;
+    }
+
+    public void setBombList(List<Bomb> bombList) {
+        this.bombList = bombList;
     }
 
     public void finishAnimations() {
@@ -200,5 +236,22 @@ public abstract class DynamicEntity extends Entity {
         if (entity.getX() % Sprite.SCALED_SIZE == 0 && entity.getY() % Sprite.SCALED_SIZE == 0) {
             entity.setAnimations(false);
         }
+    }
+
+    public void createBomb(GameMap gameMap) {
+        int numBomb = this.getNumberBombs();
+        if (numBomb == 0 || gameMap.checkBlockedPixel(this.getX(), this.getY())) {
+            return;
+        }
+        setNumberBombs(numBomb - 1);
+        Bomb bomb = new Bomb(this, gameMap);
+        bombList.add(bomb);
+        gameMap.setPosIsBlocked(this.getY() / Sprite.SCALED_SIZE,
+            this.getX() / Sprite.SCALED_SIZE);
+    }
+
+    public void explodeBomb(Bomb bomb, GameMap gameMap) {
+        gameMap.setPosIsOpened(bomb.getY() / Sprite.SCALED_SIZE,
+            bomb.getX() / Sprite.SCALED_SIZE);
     }
 }
