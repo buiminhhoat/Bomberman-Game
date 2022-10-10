@@ -2,12 +2,12 @@ package uet.oop.bomberman.entities.dynamicentity.enemies;
 
 import java.util.Random;
 import javafx.scene.image.Image;
-import uet.oop.bomberman.control.Move;
 import uet.oop.bomberman.entities.dynamicentity.DynamicEntity;
 import uet.oop.bomberman.enumeration.Direction;
 import uet.oop.bomberman.gamemap.GameMap;
 
 public abstract class Enemies extends DynamicEntity {
+
     protected Direction faceDirection = Direction.LEFT;
     protected int maxStep;
 
@@ -15,10 +15,12 @@ public abstract class Enemies extends DynamicEntity {
 
     Enemies() {
 
-    };
+    }
+
+    ;
 
     public Enemies(int xUnit, int yUnit, Image img) {
-        super(xUnit, yUnit, img, 8,2,
+        super(xUnit, yUnit, img, 8, 2,
             false, 1, Direction.LEFT);
     }
 
@@ -64,23 +66,22 @@ public abstract class Enemies extends DynamicEntity {
                     this.direction = Direction.RIGHT;
                     break;
             }
-        }
-        else {
+        } else {
             --maxStep;
             switch (direction) {
                 case UP:
-                    Move.up(this, gameMap);
+                    up(gameMap);
                     break;
                 case DOWN:
-                    Move.down(this, gameMap);
+                    down(gameMap);
                     break;
                 case LEFT:
                     faceDirection = Direction.LEFT;
-                    Move.left(this, gameMap);
+                    left(gameMap);
                     break;
                 case RIGHT:
                     faceDirection = Direction.RIGHT;
-                    Move.right(this, gameMap);
+                    right(gameMap);
                     break;
             }
         }

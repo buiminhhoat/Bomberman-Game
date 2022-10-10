@@ -5,6 +5,7 @@ import uet.oop.bomberman.enumeration.Direction;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Balloon extends Enemies {
+
     public Balloon() {
     }
 

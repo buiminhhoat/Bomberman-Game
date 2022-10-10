@@ -3,8 +3,11 @@ package uet.oop.bomberman.entities.dynamicentity;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.enumeration.Direction;
+import uet.oop.bomberman.gamemap.GameMap;
+import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class DynamicEntity extends Entity {
+
     protected int levelSpeed; // {16, 8, 4, 2}
     protected int timeline = 0;
     protected int currentFrame = 0;
@@ -20,7 +23,8 @@ public abstract class DynamicEntity extends Entity {
         super(xUnit, yUnit, img);
     }
 
-    public DynamicEntity(int levelSpeed, int maxFrame, Boolean animations, int lives, Direction direction) {
+    public DynamicEntity(int levelSpeed, int maxFrame, Boolean animations, int lives,
+        Direction direction) {
         this.levelSpeed = levelSpeed;
         this.maxFrame = maxFrame;
         this.animations = animations;
@@ -29,7 +33,7 @@ public abstract class DynamicEntity extends Entity {
     }
 
     public DynamicEntity(int xUnit, int yUnit, Image img,
-                         int levelSpeed, int maxFrame, Boolean animations, int lives, Direction direction) {
+        int levelSpeed, int maxFrame, Boolean animations, int lives, Direction direction) {
         super(xUnit, yUnit, img);
         this.levelSpeed = levelSpeed;
         this.maxFrame = maxFrame;
@@ -123,5 +127,78 @@ public abstract class DynamicEntity extends Entity {
     @Override
     public void update() {
 
+    }
+
+    public void checkRun() {
+        if (!getAnimations()) {
+            return;
+        }
+        run(this);
+    }
+
+    public void up(GameMap gameMap) {
+        if (!getAnimations()) {
+            setDirection(Direction.UP);
+            if (gameMap.checkBlockedPixel(this.getX(), this.getY() - Sprite.SCALED_SIZE)) {
+                return;
+            }
+            this.setAnimations(true);
+        }
+    }
+
+    public void down(GameMap gameMap) {
+        if (!getAnimations()) {
+            setDirection(Direction.DOWN);
+            if (gameMap.checkBlockedPixel(this.getX(), this.getY() + Sprite.SCALED_SIZE)) {
+                return;
+            }
+            setAnimations(true);
+        }
+    }
+
+    public void left(GameMap gameMap) {
+        if (!this.getAnimations()) {
+            this.setDirection(Direction.LEFT);
+            if (gameMap.checkBlockedPixel(this.getX() - Sprite.SCALED_SIZE, this.getY())) {
+                return;
+            }
+            this.setAnimations(true);
+        }
+    }
+
+    public void right(GameMap gameMap) {
+        if (!this.getAnimations()) {
+            this.setDirection(Direction.RIGHT);
+            if (gameMap.checkBlockedPixel(this.getX() + Sprite.SCALED_SIZE, this.getY())) {
+                return;
+            }
+            this.setAnimations(true);
+        }
+    }
+
+    private void run(DynamicEntity entity) {
+        if (entity.getDirection() == null) {
+            return;
+        }
+
+        entity.nextTimeline();
+        switch (entity.getDirection()) {
+            case UP:
+                entity.setY(entity.getY() - Sprite.SCALED_SIZE / entity.getLevelSpeed());
+                break;
+            case DOWN:
+                entity.setY(entity.getY() + Sprite.SCALED_SIZE / entity.getLevelSpeed());
+                break;
+            case LEFT:
+                entity.setX(entity.getX() - Sprite.SCALED_SIZE / entity.getLevelSpeed());
+                break;
+            case RIGHT:
+                entity.setX(entity.getX() + Sprite.SCALED_SIZE / entity.getLevelSpeed());
+                break;
+        }
+
+        if (entity.getX() % Sprite.SCALED_SIZE == 0 && entity.getY() % Sprite.SCALED_SIZE == 0) {
+            entity.setAnimations(false);
+        }
     }
 }

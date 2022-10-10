@@ -6,6 +6,7 @@ import uet.oop.bomberman.enumeration.Direction;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomber extends DynamicEntity {
+
     public static final int DEFAULT_NUMBER_BOMBS = 3;
     public static final int DEFAULT_LENGTH_EXPLOSION_OF_BOMB = 2;
 
@@ -17,7 +18,7 @@ public class Bomber extends DynamicEntity {
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img, 4, 2,
-                false, 3, Direction.DOWN);
+            false, 3, Direction.DOWN);
     }
 
     public int getNumberBombs() {

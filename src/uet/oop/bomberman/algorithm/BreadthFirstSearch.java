@@ -4,12 +4,12 @@ import java.util.LinkedList;
 import uet.oop.bomberman.gamemap.GameMap;
 
 public abstract class BreadthFirstSearch {
-    private static int dist[][];
-    private static int dx[] = {-1, 0, 1, 0};
-    private static int dy[] = { 0, 1, 0,-1};
 
     private static final int INF = (int) 1e9 + 7;
     static LinkedList<Integer> queue;
+    private static int dist[][];
+    private static int dx[] = {-1, 0, 1, 0};
+    private static int dy[] = {0, 1, 0, -1};
 
     public BreadthFirstSearch() {
 

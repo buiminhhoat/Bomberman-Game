@@ -1,5 +1,7 @@
 package uet.oop.bomberman.entities.dynamicentity.bomb;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.canvas.GraphicsContext;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.dynamicentity.DynamicEntity;
@@ -8,9 +10,6 @@ import uet.oop.bomberman.enumeration.BombermanObject;
 import uet.oop.bomberman.enumeration.Direction;
 import uet.oop.bomberman.gamemap.GameMap;
 import uet.oop.bomberman.graphics.Sprite;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Bomb extends DynamicEntity {
 
@@ -28,7 +27,7 @@ public class Bomb extends DynamicEntity {
 
     public Bomb(Entity bomber, GameMap gameMap) {
         super(bomber.getX() / Sprite.SCALED_SIZE, bomber.getY() / Sprite.SCALED_SIZE,
-                Sprite.bomb.getFxImage(), 8, 3, true, 3, Direction.DOWN);
+            Sprite.bomb.getFxImage(), 8, 3, true, 3, Direction.DOWN);
         this.bomber = bomber;
 
         int x = bomber.getX() / Sprite.SCALED_SIZE;
@@ -93,7 +92,8 @@ public class Bomb extends DynamicEntity {
 
         for (int i = y - 1; i >= y - lth; --i) {
             if (gameMap.checkBlockedPixel(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
-                if (gameMap.getMapObject(i, x) == BombermanObject.BRICK && flame_center.getTimeline() == 3) {
+                if (gameMap.getMapObject(i, x) == BombermanObject.BRICK
+                    && flame_center.getTimeline() == 3) {
                     gameMap.destroyBrick(i, x);
                 }
                 break;
@@ -102,7 +102,8 @@ public class Bomb extends DynamicEntity {
 
         for (int i = y + 1; i <= y + lth; ++i) {
             if (gameMap.checkBlockedPixel(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
-                if (gameMap.getMapObject(i, x) == BombermanObject.BRICK && flame_center.getTimeline() == 3) {
+                if (gameMap.getMapObject(i, x) == BombermanObject.BRICK
+                    && flame_center.getTimeline() == 3) {
                     gameMap.destroyBrick(i, x);
                 }
                 break;
@@ -111,7 +112,8 @@ public class Bomb extends DynamicEntity {
 
         for (int i = x - 1; i >= x - lth; --i) {
             if (gameMap.checkBlockedPixel(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
-                if (gameMap.getMapObject(y, i) == BombermanObject.BRICK && flame_center.getTimeline() == 3) {
+                if (gameMap.getMapObject(y, i) == BombermanObject.BRICK
+                    && flame_center.getTimeline() == 3) {
                     gameMap.destroyBrick(y, i);
                 }
                 break;
@@ -120,7 +122,8 @@ public class Bomb extends DynamicEntity {
 
         for (int i = x + 1; i <= x + lth; ++i) {
             if (gameMap.checkBlockedPixel(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
-                if (gameMap.getMapObject(y, i) == BombermanObject.BRICK && flame_center.getTimeline() == 3) {
+                if (gameMap.getMapObject(y, i) == BombermanObject.BRICK
+                    && flame_center.getTimeline() == 3) {
                     gameMap.destroyBrick(y, i);
                 }
                 break;

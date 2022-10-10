@@ -3,14 +3,16 @@ package uet.oop.bomberman.entities.dynamicentity.enemies;
 import java.util.Random;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.algorithm.BreadthFirstSearch;
-import uet.oop.bomberman.control.Move;
 import uet.oop.bomberman.entities.dynamicentity.bomber.Bomber;
 import uet.oop.bomberman.enumeration.Direction;
 import uet.oop.bomberman.gamemap.GameMap;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Oneal extends Enemies {
+
     Bomber bomber;
+    private int dx[] = {-1, 0, 1, 0};
+    private int dy[] = {0, 1, 0, -1};
 
     public Oneal() {
 
@@ -27,9 +29,6 @@ public class Oneal extends Enemies {
     public void setBomber(Bomber bomber) {
         this.bomber = bomber;
     }
-
-    private int dx[] = {-1, 0, 1, 0};
-    private int dy[] = { 0, 1, 0,-1};
 
     @Override
     public void randomDirection(GameMap gameMap) {
@@ -51,8 +50,7 @@ public class Oneal extends Enemies {
                     saveDirection = h;
                 }
             }
-        }
-        else {
+        } else {
             for (int h = 3; h >= 0; --h) {
                 int kx = this.getY() / Sprite.SCALED_SIZE + dy[h];
                 int ky = this.getX() / Sprite.SCALED_SIZE + dx[h];
@@ -70,26 +68,24 @@ public class Oneal extends Enemies {
 
         if (random.nextInt(20) > 16) {
             levelSpeed = 4;
-        }
-        else if (random.nextInt(20) > 5){
+        } else if (random.nextInt(20) > 5) {
             levelSpeed = 8;
-        }
-        else {
+        } else {
             levelSpeed = 16;
         }
 
         switch (saveDirection) {
             case 0:
-                Move.left(this, gameMap);
+                left(gameMap);
                 break;
             case 1:
-                Move.down(this, gameMap);
+                down(gameMap);
                 break;
             case 2:
-                Move.right(this, gameMap);
+                right(gameMap);
                 break;
             case 3:
-                Move.up(this, gameMap);
+                up(gameMap);
                 break;
         }
     }

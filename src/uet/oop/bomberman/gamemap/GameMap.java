@@ -1,34 +1,35 @@
 package uet.oop.bomberman.gamemap;
 
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.block.Brick;
-import uet.oop.bomberman.entities.block.Grass;
-import uet.oop.bomberman.entities.block.Wall;
-import uet.oop.bomberman.entities.dynamicentity.bomb.Bomb;
-import uet.oop.bomberman.entities.dynamicentity.enemies.Balloon;
-import uet.oop.bomberman.entities.dynamicentity.bomber.Bomber;
-import uet.oop.bomberman.entities.dynamicentity.enemies.Oneal;
-import uet.oop.bomberman.enumeration.BombermanObject;
-import uet.oop.bomberman.graphics.Sprite;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.block.Brick;
+import uet.oop.bomberman.entities.block.Grass;
+import uet.oop.bomberman.entities.block.Wall;
+import uet.oop.bomberman.entities.dynamicentity.bomb.Bomb;
+import uet.oop.bomberman.entities.dynamicentity.bomber.Bomber;
+import uet.oop.bomberman.entities.dynamicentity.enemies.Balloon;
+import uet.oop.bomberman.entities.dynamicentity.enemies.Ghost;
+import uet.oop.bomberman.entities.dynamicentity.enemies.Oneal;
+import uet.oop.bomberman.enumeration.BombermanObject;
+import uet.oop.bomberman.graphics.Sprite;
 
 public class GameMap {
+
     private int level;
     private int row;
     private int col;
-    private List <Bomb> listBombs;
-    private List <Entity> stillObjects = new ArrayList<>();
-    private List <Entity> movingEntities = new ArrayList<>();
+    private List<Bomb> listBombs;
+    private List<Entity> stillObjects = new ArrayList<>();
+    private List<Entity> movingEntities = new ArrayList<>();
 
     private BombermanObject[][] map;
-    private boolean [][] isBlocked;
+    private boolean[][] isBlocked;
 
-    public GameMap(List <Bomb> listBombs) {
+    public GameMap(List<Bomb> listBombs) {
         this.listBombs = listBombs;
     }
 
@@ -79,7 +80,8 @@ public class GameMap {
         isBlocked[x][y] = false;
         for (Entity brick : stillObjects) {
             if (brick instanceof Brick) {
-                if (brick.getX() / Sprite.SCALED_SIZE == y && brick.getY() / Sprite.SCALED_SIZE == x) {
+                if (brick.getX() / Sprite.SCALED_SIZE == y
+                    && brick.getY() / Sprite.SCALED_SIZE == x) {
                     ((Brick) brick).setAnimations(true);
                     return;
                 }
@@ -101,6 +103,8 @@ public class GameMap {
                 return BombermanObject.BALLOON;
             case '2':
                 return BombermanObject.ONEAL;
+            case '3':
+                return BombermanObject.GHOST;
             case 'b':
                 return BombermanObject.BOMB_ITEM;
             case 'f':
@@ -134,13 +138,12 @@ public class GameMap {
                     if (map[i][j] == BombermanObject.BRICK
                         || map[i][j] == BombermanObject.WALL) {
                         isBlocked[i][j] = true;
-                    }
-                    else {
+                    } else {
                         isBlocked[i][j] = false;
                     }
                 }
             }
-            
+
             scanner.close();
         } catch (FileNotFoundException e) {
             System.out.println("File not found exception!");
@@ -204,7 +207,7 @@ public class GameMap {
         this.isBlocked = isBlocked;
     }
 
-    public List <Entity> getListStillObjects() {
+    public List<Entity> getListStillObjects() {
         for (int i = 0; i < row; ++i) {
             for (int j = 0; j < col; ++j) {
                 Entity object;
@@ -226,7 +229,7 @@ public class GameMap {
         return stillObjects;
     }
 
-    public List <Entity> getListMovingEntity() {
+    public List<Entity> getListMovingEntity() {
         for (int i = 0; i < row; ++i) {
             for (int j = 0; j < col; ++j) {
                 Entity movingEntity = null;
@@ -241,8 +244,12 @@ public class GameMap {
                     case ONEAL:
                         movingEntity = new Oneal(j, i, Sprite.oneal_left1.getFxImage());
                         break;
+                    case GHOST:
+                        movingEntity = new Ghost(j, i, Sprite.ghost_left1.getFxImage());
                 }
-                if (movingEntity == null) continue;
+                if (movingEntity == null) {
+                    continue;
+                }
                 movingEntities.add(movingEntity);
             }
         }

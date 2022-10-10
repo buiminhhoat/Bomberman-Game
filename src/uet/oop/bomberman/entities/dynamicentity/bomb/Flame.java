@@ -6,22 +6,24 @@ import uet.oop.bomberman.enumeration.Direction;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Flame extends DynamicEntity {
+
     private boolean lastFlame = false;
     private int idFrame = 0;
     private Axis axisFlame;
+    private int[] frame = {0, 1, 2, 2, 1, 0};
 
     public Flame() {
     }
 
     public Flame(int x, int y) {
         super(x, y, Sprite.bomb_exploded.getFxImage(), 4, 3,
-                true, 3, Direction.DOWN);
+            true, 3, Direction.DOWN);
         axisFlame = Axis.CENTER;
     }
 
     public Flame(int x, int y, Direction direction, boolean lastFlame) {
         super(x, y, Sprite.explosion_horizontal.getFxImage(), 4, 3,
-                true, 3, direction);
+            true, 3, direction);
         this.lastFlame = lastFlame;
 
         if (direction == Direction.UP || direction == Direction.DOWN) {
@@ -37,7 +39,6 @@ public class Flame extends DynamicEntity {
         this.update();
     }
 
-    private int[] frame = {0, 1, 2, 2, 1, 0};
     @Override
     public void nextTimeline() {
         ++this.timeline;
