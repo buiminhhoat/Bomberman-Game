@@ -9,6 +9,7 @@ import graphics.Sprite;
 public class Ghost extends Enemies {
 
     public Ghost() {
+
     }
 
     public Ghost(int x, int y, Image img) {
@@ -82,6 +83,7 @@ public class Ghost extends Enemies {
         }
     }
 
+    @Override
     public void up(GameMap gameMap) {
         if (!getAnimations()) {
             setDirection(Direction.UP);

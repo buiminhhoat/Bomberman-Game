@@ -13,11 +13,11 @@ public abstract class DynamicEntity extends Entity {
     public static final int DEFAULT_NUMBER_BOMBS = 3;
     public static final int DEFAULT_LENGTH_EXPLOSION_OF_BOMB = 2;
 
-    private int numberBombs = DEFAULT_NUMBER_BOMBS;
+    protected int numberBombs = DEFAULT_NUMBER_BOMBS;
 
-    private int lengthExplosionOfBomb = DEFAULT_LENGTH_EXPLOSION_OF_BOMB;
+    protected int lengthExplosionOfBomb = DEFAULT_LENGTH_EXPLOSION_OF_BOMB;
 
-    private List<Bomb> bombList = new ArrayList<>();
+    protected List<Bomb> bombList = new ArrayList<>();
 
     protected int levelSpeed; // {16, 8, 4, 2}
     protected int timeline = 0;
@@ -251,7 +251,11 @@ public abstract class DynamicEntity extends Entity {
     }
 
     public void explodeBomb(Bomb bomb, GameMap gameMap) {
-        gameMap.setPosIsOpened(bomb.getY() / Sprite.SCALED_SIZE,
-            bomb.getX() / Sprite.SCALED_SIZE);
+        if (!bomb.getAnimations()) {
+            int numBomb = getNumberBombs();
+            setNumberBombs(numBomb + 1);
+            gameMap.setPosIsOpened(bomb.getY() / Sprite.SCALED_SIZE,
+                bomb.getX() / Sprite.SCALED_SIZE);
+        }
     }
 }

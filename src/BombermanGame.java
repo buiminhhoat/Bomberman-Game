@@ -135,11 +135,7 @@ public class BombermanGame extends Application {
                     bomb.checkExplosion(gameMap);
                 }
                 for (Bomb bomb: bombList) {
-                    if (!bomb.getAnimations()) {
-                        int numBomb = ((DynamicEntity) entity).getNumberBombs();
-                        ((DynamicEntity) entity).setNumberBombs(numBomb + 1);
-                        ((DynamicEntity) entity).explodeBomb(bomb, gameMap);
-                    }
+                    ((DynamicEntity) entity).explodeBomb(bomb, gameMap);
                 }
                 bombList.removeIf(bomb -> !bomb.getAnimations());
                 for (Bomb bomb: bombList) {

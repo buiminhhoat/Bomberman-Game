@@ -248,8 +248,10 @@ public class GameMap {
                         break;
                     case GHOST:
                         movingEntity = new Ghost(j, i, Sprite.ghost_left1.getFxImage());
+                        break;
                     case CREEPER:
                         movingEntity = new Creeper(j, i, Sprite.ghost_left1.getFxImage());
+                        break;
                 }
                 if (movingEntity == null) {
                     continue;
