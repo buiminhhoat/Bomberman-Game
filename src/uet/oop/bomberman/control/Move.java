@@ -16,7 +16,7 @@ public abstract class Move {
     public static void up(MovingEntity entity, GameMap gameMap) {
         if (!entity.getAnimations()) {
             entity.setDirection(Direction.UP);
-            if (gameMap.checkBlocked(entity.getX(), entity.getY() - Sprite.SCALED_SIZE)) {
+            if (gameMap.checkBlockedPixel(entity.getX(), entity.getY() - Sprite.SCALED_SIZE)) {
                 return;
             }
             entity.setAnimations(true);
@@ -26,7 +26,7 @@ public abstract class Move {
     public static void down(MovingEntity entity, GameMap gameMap) {
         if (!entity.getAnimations()) {
             entity.setDirection(Direction.DOWN);
-            if (gameMap.checkBlocked(entity.getX(), entity.getY() + Sprite.SCALED_SIZE)) {
+            if (gameMap.checkBlockedPixel(entity.getX(), entity.getY() + Sprite.SCALED_SIZE)) {
                 return;
             }
             entity.setAnimations(true);
@@ -36,7 +36,7 @@ public abstract class Move {
     public static void left(MovingEntity entity, GameMap gameMap) {
         if (!entity.getAnimations()) {
             entity.setDirection(Direction.LEFT);
-            if (gameMap.checkBlocked(entity.getX() - Sprite.SCALED_SIZE, entity.getY())) {
+            if (gameMap.checkBlockedPixel(entity.getX() - Sprite.SCALED_SIZE, entity.getY())) {
                 return;
             }
             entity.setAnimations(true);
@@ -46,7 +46,7 @@ public abstract class Move {
     public static void right(MovingEntity entity, GameMap gameMap) {
         if (!entity.getAnimations()) {
             entity.setDirection(Direction.RIGHT);
-            if (gameMap.checkBlocked(entity.getX() + Sprite.SCALED_SIZE, entity.getY())) {
+            if (gameMap.checkBlockedPixel(entity.getX() + Sprite.SCALED_SIZE, entity.getY())) {
                 return;
             }
             entity.setAnimations(true);

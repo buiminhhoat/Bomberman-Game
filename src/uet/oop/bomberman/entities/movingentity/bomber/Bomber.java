@@ -11,7 +11,7 @@ import static uet.oop.bomberman.BombermanGame.HEIGHT;
 import static uet.oop.bomberman.BombermanGame.WIDTH;
 
 public class Bomber extends MovingEntity {
-    public static final int DEFAULT_NUMBER_BOMBS = 1;
+    public static final int DEFAULT_NUMBER_BOMBS = 3;
     public static final int DEFAULT_LENGTH_EXPLOSION_OF_BOMB = 2;
 
     private int numberBombs = DEFAULT_NUMBER_BOMBS;

@@ -33,27 +33,27 @@ public class Bomb extends MovingEntity {
         int y = bomber.getY() / Sprite.SCALED_SIZE;
         int lth = ((Bomber) bomber).getLengthExplosionOfBomb();
 
-        flame_center = new Flame(x, y, lth);
+        flame_center = new Flame(x, y);
 
-        for (int i = y - 1; i < y - lth + 1; ++i) {
-            listFlame.add(new Flame(x, i, lth, Direction.UP, false));
+        for (int i = y - 1; i > y - lth; --i) {
+            listFlame.add(new Flame(x, i, Direction.UP, false));
         }
-        listFlame.add(new Flame(x, y - lth + 1, lth, Direction.UP, true));
+        listFlame.add(new Flame(x, y - lth, Direction.UP, true));
 
-        for (int i = y + 1; i < y + lth - 1; ++i) {
-            listFlame.add(new Flame(x, i, lth, Direction.DOWN, false));
+        for (int i = y + 1; i < y + lth; ++i) {
+            listFlame.add(new Flame(x, i, Direction.DOWN, false));
         }
-        listFlame.add(new Flame(x, y + lth - 1, lth, Direction.DOWN, true));
+        listFlame.add(new Flame(x, y + lth, Direction.DOWN, true));
 
-        for (int i = x - 1; i < x - lth + 1; ++i) {
-            listFlame.add(new Flame(i, y, lth, Direction.LEFT, false));
+        for (int i = x - 1; i > x - lth; --i) {
+            listFlame.add(new Flame(i, y, Direction.LEFT, false));
         }
-        listFlame.add(new Flame(x - lth + 1, y, lth, Direction.LEFT, true));
+        listFlame.add(new Flame(x - lth, y, Direction.LEFT, true));
 
-        for (int i = x + 1; i < x + lth - 1; ++i) {
-            listFlame.add(new Flame(i, y, lth, Direction.RIGHT, false));
+        for (int i = x + 1; i < x + lth; ++i) {
+            listFlame.add(new Flame(i, y, Direction.RIGHT, false));
         }
-        listFlame.add(new Flame(x + lth - 1, y, lth, Direction.RIGHT, true));
+        listFlame.add(new Flame(x + lth, y, Direction.RIGHT, true));
     }
 
     public int getTimeBomb() {
@@ -82,7 +82,7 @@ public class Bomb extends MovingEntity {
             flame.flaming();
         }
 
-        if (flame_center.getTimeFlame() == 0) {
+        if (!flame_center.getAnimations()) {
             this.setAnimations(false);
             this.setTimeBomb(DEFAULT_TIME_BOMB);
         }
@@ -108,10 +108,10 @@ public class Bomb extends MovingEntity {
     @Override
     public void render(GraphicsContext gc) {
         if (this.timeBomb == 0) {
-            flame_center.render(gc);
             for (Flame flame : listFlame) {
                 flame.render(gc);
             }
+            flame_center.render(gc);
         } else {
             gc.drawImage(img, x, y);
         }

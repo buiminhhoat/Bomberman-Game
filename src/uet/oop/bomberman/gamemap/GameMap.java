@@ -1,10 +1,10 @@
 package uet.oop.bomberman.gamemap;
 
-import java.util.Vector;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.block.Brick;
 import uet.oop.bomberman.entities.block.Grass;
 import uet.oop.bomberman.entities.block.Wall;
+import uet.oop.bomberman.entities.movingentity.bomb.Bomb;
 import uet.oop.bomberman.entities.movingentity.enemies.Balloon;
 import uet.oop.bomberman.entities.movingentity.bomber.Bomber;
 import uet.oop.bomberman.entities.movingentity.enemies.Oneal;
@@ -15,16 +15,24 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class GameMap {
     private int level;
     private int row;
     private int col;
+    private List <Bomb> listBombs;
 
     private BombermanObject[][] map;
     private boolean [][] isBlocked;
+
+    public GameMap(List <Bomb> listBombs) {
+        this.listBombs = listBombs;
+    }
+
+    public GameMap() {
+
+    }
 
     public BombermanObject getObjectMap(int x, int y) {
         if (x < 0 || y < 0) {
@@ -34,13 +42,33 @@ public class GameMap {
     }
 
     public boolean checkBlocked(int x, int y) {
-        x /= Sprite.SCALED_SIZE;
-        y /= Sprite.SCALED_SIZE;
-        if (Objects.equals(getObjectMap(y, x), BombermanObject.WALL)) {
+        if (isBlocked[x][y]) {
             return true;
         }
-        if (Objects.equals(getObjectMap(y, x), BombermanObject.BRICK)) {
+
+        for (Bomb bomb : listBombs) {
+            int xB = bomb.getX() / Sprite.SCALED_SIZE;
+            int yB = bomb.getY() / Sprite.SCALED_SIZE;
+            if (y == xB && x == yB) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkBlockedPixel(int x, int y) {
+        x /= Sprite.SCALED_SIZE;
+        y /= Sprite.SCALED_SIZE;
+        if (isBlocked[y][x]) {
             return true;
+        }
+
+        for (Bomb bomb : listBombs) {
+            int xB = bomb.getX() / Sprite.SCALED_SIZE;
+            int yB = bomb.getY() / Sprite.SCALED_SIZE;
+            if (x == xB && y == yB) {
+                return true;
+            }
         }
         return false;
     }
@@ -108,10 +136,6 @@ public class GameMap {
 
     public void setPosIsBlocked(int x, int y) {
         isBlocked[x][y] = true;
-    }
-
-    public boolean getPosIsBlocked(int x, int y) {
-        return isBlocked[x][y];
     }
 
     public int getIdPos(int x, int y) {

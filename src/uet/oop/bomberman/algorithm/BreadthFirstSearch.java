@@ -35,12 +35,11 @@ public abstract class BreadthFirstSearch {
             int u = queue.poll();
             int ux = gameMap.getIdX(u);
             int uy = gameMap.getIdY(u);
-//            System.out.println(ux + " " + uy);
             for (int h = 0; h <= 3; ++h) {
                 int kx = ux + dx[h];
                 int ky = uy + dy[h];
                 if (kx >= 0 && kx < gameMap.getRow() && ky >= 0 && ky < gameMap.getCol()
-                    && dist[kx][ky] > dist[ux][uy] + 1 && !gameMap.getPosIsBlocked(kx, ky)) {
+                    && dist[kx][ky] > dist[ux][uy] + 1 && !gameMap.checkBlocked(kx, ky)) {
                     dist[kx][ky] = dist[ux][uy] + 1;
                     queue.add(gameMap.getIdPos(kx, ky));
                 }

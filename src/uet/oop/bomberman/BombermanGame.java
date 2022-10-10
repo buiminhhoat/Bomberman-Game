@@ -76,7 +76,7 @@ public class BombermanGame extends Application {
                 case SPACE:
                     System.out.println("SPACE");
                     int numBomb = ((Bomber) bomberman).getNumberBombs();
-                    if (numBomb == 0) {
+                    if (numBomb == 0 || gameMap.checkBlockedPixel(bomberman.getX(), bomberman.getY())) {
                         break;
                     }
                     ((Bomber) bomberman).setNumberBombs(numBomb - 1);
@@ -103,7 +103,7 @@ public class BombermanGame extends Application {
         };
         timer.start();
 
-        gameMap = new GameMap();
+        gameMap = new GameMap(listBombs);
         int currentLevel = 1;
         gameMap.initMap(currentLevel);
         stillObjects = gameMap.getListStillObjects();
