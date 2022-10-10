@@ -1,19 +1,19 @@
 package uet.oop.bomberman.control;
 
 import uet.oop.bomberman.enumeration.Direction;
-import uet.oop.bomberman.entities.movingentity.MovingEntity;
+import uet.oop.bomberman.entities.dynamicentity.DynamicEntity;
 import uet.oop.bomberman.gamemap.GameMap;
 import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class Move {
-    public static void checkRun(MovingEntity entity) {
+    public static void checkRun(DynamicEntity entity) {
         if (!entity.getAnimations()) {
             return;
         }
         run(entity);
     }
 
-    public static void up(MovingEntity entity, GameMap gameMap) {
+    public static void up(DynamicEntity entity, GameMap gameMap) {
         if (!entity.getAnimations()) {
             entity.setDirection(Direction.UP);
             if (gameMap.checkBlockedPixel(entity.getX(), entity.getY() - Sprite.SCALED_SIZE)) {
@@ -23,7 +23,7 @@ public abstract class Move {
         }
     }
 
-    public static void down(MovingEntity entity, GameMap gameMap) {
+    public static void down(DynamicEntity entity, GameMap gameMap) {
         if (!entity.getAnimations()) {
             entity.setDirection(Direction.DOWN);
             if (gameMap.checkBlockedPixel(entity.getX(), entity.getY() + Sprite.SCALED_SIZE)) {
@@ -33,7 +33,7 @@ public abstract class Move {
         }
     }
 
-    public static void left(MovingEntity entity, GameMap gameMap) {
+    public static void left(DynamicEntity entity, GameMap gameMap) {
         if (!entity.getAnimations()) {
             entity.setDirection(Direction.LEFT);
             if (gameMap.checkBlockedPixel(entity.getX() - Sprite.SCALED_SIZE, entity.getY())) {
@@ -43,7 +43,7 @@ public abstract class Move {
         }
     }
 
-    public static void right(MovingEntity entity, GameMap gameMap) {
+    public static void right(DynamicEntity entity, GameMap gameMap) {
         if (!entity.getAnimations()) {
             entity.setDirection(Direction.RIGHT);
             if (gameMap.checkBlockedPixel(entity.getX() + Sprite.SCALED_SIZE, entity.getY())) {
@@ -53,11 +53,11 @@ public abstract class Move {
         }
     }
 
-    private static void step(MovingEntity entity) {
+    private static void step(DynamicEntity entity) {
         entity.nextTimeline();
     }
 
-    private static void run(MovingEntity entity) {
+    private static void run(DynamicEntity entity) {
         if (entity.getDirection() == null) {
             return;
         }

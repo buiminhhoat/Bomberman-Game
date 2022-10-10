@@ -1,9 +1,6 @@
-package uet.oop.bomberman.entities.movingentity.enemies;
+package uet.oop.bomberman.entities.dynamicentity.enemies;
 
-import java.util.Random;
 import javafx.scene.image.Image;
-import uet.oop.bomberman.control.Move;
-import uet.oop.bomberman.entities.movingentity.MovingEntity;
 import uet.oop.bomberman.enumeration.Direction;
 import uet.oop.bomberman.graphics.Sprite;
 

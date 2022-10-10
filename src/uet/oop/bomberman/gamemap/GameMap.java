@@ -4,10 +4,10 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.block.Brick;
 import uet.oop.bomberman.entities.block.Grass;
 import uet.oop.bomberman.entities.block.Wall;
-import uet.oop.bomberman.entities.movingentity.bomb.Bomb;
-import uet.oop.bomberman.entities.movingentity.enemies.Balloon;
-import uet.oop.bomberman.entities.movingentity.bomber.Bomber;
-import uet.oop.bomberman.entities.movingentity.enemies.Oneal;
+import uet.oop.bomberman.entities.dynamicentity.bomb.Bomb;
+import uet.oop.bomberman.entities.dynamicentity.enemies.Balloon;
+import uet.oop.bomberman.entities.dynamicentity.bomber.Bomber;
+import uet.oop.bomberman.entities.dynamicentity.enemies.Oneal;
 import uet.oop.bomberman.enumeration.BombermanObject;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -22,6 +22,8 @@ public class GameMap {
     private int row;
     private int col;
     private List <Bomb> listBombs;
+    private List <Entity> stillObjects = new ArrayList<>();
+    private List <Entity> movingEntities = new ArrayList<>();
 
     private BombermanObject[][] map;
     private boolean [][] isBlocked;
@@ -34,7 +36,7 @@ public class GameMap {
 
     }
 
-    public BombermanObject getObjectMap(int x, int y) {
+    public BombermanObject getMapObject(int x, int y) {
         if (x < 0 || y < 0) {
             return null;
         }
@@ -71,6 +73,18 @@ public class GameMap {
             }
         }
         return false;
+    }
+
+    public void destroyBrick(int x, int y) {
+        isBlocked[x][y] = false;
+        for (Entity brick : stillObjects) {
+            if (brick instanceof Brick) {
+                if (brick.getX() / Sprite.SCALED_SIZE == y && brick.getY() / Sprite.SCALED_SIZE == x) {
+                    ((Brick) brick).setAnimations(true);
+                    return;
+                }
+            }
+        }
     }
 
     private BombermanObject convertEntity(char c) {
@@ -191,10 +205,12 @@ public class GameMap {
     }
 
     public List <Entity> getListStillObjects() {
-        List <Entity> stillObjects = new ArrayList<>();
         for (int i = 0; i < row; ++i) {
             for (int j = 0; j < col; ++j) {
                 Entity object;
+                object = new Grass(j, i, Sprite.grass.getFxImage());
+                stillObjects.add(object);
+
                 BombermanObject bombermanObject = map[i][j];
                 switch (bombermanObject) {
                     case WALL:
@@ -202,9 +218,6 @@ public class GameMap {
                         break;
                     case BRICK:
                         object = new Brick(j, i, Sprite.brick.getFxImage());
-                        break;
-                    default:
-                        object = new Grass(j, i, Sprite.grass.getFxImage());
                         break;
                 }
                 stillObjects.add(object);
@@ -214,7 +227,6 @@ public class GameMap {
     }
 
     public List <Entity> getListMovingEntity() {
-        List <Entity> movingEntities = new ArrayList<>();
         for (int i = 0; i < row; ++i) {
             for (int j = 0; j < col; ++j) {
                 Entity movingEntity = null;

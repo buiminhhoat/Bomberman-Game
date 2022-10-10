@@ -1,11 +1,11 @@
-package uet.oop.bomberman.entities.movingentity.bomb;
+package uet.oop.bomberman.entities.dynamicentity.bomb;
 
-import uet.oop.bomberman.entities.movingentity.MovingEntity;
+import uet.oop.bomberman.entities.dynamicentity.DynamicEntity;
 import uet.oop.bomberman.enumeration.Axis;
 import uet.oop.bomberman.enumeration.Direction;
 import uet.oop.bomberman.graphics.Sprite;
 
-public class Flame extends MovingEntity {
+public class Flame extends DynamicEntity {
     private boolean lastFlame = false;
     private int idFrame = 0;
     private Axis axisFlame;

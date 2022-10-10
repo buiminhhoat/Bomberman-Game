@@ -1,16 +1,11 @@
-package uet.oop.bomberman.entities.movingentity.bomber;
+package uet.oop.bomberman.entities.dynamicentity.bomber;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.algorithm.BreadthFirstSearch;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.movingentity.MovingEntity;
+import uet.oop.bomberman.entities.dynamicentity.DynamicEntity;
 import uet.oop.bomberman.enumeration.Direction;
 import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.BombermanGame.HEIGHT;
-import static uet.oop.bomberman.BombermanGame.WIDTH;
-
-public class Bomber extends MovingEntity {
+public class Bomber extends DynamicEntity {
     public static final int DEFAULT_NUMBER_BOMBS = 3;
     public static final int DEFAULT_LENGTH_EXPLOSION_OF_BOMB = 2;
 
@@ -19,7 +14,6 @@ public class Bomber extends MovingEntity {
 
     public Bomber() {
     }
-
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img, 4, 2,

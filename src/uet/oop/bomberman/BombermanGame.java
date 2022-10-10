@@ -11,12 +11,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import uet.oop.bomberman.algorithm.BreadthFirstSearch;
 import uet.oop.bomberman.control.Move;
-import uet.oop.bomberman.entities.movingentity.bomb.Bomb;
-import uet.oop.bomberman.entities.movingentity.bomber.Bomber;
+import uet.oop.bomberman.entities.block.Brick;
+import uet.oop.bomberman.entities.dynamicentity.bomb.Bomb;
+import uet.oop.bomberman.entities.dynamicentity.bomber.Bomber;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.movingentity.MovingEntity;
-import uet.oop.bomberman.entities.movingentity.enemies.Balloon;
-import uet.oop.bomberman.entities.movingentity.enemies.Oneal;
+import uet.oop.bomberman.entities.dynamicentity.DynamicEntity;
+import uet.oop.bomberman.entities.dynamicentity.enemies.Balloon;
+import uet.oop.bomberman.entities.dynamicentity.enemies.Oneal;
 import uet.oop.bomberman.gamemap.GameMap;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -32,7 +33,7 @@ public class BombermanGame extends Application {
     private List <Entity> stillObjects = new ArrayList<>();
     private List <Bomb> listBombs = new ArrayList<>();
 
-    private MovingEntity bomberman;
+    private DynamicEntity bomberman;
 
     public Scene scene = null;
 
@@ -80,7 +81,7 @@ public class BombermanGame extends Application {
                         break;
                     }
                     ((Bomber) bomberman).setNumberBombs(numBomb - 1);
-                    Bomb bomb = new Bomb(bomberman);
+                    Bomb bomb = new Bomb(bomberman, gameMap);
                     listBombs.add(bomb);
                     break;
                 case P:
@@ -110,7 +111,7 @@ public class BombermanGame extends Application {
         movingEntities = gameMap.getListMovingEntity();
         for (Entity entity: movingEntities) {
             if (entity instanceof Bomber) {
-                bomberman = (MovingEntity) entity;
+                bomberman = (DynamicEntity) entity;
                 break;
             }
         }
@@ -128,11 +129,11 @@ public class BombermanGame extends Application {
             if (entity instanceof Oneal) {
                 ((Oneal) entity).randomDirection(gameMap);
             }
-            Move.checkRun((MovingEntity) entity);
+            Move.checkRun((DynamicEntity) entity);
         }
 
         for (Bomb bomb : listBombs) {
-            bomb.checkExplosion();
+            bomb.checkExplosion(gameMap);
         }
 
         for (Bomb bomb : listBombs) {
@@ -143,10 +144,21 @@ public class BombermanGame extends Application {
         }
         listBombs.removeIf(bomb -> !bomb.getAnimations());
 
+        for (int i = 0; i < stillObjects.size(); ++i) {
+            Entity brick = stillObjects.get(i);
+            if (brick instanceof Brick) {
+                if (((Brick) brick).checkDestroy()) {
+                    stillObjects.remove(i);
+                    --i;
+                }
+            }
+        }
+
         Move.checkRun(bomberman);
         BreadthFirstSearch.CalculatorBreadthFirstSearch(bomberman.getY() / Sprite.SCALED_SIZE,
             bomberman.getX() / Sprite.SCALED_SIZE, gameMap);
 
+        stillObjects.forEach(Entity::update);
         movingEntities.forEach(Entity::update);
         listBombs.forEach(Entity::update);
 

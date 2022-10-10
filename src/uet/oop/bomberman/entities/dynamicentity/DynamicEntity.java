@@ -1,10 +1,10 @@
-package uet.oop.bomberman.entities.movingentity;
+package uet.oop.bomberman.entities.dynamicentity;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.enumeration.Direction;
 
-public abstract class MovingEntity extends Entity {
+public abstract class DynamicEntity extends Entity {
     protected int levelSpeed; // {16, 8, 4, 2}
     protected int timeline = 0;
     protected int currentFrame = 0;
@@ -13,14 +13,14 @@ public abstract class MovingEntity extends Entity {
     protected int lives;
     protected Direction direction;
 
-    public MovingEntity() {
+    public DynamicEntity() {
     }
 
-    public MovingEntity(int xUnit, int yUnit, Image img) {
+    public DynamicEntity(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
 
-    public MovingEntity(int levelSpeed, int maxFrame, Boolean animations, int lives, Direction direction) {
+    public DynamicEntity(int levelSpeed, int maxFrame, Boolean animations, int lives, Direction direction) {
         this.levelSpeed = levelSpeed;
         this.maxFrame = maxFrame;
         this.animations = animations;
@@ -28,8 +28,8 @@ public abstract class MovingEntity extends Entity {
         this.direction = direction;
     }
 
-    public MovingEntity(int xUnit, int yUnit, Image img,
-                        int levelSpeed, int maxFrame, Boolean animations, int lives, Direction direction) {
+    public DynamicEntity(int xUnit, int yUnit, Image img,
+                         int levelSpeed, int maxFrame, Boolean animations, int lives, Direction direction) {
         super(xUnit, yUnit, img);
         this.levelSpeed = levelSpeed;
         this.maxFrame = maxFrame;
