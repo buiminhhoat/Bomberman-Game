@@ -1,10 +1,10 @@
-package entities.dynamicentity.enemies;
+package entities.animationentity.movingentity.enemies;
 
-import javafx.scene.image.Image;
 import enumeration.BombermanObject;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
+import javafx.scene.image.Image;
 
 public class Ghost extends Enemies {
 
@@ -109,7 +109,7 @@ public class Ghost extends Enemies {
     public void left(GameMap gameMap) {
         if (!this.getAnimations()) {
             this.setDirection(Direction.LEFT);
-            if (gameMap.getMapObject(this.getYPixel()/ Sprite.SCALED_SIZE,
+            if (gameMap.getMapObject(this.getYPixel() / Sprite.SCALED_SIZE,
                 (this.getXPixel() - Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE)
                 == BombermanObject.WALL) {
                 return;
@@ -121,7 +121,7 @@ public class Ghost extends Enemies {
     public void right(GameMap gameMap) {
         if (!this.getAnimations()) {
             this.setDirection(Direction.RIGHT);
-            if (gameMap.getMapObject(this.getYPixel()/ Sprite.SCALED_SIZE,
+            if (gameMap.getMapObject(this.getYPixel() / Sprite.SCALED_SIZE,
                 (this.getXPixel() + Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE)
                 == BombermanObject.WALL) {
                 return;

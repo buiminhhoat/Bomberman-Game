@@ -1,5 +1,18 @@
-import entities.dynamicentity.enemies.Creeper;
-import entities.dynamicentity.enemies.Enemies;
+import algorithm.BreadthFirstSearch;
+import entities.Entity;
+import entities.animationentity.AnimationEntity;
+import entities.animationentity.bomb.Bomb;
+import entities.animationentity.movingentity.MovingEntity;
+import entities.animationentity.movingentity.bomber.Bomber;
+import entities.animationentity.movingentity.enemies.Balloon.Beehive;
+import entities.animationentity.movingentity.enemies.Creeper;
+import entities.animationentity.movingentity.enemies.Enemies;
+import entities.animationentity.movingentity.enemies.chase.Bee;
+import entities.animationentity.movingentity.enemies.chase.Chase;
+import entities.animationentity.movingentity.enemies.chase.Oneal;
+import entities.block.Brick;
+import gamemap.GameMap;
+import graphics.Sprite;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.AnimationTimer;
@@ -9,27 +22,21 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
-import algorithm.BreadthFirstSearch;
-import entities.Entity;
-import entities.block.Brick;
-import entities.dynamicentity.DynamicEntity;
-import entities.dynamicentity.bomb.Bomb;
-import entities.dynamicentity.bomber.Bomber;
-import gamemap.GameMap;
-import graphics.Sprite;
 
 public class BombermanGame extends Application {
 
     public static final int WIDTH = 25;
     public static final int HEIGHT = 20;
+    public static final int INF = (int) 1e9 + 7;
     public static final String TITLE = "Bomberman Game";
+
     public Scene scene = null;
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> movingEntities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
     private List<Entity> listBombingEntity = new ArrayList<>();
-    private DynamicEntity bomberman;
+    private MovingEntity bomberman;
     private GameMap gameMap;
 
     public static void main(String[] args) {
@@ -108,6 +115,10 @@ public class BombermanGame extends Application {
         };
         timer.start();
 
+        initGame();
+    }
+
+    private void initGame() {
         gameMap = new GameMap();
         int currentLevel = 1;
         gameMap.initMap(currentLevel);
@@ -115,7 +126,7 @@ public class BombermanGame extends Application {
         movingEntities = gameMap.getListMovingEntity();
         for (Entity entity : movingEntities) {
             if (entity instanceof Bomber) {
-                bomberman = (DynamicEntity) entity;
+                bomberman = (MovingEntity) entity;
                 break;
             }
         }
@@ -125,7 +136,34 @@ public class BombermanGame extends Application {
                 listBombingEntity.add(entity);
             }
         }
-        BreadthFirstSearch.initBreadthFirstSearch(gameMap);
+
+        for (Entity entity : movingEntities) {
+            if (entity instanceof Chase) {
+                if (entity instanceof Oneal) {
+                    ((Oneal) entity).setTargetEntity(bomberman);
+                }
+
+                if (entity instanceof Bee) {
+                    ((Bee) entity).setDistanceChase(gameMap.getCol() * gameMap.getRow());
+                    BreadthFirstSearch.CalculatorBreadthFirstSearch(
+                        entity.getYPixel() / Sprite.SCALED_SIZE,
+                        entity.getXPixel() / Sprite.SCALED_SIZE,
+                        gameMap);
+                    int minDist = INF;
+                    for (Entity targetEntity : movingEntities) {
+                        if (targetEntity instanceof Beehive) {
+                            int dist = BreadthFirstSearch.minDistance(
+                                targetEntity.getYPixel() / Sprite.SCALED_SIZE,
+                                targetEntity.getXPixel() / Sprite.SCALED_SIZE);
+                            if (minDist > dist) {
+                                minDist = dist;
+                                ((Bee) entity).setTargetEntity(targetEntity);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void move() {
@@ -136,23 +174,23 @@ public class BombermanGame extends Application {
             if (entity instanceof Enemies) {
                 ((Enemies) entity).chooseDirection(gameMap);
             }
-            ((DynamicEntity) entity).checkRun();
+            ((MovingEntity) entity).checkRun();
         }
         bomberman.checkRun();
     }
 
     private void checkBomb() {
-        for (Entity entity: listBombingEntity) {
-            if (entity instanceof DynamicEntity) {
-                List<Bomb> bombList = ((DynamicEntity) entity).getBombList();
-                for (Bomb bomb: bombList) {
+        for (Entity entity : listBombingEntity) {
+            if (entity instanceof MovingEntity) {
+                List<Bomb> bombList = ((MovingEntity) entity).getBombList();
+                for (Bomb bomb : bombList) {
                     bomb.checkExplosion(gameMap, movingEntities);
                 }
-                for (Bomb bomb: bombList) {
-                    ((DynamicEntity) entity).explodedBomb(bomb, gameMap);
+                for (Bomb bomb : bombList) {
+                    ((MovingEntity) entity).explodedBomb(bomb, gameMap);
                 }
                 bombList.removeIf(bomb -> !bomb.getAnimations());
-                for (Bomb bomb: bombList) {
+                for (Bomb bomb : bombList) {
                     bomb.update();
                 }
             }
@@ -174,8 +212,8 @@ public class BombermanGame extends Application {
     private void checkKillEntity() {
         for (int i = 0; i < movingEntities.size(); ++i) {
             Entity entity = movingEntities.get(i);
-            if (entity instanceof DynamicEntity) {
-                if (((DynamicEntity) entity).getlives() == 0) {
+            if (entity instanceof AnimationEntity) {
+                if (((AnimationEntity) entity).getlives() == 0) {
 
                     movingEntities.remove(i);
                     --i;
@@ -198,22 +236,17 @@ public class BombermanGame extends Application {
         checkBomb();
         checkDestroyBrick();
         checkKillEntity();
-
-        BreadthFirstSearch.CalculatorBreadthFirstSearch(bomberman.getYPixel() / Sprite.SCALED_SIZE,
-            bomberman.getXPixel() / Sprite.SCALED_SIZE, gameMap);
-
         stillObjects.forEach(Entity::update);
         movingEntities.forEach(Entity::update);
-
         fps();
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
-        for (Entity entity: listBombingEntity) {
-            if (entity instanceof DynamicEntity) {
-                List<Bomb> bombList = ((DynamicEntity) entity).getBombList();
+        for (Entity entity : listBombingEntity) {
+            if (entity instanceof MovingEntity) {
+                List<Bomb> bombList = ((MovingEntity) entity).getBombList();
                 bombList.forEach(g -> g.render(gc));
             }
         }

@@ -1,8 +1,8 @@
 package entities;
 
+import graphics.Sprite;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import graphics.Sprite;
 
 public abstract class Entity {
 

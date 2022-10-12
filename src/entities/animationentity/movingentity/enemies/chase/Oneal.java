@@ -1,18 +1,10 @@
-package entities.dynamicentity.enemies;
+package entities.animationentity.movingentity.enemies.chase;
 
-import java.util.Random;
-import javafx.scene.image.Image;
-import algorithm.BreadthFirstSearch;
-import entities.dynamicentity.bomber.Bomber;
 import enumeration.Direction;
-import gamemap.GameMap;
 import graphics.Sprite;
+import javafx.scene.image.Image;
 
-public class Oneal extends Enemies {
-
-    Bomber bomber;
-    private int dx[] = {-1, 0, 1, 0};
-    private int dy[] = {0, 1, 0, -1};
+public class Oneal extends Chase {
 
     public Oneal() {
 
@@ -22,77 +14,8 @@ public class Oneal extends Enemies {
         super(x, y, img);
     }
 
-    public Bomber getBomber() {
-        return bomber;
-    }
-
-    public void setBomber(Bomber bomber) {
-        this.bomber = bomber;
-    }
-
-    @Override
-    public void chooseDirection(GameMap gameMap) {
-        if (animations) {
-            return;
-        }
-        int Min = (int) 1e9 + 7;
-        int saveDirection = -1;
-        Random random = new Random();
-        int type = 0;
-        type = random.nextInt(2);
-
-        if (type == 0) {
-            for (int h = 0; h < 4; ++h) {
-                int kx = this.getYPixel() / Sprite.SCALED_SIZE + dy[h];
-                int ky = this.getXPixel() / Sprite.SCALED_SIZE + dx[h];
-                if (Min > BreadthFirstSearch.minDistance(kx, ky)) {
-                    Min = BreadthFirstSearch.minDistance(kx, ky);
-                    saveDirection = h;
-                }
-            }
-        } else {
-            for (int h = 3; h >= 0; --h) {
-                int kx = this.getYPixel() / Sprite.SCALED_SIZE + dy[h];
-                int ky = this.getXPixel() / Sprite.SCALED_SIZE + dx[h];
-                if (Min > BreadthFirstSearch.minDistance(kx, ky)) {
-                    Min = BreadthFirstSearch.minDistance(kx, ky);
-                    saveDirection = h;
-                }
-            }
-        }
-
-        if (saveDirection == -1) {
-            super.chooseDirection(gameMap);
-            return;
-        }
-
-        if (random.nextInt(20) > 16) {
-            levelSpeed = 4;
-        } else if (random.nextInt(20) > 5) {
-            levelSpeed = 8;
-        } else {
-            levelSpeed = 16;
-        }
-
-        switch (saveDirection) {
-            case 0:
-                left(gameMap);
-                break;
-            case 1:
-                down(gameMap);
-                break;
-            case 2:
-                right(gameMap);
-                break;
-            case 3:
-                up(gameMap);
-                break;
-        }
-    }
-
     @Override
     public void update() {
-        Random random = new Random();
         if (this.animations) {
             switch (this.direction) {
                 case LEFT:

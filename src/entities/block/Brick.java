@@ -1,11 +1,11 @@
 package entities.block;
 
-import javafx.scene.image.Image;
-import entities.dynamicentity.DynamicEntity;
+import entities.animationentity.AnimationEntity;
 import enumeration.Direction;
 import graphics.Sprite;
+import javafx.scene.image.Image;
 
-public class Brick extends DynamicEntity {
+public class Brick extends AnimationEntity {
 
     private boolean isDestroy = false;
 

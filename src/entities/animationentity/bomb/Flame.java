@@ -1,11 +1,11 @@
-package entities.dynamicentity.bomb;
+package entities.animationentity.bomb;
 
-import entities.dynamicentity.DynamicEntity;
+import entities.animationentity.AnimationEntity;
 import enumeration.Axis;
 import enumeration.Direction;
 import graphics.Sprite;
 
-public class Flame extends DynamicEntity {
+public class Flame extends AnimationEntity {
 
     private boolean lastFlame = false;
     private int idFrame = 0;

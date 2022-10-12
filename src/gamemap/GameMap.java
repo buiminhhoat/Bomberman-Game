@@ -1,21 +1,23 @@
 package gamemap;
 
-import entities.dynamicentity.enemies.Creeper;
+import entities.Entity;
+import entities.animationentity.movingentity.bomber.Bomber;
+import entities.animationentity.movingentity.enemies.Balloon;
+import entities.animationentity.movingentity.enemies.Balloon.Beehive;
+import entities.animationentity.movingentity.enemies.Creeper;
+import entities.animationentity.movingentity.enemies.Ghost;
+import entities.animationentity.movingentity.enemies.chase.Bee;
+import entities.animationentity.movingentity.enemies.chase.Oneal;
+import entities.block.Brick;
+import entities.block.Grass;
+import entities.block.Wall;
+import enumeration.BombermanObject;
+import graphics.Sprite;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import entities.Entity;
-import entities.block.Brick;
-import entities.block.Grass;
-import entities.block.Wall;
-import entities.dynamicentity.bomber.Bomber;
-import entities.dynamicentity.enemies.Balloon;
-import entities.dynamicentity.enemies.Ghost;
-import entities.dynamicentity.enemies.Oneal;
-import enumeration.BombermanObject;
-import graphics.Sprite;
 
 public class GameMap {
 
@@ -106,6 +108,10 @@ public class GameMap {
                 return BombermanObject.GHOST;
             case '4':
                 return BombermanObject.CREEPER;
+            case '5':
+                return BombermanObject.BEEHIVE;
+            case '6':
+                return BombermanObject.BEE;
             case 'b':
                 return BombermanObject.BOMB_ITEM;
             case 'f':
@@ -272,6 +278,39 @@ public class GameMap {
                 movingEntities.add(movingEntity);
             }
         }
+
+        for (int i = 0; i < row; ++i) {
+            for (int j = 0; j < col; ++j) {
+                Entity movingEntity = null;
+                BombermanObject bombermanObject = map[i][j];
+                switch (bombermanObject) {
+                    case BEEHIVE:
+                        movingEntity = new Beehive(j, i, Sprite.beehive.getFxImage());
+                        break;
+                }
+                if (movingEntity == null) {
+                    continue;
+                }
+                movingEntities.add(movingEntity);
+            }
+        }
+
+        for (int i = 0; i < row; ++i) {
+            for (int j = 0; j < col; ++j) {
+                Entity movingEntity = null;
+                BombermanObject bombermanObject = map[i][j];
+                switch (bombermanObject) {
+                    case BEE:
+                        movingEntity = new Bee(j, i, Sprite.bee_left1.getFxImage());
+                        break;
+                }
+                if (movingEntity == null) {
+                    continue;
+                }
+                movingEntities.add(movingEntity);
+            }
+        }
+
         return movingEntities;
     }
 }

@@ -1,14 +1,12 @@
-package entities.dynamicentity.enemies;
+package entities.animationentity.movingentity.enemies;
 
-import entities.dynamicentity.bomb.Bomb;
-import entities.dynamicentity.bomber.Bomber;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
-import java.util.List;
 import javafx.scene.image.Image;
 
 public class Creeper extends Enemies {
+
     public Creeper() {
 
     }

@@ -1,8 +1,10 @@
-package entities.dynamicentity.enemies;
+package entities.animationentity.movingentity.enemies;
 
-import javafx.scene.image.Image;
+import entities.animationentity.movingentity.enemies.chase.Chase;
 import enumeration.Direction;
+import gamemap.GameMap;
 import graphics.Sprite;
+import javafx.scene.image.Image;
 
 public class Balloon extends Enemies {
 
@@ -77,6 +79,21 @@ public class Balloon extends Enemies {
                     this.img = Sprite.balloom_right1.getFxImage();
                     break;
             }
+        }
+    }
+
+    public static class Beehive extends Chase {
+
+        public Beehive() {
+
+        }
+
+        public Beehive(int x, int y, Image img) {
+            super(x, y, img);
+        }
+
+        public void chooseDirection(GameMap gameMap) {
+
         }
     }
 }

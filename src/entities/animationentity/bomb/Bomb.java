@@ -1,19 +1,18 @@
-package entities.dynamicentity.bomb;
+package entities.animationentity.bomb;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import entities.dynamicentity.enemies.Creeper;
-import entities.dynamicentity.enemies.Enemies;
-import javafx.scene.canvas.GraphicsContext;
 import entities.Entity;
-import entities.dynamicentity.DynamicEntity;
+import entities.animationentity.AnimationEntity;
+import entities.animationentity.movingentity.enemies.Creeper;
+import entities.animationentity.movingentity.enemies.Enemies;
 import enumeration.BombermanObject;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.scene.canvas.GraphicsContext;
 
-public class Bomb extends DynamicEntity {
+public class Bomb extends AnimationEntity {
 
     private final int DEFAULT_TIME_BOMB = 50; // 25 = 1s
 
@@ -23,12 +22,12 @@ public class Bomb extends DynamicEntity {
     private List<Flame> listFlame = new ArrayList<>();
     private List<Entity> listKill = new ArrayList<>();
 
-    private DynamicEntity dynamicEntity;
+    private AnimationEntity dynamicEntity;
 
     public Bomb() {
     }
 
-    public Bomb(DynamicEntity dynamicEntity, GameMap gameMap) {
+    public Bomb(AnimationEntity dynamicEntity, GameMap gameMap) {
         super(dynamicEntity.getXPixel() / Sprite.SCALED_SIZE,
             dynamicEntity.getYPixel() / Sprite.SCALED_SIZE,
             Sprite.bomb.getFxImage(), 8, 3, true, 3, Direction.DOWN);
@@ -103,7 +102,7 @@ public class Bomb extends DynamicEntity {
 
             if (entity.getXPixel() == xPixel && entity.getYPixel() == yPixel) {
                 listKill.add(entity);
-                ((DynamicEntity) entity).die();
+                ((AnimationEntity) entity).die();
             }
         }
     }
@@ -111,7 +110,7 @@ public class Bomb extends DynamicEntity {
     private void explode(GameMap gameMap, List<Entity> movingEntities) {
         int x = this.getXPixel() / Sprite.SCALED_SIZE;
         int y = this.getYPixel() / Sprite.SCALED_SIZE;
-        int lth = ((DynamicEntity) dynamicEntity).getLengthExplosionOfBomb();
+        int lth = ((AnimationEntity) dynamicEntity).getLengthExplosionOfBomb();
 
         killEntity(x * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE, movingEntities);
 

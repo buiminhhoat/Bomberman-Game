@@ -1,23 +1,20 @@
 package algorithm;
 
-import java.util.LinkedList;
 import gamemap.GameMap;
+import java.util.LinkedList;
 
 public abstract class BreadthFirstSearch {
 
+    private static final int SIZE = 100;
+    private static final int dx[] = {-1, 0, 1, 0};
+    private static final int dy[] = {0, 1, 0, -1};
     private static final int INF = (int) 1e9 + 7;
-    static LinkedList<Integer> queue;
-    private static int dist[][];
-    private static int dx[] = {-1, 0, 1, 0};
-    private static int dy[] = {0, 1, 0, -1};
+    static LinkedList<Integer> queue = new LinkedList<Integer>();
+    ;
+    private static int dist[][] = new int[SIZE][SIZE];
 
     public BreadthFirstSearch() {
 
-    }
-
-    public static void initBreadthFirstSearch(GameMap gameMap) {
-        dist = new int[1000][1000];
-        queue = new LinkedList<Integer>();
     }
 
     public static void CalculatorBreadthFirstSearch(int x, int y, GameMap gameMap) {
@@ -27,9 +24,6 @@ public abstract class BreadthFirstSearch {
             }
         }
         dist[x][y] = 0;
-        while (queue.size() > 0) {
-            queue.removeFirst();
-        }
         queue.add(gameMap.getIdPos(x, y));
         while (queue.size() > 0) {
             int u = queue.poll();

@@ -1,22 +1,18 @@
-package entities.dynamicentity.bomber;
+package entities.animationentity.movingentity.bomber;
 
-import entities.dynamicentity.bomb.Bomb;
-import gamemap.GameMap;
-import java.util.ArrayList;
-import java.util.List;
-import javafx.scene.image.Image;
-import entities.dynamicentity.DynamicEntity;
+import entities.animationentity.movingentity.MovingEntity;
 import enumeration.Direction;
 import graphics.Sprite;
+import javafx.scene.image.Image;
 
-public class Bomber extends DynamicEntity {
+public class Bomber extends MovingEntity {
 
     public Bomber() {
 
     }
 
     public Bomber(int x, int y, Image img) {
-        super(x, y, img, 4, 2,
+        super(x, y, img, 8, 2,
             false, 3, Direction.DOWN);
     }
 

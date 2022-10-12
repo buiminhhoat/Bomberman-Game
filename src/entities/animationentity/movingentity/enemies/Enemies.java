@@ -1,19 +1,19 @@
-package entities.dynamicentity.enemies;
+package entities.animationentity.movingentity.enemies;
 
-import java.util.Random;
-import javafx.scene.image.Image;
-import entities.dynamicentity.DynamicEntity;
+import entities.animationentity.movingentity.MovingEntity;
 import enumeration.Direction;
 import gamemap.GameMap;
+import java.util.Random;
+import javafx.scene.image.Image;
 
-public abstract class Enemies extends DynamicEntity {
+public abstract class Enemies extends MovingEntity {
 
     protected Direction faceDirection = Direction.LEFT;
     protected int maxStep;
 
     GameMap gameMap;
 
-    Enemies() {
+    public Enemies() {
 
     }
 
@@ -46,8 +46,8 @@ public abstract class Enemies extends DynamicEntity {
         if (animations) {
             return;
         }
+        Random generator = new Random();
         if (maxStep == 0) {
-            Random generator = new Random();
             maxStep = generator.nextInt(4) + 1;
             int type = generator.nextInt(4);
             switch (type) {
