@@ -43,8 +43,8 @@ public class Oneal extends Enemies {
 
         if (type == 0) {
             for (int h = 0; h < 4; ++h) {
-                int kx = this.getY() / Sprite.SCALED_SIZE + dy[h];
-                int ky = this.getX() / Sprite.SCALED_SIZE + dx[h];
+                int kx = this.getYPixel() / Sprite.SCALED_SIZE + dy[h];
+                int ky = this.getXPixel() / Sprite.SCALED_SIZE + dx[h];
                 if (Min > BreadthFirstSearch.minDistance(kx, ky)) {
                     Min = BreadthFirstSearch.minDistance(kx, ky);
                     saveDirection = h;
@@ -52,8 +52,8 @@ public class Oneal extends Enemies {
             }
         } else {
             for (int h = 3; h >= 0; --h) {
-                int kx = this.getY() / Sprite.SCALED_SIZE + dy[h];
-                int ky = this.getX() / Sprite.SCALED_SIZE + dx[h];
+                int kx = this.getYPixel() / Sprite.SCALED_SIZE + dy[h];
+                int ky = this.getXPixel() / Sprite.SCALED_SIZE + dx[h];
                 if (Min > BreadthFirstSearch.minDistance(kx, ky)) {
                     Min = BreadthFirstSearch.minDistance(kx, ky);
                     saveDirection = h;

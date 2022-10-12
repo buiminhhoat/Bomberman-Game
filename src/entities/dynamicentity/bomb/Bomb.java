@@ -2,10 +2,12 @@ package entities.dynamicentity.bomb;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import entities.dynamicentity.enemies.Creeper;
+import entities.dynamicentity.enemies.Enemies;
 import javafx.scene.canvas.GraphicsContext;
 import entities.Entity;
 import entities.dynamicentity.DynamicEntity;
-import entities.dynamicentity.bomber.Bomber;
 import enumeration.BombermanObject;
 import enumeration.Direction;
 import gamemap.GameMap;
@@ -19,6 +21,7 @@ public class Bomb extends DynamicEntity {
 
     private Flame flame_center;
     private List<Flame> listFlame = new ArrayList<>();
+    private List<Entity> listKill = new ArrayList<>();
 
     private DynamicEntity dynamicEntity;
 
@@ -26,40 +29,40 @@ public class Bomb extends DynamicEntity {
     }
 
     public Bomb(DynamicEntity dynamicEntity, GameMap gameMap) {
-        super(dynamicEntity.getX() / Sprite.SCALED_SIZE,
-            dynamicEntity.getY() / Sprite.SCALED_SIZE,
+        super(dynamicEntity.getXPixel() / Sprite.SCALED_SIZE,
+            dynamicEntity.getYPixel() / Sprite.SCALED_SIZE,
             Sprite.bomb.getFxImage(), 8, 3, true, 3, Direction.DOWN);
         this.dynamicEntity = dynamicEntity;
 
-        int x = dynamicEntity.getX() / Sprite.SCALED_SIZE;
-        int y = dynamicEntity.getY() / Sprite.SCALED_SIZE;
+        int x = dynamicEntity.getXPixel() / Sprite.SCALED_SIZE;
+        int y = dynamicEntity.getYPixel() / Sprite.SCALED_SIZE;
         int lth = dynamicEntity.getLengthExplosionOfBomb();
 
         flame_center = new Flame(x, y);
 
         for (int i = y - 1; i >= y - lth; --i) {
-            if (gameMap.checkBlockedPixel(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
+            if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
                 break;
             }
             listFlame.add(new Flame(x, i, Direction.UP, (boolean) (i == y - lth)));
         }
 
         for (int i = y + 1; i <= y + lth; ++i) {
-            if (gameMap.checkBlockedPixel(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
+            if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
                 break;
             }
             listFlame.add(new Flame(x, i, Direction.DOWN, (boolean) (i == y + lth)));
         }
 
         for (int i = x - 1; i >= x - lth; --i) {
-            if (gameMap.checkBlockedPixel(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
+            if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
                 break;
             }
             listFlame.add(new Flame(i, y, Direction.LEFT, (boolean) (i == x - lth)));
         }
 
         for (int i = x + 1; i <= x + lth; ++i) {
-            if (gameMap.checkBlockedPixel(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
+            if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
                 break;
             }
             listFlame.add(new Flame(i, y, Direction.RIGHT, (boolean) (i == x + lth)));
@@ -78,57 +81,82 @@ public class Bomb extends DynamicEntity {
         this.timeBomb = Math.max(0, this.timeBomb - 1);
     }
 
-    public void checkExplosion(GameMap gameMap) {
+    public void checkExplosion(GameMap gameMap, List<Entity> movingEntities) {
         this.nextTimeline();
         this.countdown();
         if (this.timeBomb == 0) {
-            this.explode(gameMap);
+            this.explode(gameMap, movingEntities);
         }
     }
 
-    private void explode(GameMap gameMap) {
-        int x = this.getX() / Sprite.SCALED_SIZE;
-        int y = this.getY() / Sprite.SCALED_SIZE;
+    private void killEntity(int xPixel, int yPixel, List<Entity> movingEntities) {
+        for (Entity entity : movingEntities) {
+            if (listKill.contains(entity)) {
+                continue;
+            }
+
+            if (dynamicEntity instanceof Creeper) {
+                if (entity instanceof Enemies) {
+                    continue;
+                }
+            }
+
+            if (entity.getXPixel() == xPixel && entity.getYPixel() == yPixel) {
+                listKill.add(entity);
+                ((DynamicEntity) entity).die();
+            }
+        }
+    }
+
+    private void explode(GameMap gameMap, List<Entity> movingEntities) {
+        int x = this.getXPixel() / Sprite.SCALED_SIZE;
+        int y = this.getYPixel() / Sprite.SCALED_SIZE;
         int lth = ((DynamicEntity) dynamicEntity).getLengthExplosionOfBomb();
 
+        killEntity(x * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE, movingEntities);
+
         for (int i = y - 1; i >= y - lth; --i) {
-            if (gameMap.checkBlockedPixel(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
+            if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
                 if (gameMap.getMapObject(i, x) == BombermanObject.BRICK
                     && flame_center.getTimeline() == 3) {
                     gameMap.destroyBrick(i, x);
                 }
                 break;
             }
+            killEntity(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE, movingEntities);
         }
 
         for (int i = y + 1; i <= y + lth; ++i) {
-            if (gameMap.checkBlockedPixel(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
+            if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
                 if (gameMap.getMapObject(i, x) == BombermanObject.BRICK
                     && flame_center.getTimeline() == 3) {
                     gameMap.destroyBrick(i, x);
                 }
                 break;
             }
+            killEntity(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE, movingEntities);
         }
 
         for (int i = x - 1; i >= x - lth; --i) {
-            if (gameMap.checkBlockedPixel(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
+            if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
                 if (gameMap.getMapObject(y, i) == BombermanObject.BRICK
                     && flame_center.getTimeline() == 3) {
                     gameMap.destroyBrick(y, i);
                 }
                 break;
             }
+            killEntity(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE, movingEntities);
         }
 
         for (int i = x + 1; i <= x + lth; ++i) {
-            if (gameMap.checkBlockedPixel(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
+            if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
                 if (gameMap.getMapObject(y, i) == BombermanObject.BRICK
                     && flame_center.getTimeline() == 3) {
                     gameMap.destroyBrick(y, i);
                 }
                 break;
             }
+            killEntity(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE, movingEntities);
         }
 
         flame_center.flaming();
@@ -167,7 +195,7 @@ public class Bomb extends DynamicEntity {
             }
             flame_center.render(gc);
         } else {
-            gc.drawImage(img, x, y);
+            gc.drawImage(img, xPixel, yPixel);
         }
     }
 

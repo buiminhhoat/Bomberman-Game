@@ -87,8 +87,8 @@ public class Ghost extends Enemies {
     public void up(GameMap gameMap) {
         if (!getAnimations()) {
             setDirection(Direction.UP);
-            if (gameMap.getMapObject((this.getY() - Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE,
-                this.getX() / Sprite.SCALED_SIZE) == BombermanObject.WALL) {
+            if (gameMap.getMapObject((this.getYPixel() - Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE,
+                this.getXPixel() / Sprite.SCALED_SIZE) == BombermanObject.WALL) {
                 return;
             }
             this.setAnimations(true);
@@ -98,8 +98,8 @@ public class Ghost extends Enemies {
     public void down(GameMap gameMap) {
         if (!getAnimations()) {
             setDirection(Direction.DOWN);
-            if (gameMap.getMapObject((this.getY() + Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE,
-                this.getX() / Sprite.SCALED_SIZE) == BombermanObject.WALL) {
+            if (gameMap.getMapObject((this.getYPixel() + Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE,
+                this.getXPixel() / Sprite.SCALED_SIZE) == BombermanObject.WALL) {
                 return;
             }
             setAnimations(true);
@@ -109,8 +109,8 @@ public class Ghost extends Enemies {
     public void left(GameMap gameMap) {
         if (!this.getAnimations()) {
             this.setDirection(Direction.LEFT);
-            if (gameMap.getMapObject(this.getY()/ Sprite.SCALED_SIZE,
-                (this.getX() - Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE)
+            if (gameMap.getMapObject(this.getYPixel()/ Sprite.SCALED_SIZE,
+                (this.getXPixel() - Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE)
                 == BombermanObject.WALL) {
                 return;
             }
@@ -121,8 +121,8 @@ public class Ghost extends Enemies {
     public void right(GameMap gameMap) {
         if (!this.getAnimations()) {
             this.setDirection(Direction.RIGHT);
-            if (gameMap.getMapObject(this.getY()/ Sprite.SCALED_SIZE,
-                (this.getX() + Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE)
+            if (gameMap.getMapObject(this.getYPixel()/ Sprite.SCALED_SIZE,
+                (this.getXPixel() + Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE)
                 == BombermanObject.WALL) {
                 return;
             }

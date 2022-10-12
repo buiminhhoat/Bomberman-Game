@@ -10,7 +10,6 @@ import entities.Entity;
 import entities.block.Brick;
 import entities.block.Grass;
 import entities.block.Wall;
-import entities.dynamicentity.bomb.Bomb;
 import entities.dynamicentity.bomber.Bomber;
 import entities.dynamicentity.enemies.Balloon;
 import entities.dynamicentity.enemies.Ghost;
@@ -27,7 +26,10 @@ public class GameMap {
     private List<Entity> movingEntities = new ArrayList<>();
 
     private BombermanObject[][] map;
+
+
     private boolean[][] isBlocked;
+    private boolean[][] bombBlocked;
 
     public GameMap() {
 
@@ -44,31 +46,32 @@ public class GameMap {
         if (isBlocked[x][y]) {
             return true;
         }
-
-//        for (Bomb bomb : listBombs) {
-//            int xB = bomb.getX() / Sprite.SCALED_SIZE;
-//            int yB = bomb.getY() / Sprite.SCALED_SIZE;
-//            if (y == xB && x == yB) {
-//                return true;
-//            }
-//        }
+        if (bombBlocked[x][y]) {
+            return true;
+        }
         return false;
     }
 
-    public boolean checkBlockedPixel(int x, int y) {
-        x /= Sprite.SCALED_SIZE;
-        y /= Sprite.SCALED_SIZE;
-        if (isBlocked[y][x]) {
+    public boolean checkBlockedPixel(int xPixel, int yPixel) {
+        xPixel /= Sprite.SCALED_SIZE;
+        yPixel /= Sprite.SCALED_SIZE;
+        if (isBlocked[yPixel][xPixel]) {
+            return true;
+        }
+        if (bombBlocked[yPixel][xPixel]) {
             return true;
         }
 
-//        for (Bomb bomb : listBombs) {
-//            int xB = bomb.getX() / Sprite.SCALED_SIZE;
-//            int yB = bomb.getY() / Sprite.SCALED_SIZE;
-//            if (x == xB && y == yB) {
-//                return true;
-//            }
-//        }
+        return false;
+    }
+
+    public boolean checkBlockedPixelByBlock(int xPixel, int yPixel) {
+        xPixel /= Sprite.SCALED_SIZE;
+        yPixel /= Sprite.SCALED_SIZE;
+        if (isBlocked[yPixel][xPixel]) {
+            return true;
+        }
+
         return false;
     }
 
@@ -76,8 +79,8 @@ public class GameMap {
         isBlocked[x][y] = false;
         for (Entity brick : stillObjects) {
             if (brick instanceof Brick) {
-                if (brick.getX() / Sprite.SCALED_SIZE == y
-                    && brick.getY() / Sprite.SCALED_SIZE == x) {
+                if (brick.getXPixel() / Sprite.SCALED_SIZE == y
+                    && brick.getYPixel() / Sprite.SCALED_SIZE == x) {
                     ((Brick) brick).setAnimations(true);
                     return;
                 }
@@ -126,12 +129,14 @@ public class GameMap {
             this.col = scanner.nextInt();
 
             map = new BombermanObject[row][col];
+            bombBlocked = new boolean[row][col];
             isBlocked = new boolean[row][col];
             scanner.nextLine();
 
             for (int i = 0; i < row; ++i) {
                 String c = scanner.nextLine();
                 for (int j = 0; j < col; ++j) {
+                    bombBlocked[i][j] = false;
                     map[i][j] = convertEntity(c.charAt(j));
                     if (map[i][j] == BombermanObject.BRICK
                         || map[i][j] == BombermanObject.WALL) {
@@ -155,6 +160,14 @@ public class GameMap {
 
     public void setPosIsOpened(int x, int y) {
         isBlocked[x][y] = false;
+    }
+
+    public void setPosIsBombBlocked(int x, int y) {
+        bombBlocked[x][y] = true;
+    }
+
+    public void setPosIsBombOpened(int x, int y) {
+        bombBlocked[x][y] = false;
     }
 
     public int getIdPos(int x, int y) {

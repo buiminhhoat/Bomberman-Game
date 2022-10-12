@@ -19,6 +19,11 @@ public abstract class DynamicEntity extends Entity {
 
     protected List<Bomb> bombList = new ArrayList<>();
 
+    private boolean up = false;
+    private boolean down = false;
+    private boolean left = false;
+    private boolean right = false;
+
     protected int levelSpeed; // {16, 8, 4, 2}
     protected int timeline = 0;
     protected int currentFrame = 0;
@@ -31,8 +36,8 @@ public abstract class DynamicEntity extends Entity {
     public DynamicEntity() {
     }
 
-    public DynamicEntity(int xUnit, int yUnit, Image img) {
-        super(xUnit, yUnit, img);
+    public DynamicEntity(int x, int y, Image img) {
+        super(x, y, img);
     }
 
     public DynamicEntity(int levelSpeed, int maxFrame, Boolean animations, int lives,
@@ -44,14 +49,46 @@ public abstract class DynamicEntity extends Entity {
         this.direction = direction;
     }
 
-    public DynamicEntity(int xUnit, int yUnit, Image img,
-        int levelSpeed, int maxFrame, Boolean animations, int lives, Direction direction) {
-        super(xUnit, yUnit, img);
+    public DynamicEntity(int x, int y, Image img, int levelSpeed, int maxFrame,
+                         Boolean animations, int lives, Direction direction) {
+        super(x, y, img);
         this.levelSpeed = levelSpeed;
         this.maxFrame = maxFrame;
         this.animations = animations;
         this.lives = lives;
         this.direction = direction;
+    }
+
+    public boolean isUp() {
+        return up;
+    }
+
+    public void setUp(boolean up) {
+        this.up = up;
+    }
+
+    public boolean isDown() {
+        return down;
+    }
+
+    public void setDown(boolean down) {
+        this.down = down;
+    }
+
+    public boolean isLeft() {
+        return left;
+    }
+
+    public void setLeft(boolean left) {
+        this.left = left;
+    }
+
+    public boolean isRight() {
+        return right;
+    }
+
+    public void setRight(boolean right) {
+        this.right = right;
     }
 
     public int getLevelSpeed() {
@@ -152,7 +189,7 @@ public abstract class DynamicEntity extends Entity {
                 timeToTransitionFrame = 4;
                 break;
             case 4:
-                timeToTransitionFrame = 1;
+                timeToTransitionFrame = 2;
                 break;
         }
         if (this.timeline % timeToTransitionFrame == 0) {
@@ -172,10 +209,29 @@ public abstract class DynamicEntity extends Entity {
         run(this);
     }
 
+    public void move(GameMap gameMap) {
+        if (up) {
+            up(gameMap);
+            return;
+        }
+        if (down) {
+            down(gameMap);
+            return;
+        }
+        if (left) {
+            left(gameMap);
+            return;
+        }
+        if (right) {
+            right(gameMap);
+            return;
+        }
+    }
+
     public void up(GameMap gameMap) {
         if (!getAnimations()) {
             setDirection(Direction.UP);
-            if (gameMap.checkBlockedPixel(this.getX(), this.getY() - Sprite.SCALED_SIZE)) {
+            if (gameMap.checkBlockedPixel(this.getXPixel(), this.getYPixel() - Sprite.SCALED_SIZE)) {
                 return;
             }
             this.setAnimations(true);
@@ -185,7 +241,7 @@ public abstract class DynamicEntity extends Entity {
     public void down(GameMap gameMap) {
         if (!getAnimations()) {
             setDirection(Direction.DOWN);
-            if (gameMap.checkBlockedPixel(this.getX(), this.getY() + Sprite.SCALED_SIZE)) {
+            if (gameMap.checkBlockedPixel(this.getXPixel(), this.getYPixel() + Sprite.SCALED_SIZE)) {
                 return;
             }
             setAnimations(true);
@@ -195,7 +251,7 @@ public abstract class DynamicEntity extends Entity {
     public void left(GameMap gameMap) {
         if (!this.getAnimations()) {
             this.setDirection(Direction.LEFT);
-            if (gameMap.checkBlockedPixel(this.getX() - Sprite.SCALED_SIZE, this.getY())) {
+            if (gameMap.checkBlockedPixel(this.getXPixel() - Sprite.SCALED_SIZE, this.getYPixel())) {
                 return;
             }
             this.setAnimations(true);
@@ -205,7 +261,7 @@ public abstract class DynamicEntity extends Entity {
     public void right(GameMap gameMap) {
         if (!this.getAnimations()) {
             this.setDirection(Direction.RIGHT);
-            if (gameMap.checkBlockedPixel(this.getX() + Sprite.SCALED_SIZE, this.getY())) {
+            if (gameMap.checkBlockedPixel(this.getXPixel() + Sprite.SCALED_SIZE, this.getYPixel())) {
                 return;
             }
             this.setAnimations(true);
@@ -220,42 +276,46 @@ public abstract class DynamicEntity extends Entity {
         entity.nextTimeline();
         switch (entity.getDirection()) {
             case UP:
-                entity.setY(entity.getY() - Sprite.SCALED_SIZE / entity.getLevelSpeed());
+                entity.setYPixel(entity.getYPixel() - Sprite.SCALED_SIZE / entity.getLevelSpeed());
                 break;
             case DOWN:
-                entity.setY(entity.getY() + Sprite.SCALED_SIZE / entity.getLevelSpeed());
+                entity.setYPixel(entity.getYPixel() + Sprite.SCALED_SIZE / entity.getLevelSpeed());
                 break;
             case LEFT:
-                entity.setX(entity.getX() - Sprite.SCALED_SIZE / entity.getLevelSpeed());
+                entity.setXPixel(entity.getXPixel() - Sprite.SCALED_SIZE / entity.getLevelSpeed());
                 break;
             case RIGHT:
-                entity.setX(entity.getX() + Sprite.SCALED_SIZE / entity.getLevelSpeed());
+                entity.setXPixel(entity.getXPixel() + Sprite.SCALED_SIZE / entity.getLevelSpeed());
                 break;
         }
 
-        if (entity.getX() % Sprite.SCALED_SIZE == 0 && entity.getY() % Sprite.SCALED_SIZE == 0) {
+        if (entity.getXPixel() % Sprite.SCALED_SIZE == 0 && entity.getYPixel() % Sprite.SCALED_SIZE == 0) {
             entity.setAnimations(false);
         }
     }
 
     public void createBomb(GameMap gameMap) {
         int numBomb = this.getNumberBombs();
-        if (numBomb == 0 || gameMap.checkBlockedPixel(this.getX(), this.getY())) {
+        if (numBomb == 0 || gameMap.checkBlockedPixel(this.getXPixel(), this.getYPixel())) {
             return;
         }
         setNumberBombs(numBomb - 1);
         Bomb bomb = new Bomb(this, gameMap);
         bombList.add(bomb);
-        gameMap.setPosIsBlocked(this.getY() / Sprite.SCALED_SIZE,
-            this.getX() / Sprite.SCALED_SIZE);
+        gameMap.setPosIsBombBlocked(this.getYPixel() / Sprite.SCALED_SIZE,
+            this.getXPixel() / Sprite.SCALED_SIZE);
     }
 
-    public void explodeBomb(Bomb bomb, GameMap gameMap) {
+    public void explodedBomb(Bomb bomb, GameMap gameMap) {
         if (!bomb.getAnimations()) {
             int numBomb = getNumberBombs();
             setNumberBombs(numBomb + 1);
-            gameMap.setPosIsOpened(bomb.getY() / Sprite.SCALED_SIZE,
-                bomb.getX() / Sprite.SCALED_SIZE);
+            gameMap.setPosIsBombOpened(bomb.getYPixel() / Sprite.SCALED_SIZE,
+                bomb.getXPixel() / Sprite.SCALED_SIZE);
         }
+    }
+
+    public void die() {
+        --this.lives;
     }
 }

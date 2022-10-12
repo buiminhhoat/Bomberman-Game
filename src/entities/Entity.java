@@ -7,10 +7,10 @@ import graphics.Sprite;
 public abstract class Entity {
 
     //Tọa độ X tính từ góc trái trên trong Canvas
-    protected int x;
+    protected int xPixel;
 
     //Tọa độ Y tính từ góc trái trên trong Canvas
-    protected int y;
+    protected int yPixel;
 
     protected Image img;
 
@@ -19,26 +19,26 @@ public abstract class Entity {
     }
 
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
-    public Entity(int xUnit, int yUnit, Image img) {
-        this.x = xUnit * Sprite.SCALED_SIZE;
-        this.y = yUnit * Sprite.SCALED_SIZE;
+    public Entity(int x, int y, Image img) {
+        this.xPixel = x * Sprite.SCALED_SIZE;
+        this.yPixel = y * Sprite.SCALED_SIZE;
         this.img = img;
     }
 
-    public int getX() {
-        return x;
+    public int getXPixel() {
+        return xPixel;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setXPixel(int xPixel) {
+        this.xPixel = xPixel;
     }
 
-    public int getY() {
-        return y;
+    public int getYPixel() {
+        return yPixel;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setYPixel(int yPixel) {
+        this.yPixel = yPixel;
     }
 
     public Image getImg() {
@@ -50,7 +50,7 @@ public abstract class Entity {
     }
 
     public void render(GraphicsContext gc) {
-        gc.drawImage(img, x, y);
+        gc.drawImage(img, xPixel, yPixel);
     }
 
     public abstract void update();

@@ -17,8 +17,8 @@ public abstract class Enemies extends DynamicEntity {
 
     }
 
-    public Enemies(int xUnit, int yUnit, Image img) {
-        super(xUnit, yUnit, img, 8, 2,
+    public Enemies(int x, int y, Image img) {
+        super(x, y, img, 8, 2,
             false, 1, Direction.LEFT);
     }
 
