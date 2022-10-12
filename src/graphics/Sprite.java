@@ -113,6 +113,16 @@ public class Sprite {
     public static Sprite creeper_right2 = new Sprite(DEFAULT_SIZE, 9, 10, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
     public static Sprite creeper_right3 = new Sprite(DEFAULT_SIZE, 9, 11, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
     public static Sprite creeper_dead = new Sprite(DEFAULT_SIZE, 8, 12, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    //Bee
+    public static Sprite bee_left1 = new Sprite(DEFAULT_SIZE, 10, 9, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite bee_left2 = new Sprite(DEFAULT_SIZE, 10, 10, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite bee_left3 = new Sprite(DEFAULT_SIZE, 10, 11, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite bee_right1 = new Sprite(DEFAULT_SIZE, 11, 9, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite bee_right2 = new Sprite(DEFAULT_SIZE, 11, 10, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite bee_right3 = new Sprite(DEFAULT_SIZE, 11, 11, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite bee_dead = new Sprite(DEFAULT_SIZE, 10, 12, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    //Beehive
+    public static Sprite beehive = new Sprite(DEFAULT_SIZE, 6, 12, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
     //ALL
     public static Sprite mob_dead1 = new Sprite(DEFAULT_SIZE, 15, 0, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
     public static Sprite mob_dead2 = new Sprite(DEFAULT_SIZE, 15, 1, SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
