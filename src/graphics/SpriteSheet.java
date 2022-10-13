@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 public class SpriteSheet {
 
     public static SpriteSheet tiles = new SpriteSheet("/textures/classic1.png", 512);
+    public static SpriteSheet forestMapTiles = new SpriteSheet("/textures/forest_map.png", 416);
     public final int SIZE;
     public int[] _pixels;
     public BufferedImage image;

@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameMap {
@@ -290,7 +291,15 @@ public class GameMap {
         for (int i = 0; i < row; ++i) {
             for (int j = 0; j < col; ++j) {
                 Entity object;
-                object = new Grass(j, i, Sprite.grass.getFxImage());
+
+                if (new Random().nextInt(15) == 0) {
+                    object = new Grass(j, i, Sprite.grass_flower.getFxImage());
+                } else {
+                    object = new Grass(j, i, Sprite.grass.getFxImage());
+                }
+                if (i == 1) {
+                    object = new Grass(j, i, Sprite.forest_map_grass.getFxImage());
+                }
                 stillObjects.add(object);
 
                 BombermanObject bombermanObject = map[i][j];
@@ -311,10 +320,63 @@ public class GameMap {
                         object = new Brick(j, i, Sprite.brick.getFxImage());
                         break;
                 }
+
+                if (j == 0) {
+                    if (i % 2 == 0) {
+                        object = new Wall(j, i, Sprite.forest_map1.getFxImage());
+                    } else {
+                        object = new Wall(j, i, Sprite.forest_map2.getFxImage());
+                    }
+                }
+                if (j == col - 1) {
+                    if (i % 2 == 0) {
+                        object = new Wall(j, i, Sprite.forest_map3.getFxImage());
+                    }  else {
+                        object = new Wall(j, i, Sprite.forest_map4.getFxImage());
+                    }
+                }
+                if (j == 1) {
+                    if (i % 2 == 0) {
+                        object = new Wall(j, i, Sprite.forest_map5.getFxImage());
+                    }  else {
+                        object = new Wall(j, i, Sprite.forest_map6.getFxImage());
+                    }
+                }
+                if (j == col - 2) {
+                    if (i % 2 == 0) {
+                        object = new Wall(j, i, Sprite.forest_map7.getFxImage());
+                    }  else {
+                        object = new Wall(j, i, Sprite.forest_map8.getFxImage());
+                    }
+                }
+                if (i == 0 && j > 0 && j < col - 1) {
+                    object = new Wall(j, i, Sprite.forest_map9.getFxImage());
+                }
+
+                if (i == row - 1 && j > 0 && j < col - 1) {
+                    if (j % 2 == 0) {
+                        object = new Wall(j, i, Sprite.forest_map10.getFxImage());
+                    }  else {
+                        object = new Wall(j, i, Sprite.forest_map11.getFxImage());
+                    }
+                }
+                if (i == 0 && j == 1) {
+                    object = new Wall(j, i, Sprite.forest_map12.getFxImage());
+                }
+                if (i == 0 && j == col - 2) {
+                    object = new Wall(j, i, Sprite.forest_map13.getFxImage());
+                }
+
+
+//                if (j == 0 || j == col - 1 || i == 0 || i == row - 1) {
+//                    object = new Wall(j, i, Sprite.beehive.getFxImage());
+//                }
+
                 isBlocked[i][j] = object.isBlocked();
                 stillObjects.add(object);
             }
         }
+
         return stillObjects;
     }
 

@@ -16,11 +16,46 @@ public class Sprite {
     private static final int TRANSPARENT_COLOR = 0xffff00ff;
     /*
     |--------------------------------------------------------------------------
+    | Forest map
+    |--------------------------------------------------------------------------
+     */
+    public static Sprite forest_map_grass = new Sprite(DEFAULT_SIZE, 2, 1, SpriteSheet.forestMapTiles,
+            DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite forest_map1 = new Sprite(DEFAULT_SIZE, 0, 0, SpriteSheet.forestMapTiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite forest_map2 = new Sprite(DEFAULT_SIZE, 0, 1, SpriteSheet.forestMapTiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite forest_map3 = new Sprite(DEFAULT_SIZE, 12, 0, SpriteSheet.forestMapTiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite forest_map4 = new Sprite(DEFAULT_SIZE, 12, 1, SpriteSheet.forestMapTiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite forest_map5 = new Sprite(DEFAULT_SIZE, 1, 2, SpriteSheet.forestMapTiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite forest_map6 = new Sprite(DEFAULT_SIZE, 1, 1, SpriteSheet.forestMapTiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite forest_map7 = new Sprite(DEFAULT_SIZE, 11, 2, SpriteSheet.forestMapTiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite forest_map8 = new Sprite(DEFAULT_SIZE, 11, 1, SpriteSheet.forestMapTiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite forest_map9 = new Sprite(DEFAULT_SIZE, 2, 0, SpriteSheet.forestMapTiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite forest_map10 = new Sprite(DEFAULT_SIZE, 2, 12, SpriteSheet.forestMapTiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite forest_map11 = new Sprite(DEFAULT_SIZE, 1, 12, SpriteSheet.forestMapTiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite forest_map12 = new Sprite(DEFAULT_SIZE, 1, 0, SpriteSheet.forestMapTiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite forest_map13 = new Sprite(DEFAULT_SIZE, 11, 0, SpriteSheet.forestMapTiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    /*
+    |--------------------------------------------------------------------------
     | Board sprites
     |--------------------------------------------------------------------------
      */
     public static Sprite grass = new Sprite(DEFAULT_SIZE, 6, 0, SpriteSheet.tiles, DEFAULT_SIZE,
         DEFAULT_SIZE);
+    public static Sprite grass_flower = new Sprite(DEFAULT_SIZE, 6, 1, SpriteSheet.tiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
     public static Sprite brick = new Sprite(DEFAULT_SIZE, 7, 0, SpriteSheet.tiles, DEFAULT_SIZE,
         DEFAULT_SIZE);
     public static Sprite wall = new Sprite(DEFAULT_SIZE, 5, 0, SpriteSheet.tiles, DEFAULT_SIZE,
