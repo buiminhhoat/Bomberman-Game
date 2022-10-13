@@ -10,7 +10,7 @@ public class Flame extends AnimationEntity {
     private boolean lastFlame = false;
     private int idFrame = 0;
     private Axis axisFlame;
-    private int[] frame = {0, 1, 2, 2, 1, 0};
+    private final int[] frame = {0, 1, 2, 2, 1, 0};
 
     public Flame() {
     }

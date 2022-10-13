@@ -17,8 +17,8 @@ public abstract class AnimationEntity extends Entity {
     protected int currentFrame = 0;
     protected int maxFrame;
     protected Boolean animations;
-    protected int lives;
 
+    protected int lives;
     protected int levelSpeed; // {16, 8, 4, 2}
 
     protected Direction direction;
@@ -119,10 +119,6 @@ public abstract class AnimationEntity extends Entity {
     @Override
     public void update() {
 
-    }
-
-    public void die() {
-        --this.lives;
     }
 
     public int getNumberBombs() {

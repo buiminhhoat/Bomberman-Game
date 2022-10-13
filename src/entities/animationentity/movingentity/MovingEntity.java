@@ -157,7 +157,7 @@ public class MovingEntity extends AnimationEntity {
     }
 
     public void checkRun() {
-        if (!getAnimations()) {
+        if (!this.getAnimations()) {
             return;
         }
         run(this);
@@ -169,6 +169,11 @@ public class MovingEntity extends AnimationEntity {
         }
 
         entity.nextTimeline();
+
+        if (this.getlives() == 0) {
+            return;
+        }
+
         switch (entity.getDirection()) {
             case UP:
                 entity.setYPixel(entity.getYPixel() - Sprite.SCALED_SIZE / entity.getLevelSpeed());
@@ -211,5 +216,11 @@ public class MovingEntity extends AnimationEntity {
         }
     }
 
+    public void die() {
+        --this.lives;
+        if (this.lives == 0) {
+            this.setAnimations(true);
+        }
+    }
 
 }

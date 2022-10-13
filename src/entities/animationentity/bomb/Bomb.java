@@ -4,6 +4,7 @@ import entities.Entity;
 import entities.animationentity.AnimationEntity;
 import entities.animationentity.hiddenitem.HiddenItem;
 import entities.animationentity.hiddenitem.SpeedItem;
+import entities.animationentity.movingentity.MovingEntity;
 import entities.animationentity.movingentity.enemies.Creeper;
 import entities.animationentity.movingentity.enemies.Enemies;
 import entities.block.Brick;
@@ -109,7 +110,7 @@ public class Bomb extends AnimationEntity {
 
             if (entity.getXPixel() == xPixel && entity.getYPixel() == yPixel) {
                 listKill.add(entity);
-                ((AnimationEntity) entity).die();
+                ((MovingEntity) entity).die();
             }
         }
     }

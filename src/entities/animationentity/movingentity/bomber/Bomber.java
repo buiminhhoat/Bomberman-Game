@@ -18,7 +18,7 @@ public class Bomber extends MovingEntity {
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img, 8, 2,
-            false, 3, Direction.DOWN);
+            false, 1, Direction.DOWN);
     }
 
     public void pickUpItem(GameMap gameMap) {
@@ -34,50 +34,85 @@ public class Bomber extends MovingEntity {
         }
     }
 
+    private final int[] frame = {0, 0, 1, 2};
+    private int idFrame = 0;
+
+    @Override
+    public void nextTimeline() {
+        if (this.getlives() != 0) {
+            super.nextTimeline();
+            return;
+        }
+        ++this.timeline;
+        int timeToTransitionFrame = 3;
+        if (this.timeline % timeToTransitionFrame == 0) {
+            ++this.idFrame;
+            if (this.idFrame == this.frame.length) {
+                this.animations = false;
+                return;
+            }
+            this.currentFrame = this.frame[this.idFrame];
+        }
+    }
+
     @Override
     public void update() {
         if (this.animations) {
-            switch (this.direction) {
-                case UP:
-                    switch (this.currentFrame) {
-                        case 0:
-                            this.img = Sprite.player_up_1.getFxImage();
-                            break;
-                        case 1:
-                            this.img = Sprite.player_up_2.getFxImage();
-                            break;
-                    }
-                    break;
-                case DOWN:
-                    switch (this.currentFrame) {
-                        case 0:
-                            this.img = Sprite.player_down_1.getFxImage();
-                            break;
-                        case 1:
-                            this.img = Sprite.player_down_2.getFxImage();
-                            break;
-                    }
-                    break;
-                case LEFT:
-                    switch (this.currentFrame) {
-                        case 0:
-                            this.img = Sprite.player_left_1.getFxImage();
-                            break;
-                        case 1:
-                            this.img = Sprite.player_left_2.getFxImage();
-                            break;
-                    }
-                    break;
-                case RIGHT:
-                    switch (this.currentFrame) {
-                        case 0:
-                            this.img = Sprite.player_right_1.getFxImage();
-                            break;
-                        case 1:
-                            this.img = Sprite.player_right_2.getFxImage();
-                            break;
-                    }
-                    break;
+            if (this.getlives() == 0) {
+                switch (this.currentFrame) {
+                    case 0:
+                        this.img = Sprite.player_dead1.getFxImage();
+                        break;
+                    case 1:
+                        this.img = Sprite.player_dead2.getFxImage();
+                        break;
+                    case 2:
+                        this.img = Sprite.player_dead3.getFxImage();
+                        break;
+                }
+            } else {
+                switch (this.direction) {
+                    case UP:
+                        switch (this.currentFrame) {
+                            case 0:
+                                this.img = Sprite.player_up_1.getFxImage();
+                                break;
+                            case 1:
+                                this.img = Sprite.player_up_2.getFxImage();
+                                break;
+                        }
+                        break;
+                    case DOWN:
+                        switch (this.currentFrame) {
+                            case 0:
+                                this.img = Sprite.player_down_1.getFxImage();
+                                break;
+                            case 1:
+                                this.img = Sprite.player_down_2.getFxImage();
+                                break;
+                        }
+                        break;
+                    case LEFT:
+                        switch (this.currentFrame) {
+                            case 0:
+                                this.img = Sprite.player_left_1.getFxImage();
+                                break;
+                            case 1:
+                                this.img = Sprite.player_left_2.getFxImage();
+                                break;
+                        }
+                        break;
+                    case RIGHT:
+                        switch (this.currentFrame) {
+                            case 0:
+                                this.img = Sprite.player_right_1.getFxImage();
+                                break;
+                            case 1:
+                                this.img = Sprite.player_right_2.getFxImage();
+                                break;
+                        }
+                        break;
+                }
             }
         } else {
             switch (this.direction) {
