@@ -234,6 +234,33 @@ public class Sprite {
     //Beehive
     public static Sprite beehive = new Sprite(DEFAULT_SIZE, 6, 12, SpriteSheet.tiles, DEFAULT_SIZE,
         DEFAULT_SIZE);
+    //DeeDee
+    public static Sprite deedee_left = new Sprite(DEFAULT_SIZE, 12, 9, SpriteSheet.tiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite deedee_right = new Sprite(DEFAULT_SIZE, 13, 9, SpriteSheet.tiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite deedee_left_eat = new Sprite(DEFAULT_SIZE, 12, 10, SpriteSheet.tiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite deedee_right_eat = new Sprite(DEFAULT_SIZE, 13, 10, SpriteSheet.tiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite deedee_left_chew1 = new Sprite(DEFAULT_SIZE, 12, 11, SpriteSheet.tiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite deedee_left_chew2 = new Sprite(DEFAULT_SIZE, 14, 9, SpriteSheet.tiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite deedee_right_chew1 = new Sprite(DEFAULT_SIZE, 13, 11, SpriteSheet.tiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite deedee_right_chew2 = new Sprite(DEFAULT_SIZE, 15, 9, SpriteSheet.tiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite deedee_left_ble1 = new Sprite(DEFAULT_SIZE, 14, 10, SpriteSheet.tiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite deedee_left_ble2 = new Sprite(DEFAULT_SIZE, 14, 11, SpriteSheet.tiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite deedee_right_ble1 = new Sprite(DEFAULT_SIZE, 15, 10, SpriteSheet.tiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite deedee_right_ble2 = new Sprite(DEFAULT_SIZE, 15, 11, SpriteSheet.tiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite deedee_dead = new Sprite(DEFAULT_SIZE, 12, 12, SpriteSheet.tiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
     //DEATH
     public static Sprite mob_dead_red1 = new Sprite(DEFAULT_SIZE, 0, 14, SpriteSheet.tiles,
         DEFAULT_SIZE, DEFAULT_SIZE);
