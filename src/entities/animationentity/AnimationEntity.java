@@ -5,7 +5,6 @@ import enumeration.Direction;
 import javafx.scene.image.Image;
 
 public abstract class AnimationEntity extends Entity {
-
     public static final int DEFAULT_NUMBER_BOMBS = 3;
 
     public static final int DEFAULT_LENGTH_EXPLOSION_OF_BOMB = 2;

@@ -293,7 +293,7 @@ public class Sprite {
     public static Sprite powerup_flames = new Sprite(DEFAULT_SIZE, 1, 10, SpriteSheet.tiles,
         DEFAULT_SIZE,
         DEFAULT_SIZE);
-    public static Sprite powerup_speed = new Sprite(DEFAULT_SIZE, 2, 10, SpriteSheet.tiles,
+    public static Sprite powerup_speed = new Sprite(DEFAULT_SIZE, 2, 11, SpriteSheet.tiles,
         DEFAULT_SIZE, DEFAULT_SIZE);
     public static Sprite powerup_wallpass = new Sprite(DEFAULT_SIZE, 3, 10, SpriteSheet.tiles,
         DEFAULT_SIZE,

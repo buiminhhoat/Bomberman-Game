@@ -12,10 +12,12 @@ public abstract class Entity {
     //Tọa độ Y tính từ góc trái trên trong Canvas
     protected int yPixel;
 
+    protected boolean isBlocked;
+
     protected Image img;
 
     public Entity() {
-
+        isBlocked = false;
     }
 
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
@@ -23,6 +25,7 @@ public abstract class Entity {
         this.xPixel = x * Sprite.SCALED_SIZE;
         this.yPixel = y * Sprite.SCALED_SIZE;
         this.img = img;
+        isBlocked = false;
     }
 
     public int getXPixel() {
@@ -47,6 +50,14 @@ public abstract class Entity {
 
     public void setImg(Image img) {
         this.img = img;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 
     public void render(GraphicsContext gc) {

@@ -210,4 +210,6 @@ public class MovingEntity extends AnimationEntity {
                 bomb.getXPixel() / Sprite.SCALED_SIZE);
         }
     }
+
+
 }

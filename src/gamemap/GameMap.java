@@ -1,6 +1,8 @@
 package gamemap;
 
 import entities.Entity;
+import entities.animationentity.hiddenitem.FlameItem;
+import entities.animationentity.hiddenitem.SpeedItem;
 import entities.animationentity.movingentity.bomber.Bomber;
 import entities.animationentity.movingentity.enemies.Balloon;
 import entities.animationentity.movingentity.enemies.Balloon.Beehive;
@@ -28,6 +30,8 @@ public class GameMap {
     private List<Entity> movingEntities = new ArrayList<>();
 
     private BombermanObject[][] map;
+
+    private Entity[][] entityMap;
 
 
     private boolean[][] isBlocked;
@@ -77,19 +81,6 @@ public class GameMap {
         return false;
     }
 
-    public void destroyBrick(int x, int y) {
-        isBlocked[x][y] = false;
-        for (Entity brick : stillObjects) {
-            if (brick instanceof Brick) {
-                if (brick.getXPixel() / Sprite.SCALED_SIZE == y
-                    && brick.getYPixel() / Sprite.SCALED_SIZE == x) {
-                    ((Brick) brick).setAnimations(true);
-                    return;
-                }
-            }
-        }
-    }
-
     private BombermanObject convertEntity(char c) {
         switch (c) {
             case '#':
@@ -135,6 +126,7 @@ public class GameMap {
             this.col = scanner.nextInt();
 
             map = new BombermanObject[row][col];
+            entityMap = new Entity[row][col];
             bombBlocked = new boolean[row][col];
             isBlocked = new boolean[row][col];
             scanner.nextLine();
@@ -144,12 +136,46 @@ public class GameMap {
                 for (int j = 0; j < col; ++j) {
                     bombBlocked[i][j] = false;
                     map[i][j] = convertEntity(c.charAt(j));
-                    if (map[i][j] == BombermanObject.BRICK
-                        || map[i][j] == BombermanObject.WALL) {
-                        isBlocked[i][j] = true;
-                    } else {
-                        isBlocked[i][j] = false;
+                    isBlocked[i][j] = false;
+                    BombermanObject bombermanObject = map[i][j];
+                    Entity object = null;
+                    switch (bombermanObject) {
+                        case BOMBERMAN:
+                            object = new Bomber(j, i, Sprite.player_up.getFxImage());
+                            break;
+                        case BALLOON:
+                            object = new Balloon(j, i, Sprite.balloom_left1.getFxImage());
+                            break;
+                        case ONEAL:
+                            object = new Oneal(j, i, Sprite.oneal_left1.getFxImage());
+                            break;
+                        case GHOST:
+                            object = new Ghost(j, i, Sprite.ghost_left1.getFxImage());
+                            break;
+                        case CREEPER:
+                            object = new Creeper(j, i, Sprite.ghost_left1.getFxImage());
+                            break;
+
+                        case WALL:
+                            object = new Wall(j, i, Sprite.wall.getFxImage());
+                            break;
+                        case BRICK:
+                            object = new Brick(j, i, Sprite.brick.getFxImage());
+                            break;
+                        case SPEED_ITEM:
+                            object = new Brick(j, i, Sprite.brick.getFxImage());
+                            break;
+                        case FLAME_ITEM:
+                            object = new Brick(j, i, Sprite.brick.getFxImage());
+                            break;
+                        case BOMB_ITEM:
+                            object = new Brick(j, i, Sprite.brick.getFxImage());
+                            break;
                     }
+                    if (object == null) {
+                        continue;
+                    }
+                    entityMap[i][j] = object;
                 }
             }
 
@@ -158,6 +184,14 @@ public class GameMap {
             System.out.println("File not found exception!");
             e.printStackTrace();
         }
+    }
+
+    public Entity[][] getEntityMap() {
+        return entityMap;
+    }
+
+    public void setEntityMap(Entity[][] entityMap) {
+        this.entityMap = entityMap;
     }
 
     public void setPosIsBlocked(int x, int y) {
@@ -228,6 +262,30 @@ public class GameMap {
         this.isBlocked = isBlocked;
     }
 
+    public List<Entity> getStillObjects() {
+        return stillObjects;
+    }
+
+    public void setStillObjects(List<Entity> stillObjects) {
+        this.stillObjects = stillObjects;
+    }
+
+    public List<Entity> getMovingEntities() {
+        return movingEntities;
+    }
+
+    public void setMovingEntities(List<Entity> movingEntities) {
+        this.movingEntities = movingEntities;
+    }
+
+    public boolean[][] getBombBlocked() {
+        return bombBlocked;
+    }
+
+    public void setBombBlocked(boolean[][] bombBlocked) {
+        this.bombBlocked = bombBlocked;
+    }
+
     public List<Entity> getListStillObjects() {
         for (int i = 0; i < row; ++i) {
             for (int j = 0; j < col; ++j) {
@@ -243,7 +301,17 @@ public class GameMap {
                     case BRICK:
                         object = new Brick(j, i, Sprite.brick.getFxImage());
                         break;
+                    case SPEED_ITEM:
+                        object = new Brick(j, i, Sprite.brick.getFxImage());
+                        break;
+                    case FLAME_ITEM:
+                        object = new Brick(j, i, Sprite.brick.getFxImage());
+                        break;
+                    case BOMB_ITEM:
+                        object = new Brick(j, i, Sprite.brick.getFxImage());
+                        break;
                 }
+                isBlocked[i][j] = object.isBlocked();
                 stillObjects.add(object);
             }
         }
@@ -275,6 +343,7 @@ public class GameMap {
                 if (movingEntity == null) {
                     continue;
                 }
+                isBlocked[i][j] = movingEntity.isBlocked();
                 movingEntities.add(movingEntity);
             }
         }

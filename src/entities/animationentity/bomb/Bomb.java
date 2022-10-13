@@ -2,8 +2,11 @@ package entities.animationentity.bomb;
 
 import entities.Entity;
 import entities.animationentity.AnimationEntity;
+import entities.animationentity.hiddenitem.HiddenItem;
+import entities.animationentity.hiddenitem.SpeedItem;
 import entities.animationentity.movingentity.enemies.Creeper;
 import entities.animationentity.movingentity.enemies.Enemies;
+import entities.block.Brick;
 import enumeration.BombermanObject;
 import enumeration.Direction;
 import gamemap.GameMap;
@@ -25,12 +28,16 @@ public class Bomb extends AnimationEntity {
     private AnimationEntity dynamicEntity;
 
     public Bomb() {
+        isBlocked = true;
     }
 
     public Bomb(AnimationEntity dynamicEntity, GameMap gameMap) {
         super(dynamicEntity.getXPixel() / Sprite.SCALED_SIZE,
             dynamicEntity.getYPixel() / Sprite.SCALED_SIZE,
             Sprite.bomb.getFxImage(), 8, 3, true, 3, Direction.DOWN);
+
+        isBlocked = true;
+
         this.dynamicEntity = dynamicEntity;
 
         int x = dynamicEntity.getXPixel() / Sprite.SCALED_SIZE;
@@ -116,9 +123,9 @@ public class Bomb extends AnimationEntity {
 
         for (int i = y - 1; i >= y - lth; --i) {
             if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
-                if (gameMap.getMapObject(i, x) == BombermanObject.BRICK
+                if (gameMap.getEntityMap()[i][x] instanceof Brick
                     && flame_center.getTimeline() == 3) {
-                    gameMap.destroyBrick(i, x);
+                    destroyEntity(i, x, gameMap);
                 }
                 break;
             }
@@ -127,9 +134,9 @@ public class Bomb extends AnimationEntity {
 
         for (int i = y + 1; i <= y + lth; ++i) {
             if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
-                if (gameMap.getMapObject(i, x) == BombermanObject.BRICK
+                if (gameMap.getEntityMap()[i][x] instanceof Brick
                     && flame_center.getTimeline() == 3) {
-                    gameMap.destroyBrick(i, x);
+                    destroyEntity(i, x, gameMap);
                 }
                 break;
             }
@@ -138,9 +145,9 @@ public class Bomb extends AnimationEntity {
 
         for (int i = x - 1; i >= x - lth; --i) {
             if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
-                if (gameMap.getMapObject(y, i) == BombermanObject.BRICK
+                if (gameMap.getEntityMap()[y][i] instanceof Brick
                     && flame_center.getTimeline() == 3) {
-                    gameMap.destroyBrick(y, i);
+                    destroyEntity(y, i, gameMap);
                 }
                 break;
             }
@@ -149,9 +156,9 @@ public class Bomb extends AnimationEntity {
 
         for (int i = x + 1; i <= x + lth; ++i) {
             if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
-                if (gameMap.getMapObject(y, i) == BombermanObject.BRICK
+                if (gameMap.getEntityMap()[y][i] instanceof Brick
                     && flame_center.getTimeline() == 3) {
-                    gameMap.destroyBrick(y, i);
+                    destroyEntity(y, i, gameMap);
                 }
                 break;
             }
@@ -216,5 +223,32 @@ public class Bomb extends AnimationEntity {
 
     public void setListFlame(List<Flame> listFlame) {
         this.listFlame = listFlame;
+    }
+
+    public void destroyEntity(int x, int y, GameMap gameMap) {
+        gameMap.getIsBlocked()[x][y] = false;
+        for (Entity brick : gameMap.getStillObjects()) {
+            if (brick instanceof Brick) {
+                if (brick.getXPixel() / Sprite.SCALED_SIZE == y
+                    && brick.getYPixel() / Sprite.SCALED_SIZE == x) {
+
+                    ((Brick) brick).setAnimations(true);
+
+                    BombermanObject bombermanObject = gameMap.getMapObject(x, y);
+                    System.out.println(bombermanObject);
+
+                    Entity item = null;
+                    switch (bombermanObject) {
+                        case SPEED_ITEM:
+                            item = new SpeedItem(y, x, Sprite.powerup_speed.getFxImage());
+                            break;
+                    }
+                    if (item == null) continue;
+                    List<Entity> stillObject = gameMap.getStillObjects();
+                    stillObject.add(item);
+                    return;
+                }
+            }
+        }
     }
 }

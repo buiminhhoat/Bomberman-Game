@@ -167,6 +167,8 @@ public class BombermanGame extends Application {
     }
 
     private void move() {
+        bomberman.move(gameMap);
+        ((Bomber) bomberman).pickUpItem(gameMap);
         for (Entity entity : movingEntities) {
             if (entity instanceof Bomber) {
                 continue;
@@ -231,7 +233,6 @@ public class BombermanGame extends Application {
     }
 
     public void update() {
-        bomberman.move(gameMap);
         move();
         checkBomb();
         checkDestroyBrick();

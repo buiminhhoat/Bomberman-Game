@@ -1,6 +1,7 @@
 package entities.block;
 
 import entities.animationentity.AnimationEntity;
+import entities.animationentity.hiddenitem.HiddenItem;
 import enumeration.Direction;
 import graphics.Sprite;
 import javafx.scene.image.Image;
@@ -9,12 +10,16 @@ public class Brick extends AnimationEntity {
 
     private boolean isDestroy = false;
 
+    private HiddenItem hiddenItem;
+
     public Brick() {
+        isBlocked = true;
     }
 
     public Brick(int x, int y, Image img) {
         super(x, y, img, 4, 3,
             false, 3, Direction.DOWN);
+        isBlocked = true;
     }
 
     public boolean checkDestroy() {
