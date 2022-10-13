@@ -367,11 +367,6 @@ public class GameMap {
                     object = new Wall(j, i, Sprite.forest_map13.getFxImage());
                 }
 
-
-//                if (j == 0 || j == col - 1 || i == 0 || i == row - 1) {
-//                    object = new Wall(j, i, Sprite.beehive.getFxImage());
-//                }
-
                 isBlocked[i][j] = object.isBlocked();
                 stillObjects.add(object);
             }

@@ -2,6 +2,8 @@ package entities.animationentity.bomb;
 
 import entities.Entity;
 import entities.animationentity.AnimationEntity;
+import entities.animationentity.hiddenitem.BombItem;
+import entities.animationentity.hiddenitem.FlameItem;
 import entities.animationentity.hiddenitem.HiddenItem;
 import entities.animationentity.hiddenitem.SpeedItem;
 import entities.animationentity.movingentity.MovingEntity;
@@ -236,12 +238,17 @@ public class Bomb extends AnimationEntity {
                     ((Brick) brick).setAnimations(true);
 
                     BombermanObject bombermanObject = gameMap.getMapObject(x, y);
-                    System.out.println(bombermanObject);
 
                     Entity item = null;
                     switch (bombermanObject) {
                         case SPEED_ITEM:
                             item = new SpeedItem(y, x, Sprite.powerup_speed.getFxImage());
+                            break;
+                        case BOMB_ITEM:
+                            item = new BombItem(y, x, Sprite.powerup_bombs.getFxImage());
+                            break;
+                        case FLAME_ITEM:
+                            item = new FlameItem(y, x, Sprite.powerup_flames.getFxImage());
                             break;
                     }
                     if (item == null) continue;
