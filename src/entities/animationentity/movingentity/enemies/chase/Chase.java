@@ -43,6 +43,11 @@ public class Chase extends Enemies {
             return;
         }
 
+        if (targetEntity == null) {
+            super.chooseDirection(gameMap);
+            return;
+        }
+
         BreadthFirstSearch.CalculatorBreadthFirstSearch(
             targetEntity.getYPixel() / Sprite.SCALED_SIZE,
             targetEntity.getXPixel() / Sprite.SCALED_SIZE,

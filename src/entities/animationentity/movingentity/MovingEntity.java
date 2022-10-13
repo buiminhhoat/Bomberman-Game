@@ -217,6 +217,9 @@ public class MovingEntity extends AnimationEntity {
     }
 
     public void die() {
+        if (this.lives == 0) {
+            return;
+        }
         --this.lives;
         if (this.lives == 0) {
             this.setAnimations(true);

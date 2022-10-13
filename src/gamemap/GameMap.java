@@ -5,7 +5,7 @@ import entities.animationentity.hiddenitem.FlameItem;
 import entities.animationentity.hiddenitem.SpeedItem;
 import entities.animationentity.movingentity.bomber.Bomber;
 import entities.animationentity.movingentity.enemies.Balloon;
-import entities.animationentity.movingentity.enemies.Balloon.Beehive;
+import entities.animationentity.movingentity.enemies.Beehive;
 import entities.animationentity.movingentity.enemies.Creeper;
 import entities.animationentity.movingentity.enemies.Ghost;
 import entities.animationentity.movingentity.enemies.chase.Bee;

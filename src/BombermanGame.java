@@ -4,7 +4,7 @@ import entities.animationentity.AnimationEntity;
 import entities.animationentity.bomb.Bomb;
 import entities.animationentity.movingentity.MovingEntity;
 import entities.animationentity.movingentity.bomber.Bomber;
-import entities.animationentity.movingentity.enemies.Balloon.Beehive;
+import entities.animationentity.movingentity.enemies.Beehive;
 import entities.animationentity.movingentity.enemies.Creeper;
 import entities.animationentity.movingentity.enemies.Enemies;
 import entities.animationentity.movingentity.enemies.chase.Bee;
@@ -57,47 +57,51 @@ public class BombermanGame extends Application {
         scene = new Scene(root);
 
         scene.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
-                case UP:
-                    bomberman.setUp(true);
-                    System.out.println("UP");
-                    break;
-                case DOWN:
-                    bomberman.setDown(true);
-                    System.out.println("DOWN");
-                    break;
-                case RIGHT:
-                    bomberman.setRight(true);
-                    System.out.println("RIGHT");
-                    break;
-                case LEFT:
-                    bomberman.setLeft(true);
-                    System.out.println("LEFT");
-                    break;
-                case SPACE:
-                    System.out.println("SPACE");
-                    ((Bomber) bomberman).createBomb(gameMap);
-                    break;
-                case P:
-                    System.out.println("P");
-                    break;
+            if (bomberman != null) {
+                switch (event.getCode()) {
+                    case UP:
+                        bomberman.setUp(true);
+                        System.out.println("UP");
+                        break;
+                    case DOWN:
+                        bomberman.setDown(true);
+                        System.out.println("DOWN");
+                        break;
+                    case RIGHT:
+                        bomberman.setRight(true);
+                        System.out.println("RIGHT");
+                        break;
+                    case LEFT:
+                        bomberman.setLeft(true);
+                        System.out.println("LEFT");
+                        break;
+                    case SPACE:
+                        System.out.println("SPACE");
+                        ((Bomber) bomberman).createBomb(gameMap);
+                        break;
+                    case P:
+                        System.out.println("P");
+                        break;
+                }
             }
         });
 
         scene.setOnKeyReleased(event -> {
-            switch (event.getCode()) {
-                case UP:
-                    bomberman.setUp(false);
-                    break;
-                case DOWN:
-                    bomberman.setDown(false);
-                    break;
-                case RIGHT:
-                    bomberman.setRight(false);
-                    break;
-                case LEFT:
-                    bomberman.setLeft(false);
-                    break;
+            if (bomberman != null) {
+                switch (event.getCode()) {
+                    case UP:
+                        bomberman.setUp(false);
+                        break;
+                    case DOWN:
+                        bomberman.setDown(false);
+                        break;
+                    case RIGHT:
+                        bomberman.setRight(false);
+                        break;
+                    case LEFT:
+                        bomberman.setLeft(false);
+                        break;
+                }
             }
         });
 
@@ -216,7 +220,10 @@ public class BombermanGame extends Application {
             Entity entity = movingEntities.get(i);
             if (entity instanceof AnimationEntity) {
                 if (((AnimationEntity) entity).getlives() == 0
-                        && ((AnimationEntity) entity).getAnimations() == false) {
+                        && !((AnimationEntity) entity).getAnimations()) {
+                    if (entity instanceof Bomber) {
+                        bomberman = null;
+                    }
                     movingEntities.remove(i);
                     --i;
                 }
@@ -233,7 +240,9 @@ public class BombermanGame extends Application {
     }
 
     public void update() {
-        move();
+        if (bomberman != null) {
+            move();
+        }
         checkBomb();
         checkDestroyBrick();
         checkKillEntity();

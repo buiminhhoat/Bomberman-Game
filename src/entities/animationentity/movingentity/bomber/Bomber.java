@@ -18,7 +18,7 @@ public class Bomber extends MovingEntity {
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img, 8, 2,
-            false, 1, Direction.DOWN);
+            false, 3, Direction.DOWN);
     }
 
     public void pickUpItem(GameMap gameMap) {
@@ -31,27 +31,6 @@ public class Bomber extends MovingEntity {
                     --i;
                 }
             }
-        }
-    }
-
-    private final int[] frame = {0, 0, 1, 2};
-    private int idFrame = 0;
-
-    @Override
-    public void nextTimeline() {
-        if (this.getlives() != 0) {
-            super.nextTimeline();
-            return;
-        }
-        ++this.timeline;
-        int timeToTransitionFrame = 3;
-        if (this.timeline % timeToTransitionFrame == 0) {
-            ++this.idFrame;
-            if (this.idFrame == this.frame.length) {
-                this.animations = false;
-                return;
-            }
-            this.currentFrame = this.frame[this.idFrame];
         }
     }
 

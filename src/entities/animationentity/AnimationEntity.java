@@ -18,7 +18,7 @@ public abstract class AnimationEntity extends Entity {
     protected int maxFrame;
     protected Boolean animations;
 
-    protected int lives;
+    protected int lives = 1;
     protected int levelSpeed; // {16, 8, 4, 2}
 
     protected Direction direction;
@@ -96,23 +96,39 @@ public abstract class AnimationEntity extends Entity {
         currentFrame = 0;
     }
 
-    public void nextTimeline() {
-        ++this.timeline;
+    private final int[] frame = {0, 0, 0, 1, 2};
+    private int idFrame = 0;
 
-        int timeToTransitionFrame = 1;
-        switch (levelSpeed) {
-            case 16:
-                timeToTransitionFrame = 5;
-                break;
-            case 8:
-                timeToTransitionFrame = 4;
-                break;
-            case 4:
-                timeToTransitionFrame = 2;
-                break;
-        }
-        if (this.timeline % timeToTransitionFrame == 0) {
-            this.currentFrame = (this.currentFrame + 1) % this.maxFrame;
+    public void nextTimeline() {
+        int timeToTransitionFrame;
+
+        ++this.timeline;
+        if (this.getlives() != 0) {
+            timeToTransitionFrame = 1;
+            switch (levelSpeed) {
+                case 16:
+                    timeToTransitionFrame = 5;
+                    break;
+                case 8:
+                    timeToTransitionFrame = 4;
+                    break;
+                case 4:
+                    timeToTransitionFrame = 2;
+                    break;
+            }
+            if (this.timeline % timeToTransitionFrame == 0) {
+                this.currentFrame = (this.currentFrame + 1) % this.maxFrame;
+            }
+        } else {
+            timeToTransitionFrame = 3;
+            if (this.timeline % timeToTransitionFrame == 0) {
+                ++this.idFrame;
+                if (this.idFrame == this.frame.length) {
+                    this.animations = false;
+                    return;
+                }
+                this.currentFrame = this.frame[this.idFrame];
+            }
         }
     }
 

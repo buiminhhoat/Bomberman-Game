@@ -199,13 +199,27 @@ public class Sprite {
     //Beehive
     public static Sprite beehive = new Sprite(DEFAULT_SIZE, 6, 12, SpriteSheet.tiles, DEFAULT_SIZE,
         DEFAULT_SIZE);
-    //ALL
-    public static Sprite mob_dead1 = new Sprite(DEFAULT_SIZE, 15, 0, SpriteSheet.tiles,
+    //DEATH
+    public static Sprite mob_dead_red1 = new Sprite(DEFAULT_SIZE, 0, 14, SpriteSheet.tiles,
         DEFAULT_SIZE, DEFAULT_SIZE);
-    public static Sprite mob_dead2 = new Sprite(DEFAULT_SIZE, 15, 1, SpriteSheet.tiles,
+    public static Sprite mob_dead_red2 = new Sprite(DEFAULT_SIZE, 0, 15, SpriteSheet.tiles,
         DEFAULT_SIZE, DEFAULT_SIZE);
-    public static Sprite mob_dead3 = new Sprite(DEFAULT_SIZE, 15, 2, SpriteSheet.tiles,
-        DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite mob_dead_blue1 = new Sprite(DEFAULT_SIZE, 1, 14, SpriteSheet.tiles,
+            DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite mob_dead_blue2 = new Sprite(DEFAULT_SIZE, 1, 15, SpriteSheet.tiles,
+            DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite mob_dead_gray1 = new Sprite(DEFAULT_SIZE, 2, 14, SpriteSheet.tiles,
+            DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite mob_dead_gray2 = new Sprite(DEFAULT_SIZE, 2, 15, SpriteSheet.tiles,
+            DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite mob_dead_bee1 = new Sprite(DEFAULT_SIZE, 3, 14, SpriteSheet.tiles,
+            DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite mob_dead_bee2 = new Sprite(DEFAULT_SIZE, 3, 15, SpriteSheet.tiles,
+            DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite mob_dead_beehive1 = new Sprite(DEFAULT_SIZE, 4, 14, SpriteSheet.tiles,
+            DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite mob_dead_beehive2 = new Sprite(DEFAULT_SIZE, 4, 15, SpriteSheet.tiles,
+            DEFAULT_SIZE, DEFAULT_SIZE);
     /*
     |--------------------------------------------------------------------------
     | Bomb Sprites
