@@ -35,6 +35,9 @@ public class GameMap {
 
     private Entity[][] entityMap;
 
+    private int width;
+
+    private int height;
 
     private boolean[][] isBlocked;
     private boolean[][] bombBlocked;
@@ -127,7 +130,9 @@ public class GameMap {
             Scanner scanner = new Scanner(file);
             level = scanner.nextInt();
             this.row = scanner.nextInt();
+            this.height = this.row * Sprite.SCALED_SIZE;
             this.col = scanner.nextInt();
+            this.width = this.col * Sprite.SCALED_SIZE;
 
             map = new BombermanObject[row][col];
             entityMap = new Entity[row][col];
@@ -447,5 +452,21 @@ public class GameMap {
         }
 
         return movingEntities;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }

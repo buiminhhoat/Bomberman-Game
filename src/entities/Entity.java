@@ -1,5 +1,6 @@
 package entities;
 
+import graphics.Camera;
 import graphics.Sprite;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -61,7 +62,7 @@ public abstract class Entity {
     }
 
     public void render(GraphicsContext gc) {
-        gc.drawImage(img, xPixel, yPixel);
+        gc.drawImage(img, xPixel - Camera.getX(), yPixel - Camera.getY());
     }
 
     public abstract void update();

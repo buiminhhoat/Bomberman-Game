@@ -1,3 +1,5 @@
+import static graphics.Camera.*;
+
 import algorithm.BreadthFirstSearch;
 import entities.Entity;
 import entities.animationentity.AnimationEntity;
@@ -13,6 +15,7 @@ import entities.animationentity.movingentity.enemies.chase.DeeDee;
 import entities.animationentity.movingentity.enemies.chase.Oneal;
 import entities.block.Brick;
 import gamemap.GameMap;
+import graphics.Camera;
 import graphics.Sprite;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +28,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
 public class BombermanGame extends Application {
-
     public static final int WIDTH = 25;
     public static final int HEIGHT = 20;
+
+//    public static final int WIDTH = 20;
+//    public static final int HEIGHT = 15;
     public static final int INF = (int) 1e9 + 7;
     public static final String TITLE = "Bomberman Game";
 
@@ -259,6 +264,7 @@ public class BombermanGame extends Application {
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        updateCamera();
         stillObjects.forEach(g -> g.render(gc));
         for (Entity entity : movingEntities) {
             if (entity instanceof MovingEntity) {
@@ -267,5 +273,41 @@ public class BombermanGame extends Application {
             }
         }
         movingEntities.forEach(g -> g.render(gc));
+    }
+
+    public void updateCamera() {
+        int midX = ((Bomber) bomberman).getXPixel() + Sprite.SCALED_SIZE / 2;
+        int midY = ((Bomber) bomberman).getYPixel() + Sprite.SCALED_SIZE / 2;
+
+        boolean setX = false;
+        boolean setY = false;
+
+        if(midX - WIDTH * Sprite.SCALED_SIZE / 2 < 0) {
+            Camera.setX(0);
+            setX = true;
+        }
+
+        if(midX + WIDTH * Sprite.SCALED_SIZE / 2 > gameMap.getWidth()) {
+            Camera.setX(gameMap.getWidth() - WIDTH * Sprite.SCALED_SIZE);
+            setX = true;
+        }
+
+        if(!setX) {
+            Camera.setX(midX - WIDTH * Sprite.SCALED_SIZE / 2);
+        }
+
+        if(midY - HEIGHT * Sprite.SCALED_SIZE / 2 < 0) {
+            Camera.setY(0);
+            setY = true;
+        }
+
+        if(midY + HEIGHT * Sprite.SCALED_SIZE / 2 > gameMap.getHeight()) {
+            Camera.setY(gameMap.getHeight() - HEIGHT * Sprite.SCALED_SIZE);
+            setY = true;
+        }
+
+        if(!setY) {
+            Camera.setY(midY - HEIGHT * Sprite.SCALED_SIZE / 2);
+        }
     }
 }
