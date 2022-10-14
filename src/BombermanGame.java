@@ -1,25 +1,4 @@
-import static graphics.Camera.*;
-
-import algorithm.BreadthFirstSearch;
-import entities.Entity;
-import entities.animationentity.AnimationEntity;
-import entities.animationentity.bomb.Bomb;
-import entities.animationentity.movingentity.MovingEntity;
-import entities.animationentity.movingentity.bomber.Bomber;
-import entities.animationentity.movingentity.enemies.Beehive;
-import entities.animationentity.movingentity.enemies.Creeper;
-import entities.animationentity.movingentity.enemies.Enemies;
-import entities.animationentity.movingentity.enemies.chase.Bee;
-import entities.animationentity.movingentity.enemies.chase.Chase;
-import entities.animationentity.movingentity.enemies.chase.DeeDee;
-import entities.animationentity.movingentity.enemies.chase.Oneal;
-import entities.block.Brick;
-import gamemap.GameMap;
-import graphics.Camera;
 import graphics.Sprite;
-import java.util.ArrayList;
-import java.util.List;
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -31,24 +10,16 @@ public class BombermanGame extends Application {
     public static final int WIDTH = 25;
     public static final int HEIGHT = 20;
 
-//    public static final int WIDTH = 20;
-//    public static final int HEIGHT = 15;
     public static final int INF = (int) 1e9 + 7;
     public static final String TITLE = "Bomberman Game";
 
-    public Scene scene = null;
-    private GraphicsContext gc;
-    private Canvas canvas;
-    private List<Entity> movingEntities = new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
-    private MovingEntity bomberman;
-    private GameMap gameMap;
+    public static Scene scene = null;
+    public static GraphicsContext gc;
+    public static Canvas canvas;
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
     }
-
-    @Override
     public void start(Stage stage) {
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
@@ -61,267 +32,13 @@ public class BombermanGame extends Application {
         // Tao scene
         scene = new Scene(root);
 
-        scene.setOnKeyPressed(event -> {
-            if (bomberman != null) {
-                switch (event.getCode()) {
-                    case UP:
-                        bomberman.setUp(true);
-                        System.out.println("UP");
-                        break;
-                    case DOWN:
-                        bomberman.setDown(true);
-                        System.out.println("DOWN");
-                        break;
-                    case RIGHT:
-                        bomberman.setRight(true);
-                        System.out.println("RIGHT");
-                        break;
-                    case LEFT:
-                        bomberman.setLeft(true);
-                        System.out.println("LEFT");
-                        break;
-                    case SPACE:
-                        System.out.println("SPACE");
-                        ((Bomber) bomberman).createBomb(gameMap);
-                        break;
-                    case P:
-                        System.out.println("P");
-                        break;
-                }
-            }
-        });
-
-        scene.setOnKeyReleased(event -> {
-            if (bomberman != null) {
-                switch (event.getCode()) {
-                    case UP:
-                        bomberman.setUp(false);
-                        break;
-                    case DOWN:
-                        bomberman.setDown(false);
-                        break;
-                    case RIGHT:
-                        bomberman.setRight(false);
-                        break;
-                    case LEFT:
-                        bomberman.setLeft(false);
-                        break;
-                }
-            }
-        });
-
         // Them scene vao stage
         stage.setScene(scene);
         stage.setTitle(TITLE);
         stage.show();
 
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long l) {
-                render();
-                update();
-            }
-        };
-        timer.start();
+        LevelGame levelGame = new LevelGame(1);
+        levelGame.start();
 
-        initGame();
-    }
-
-    private void initGame() {
-        gameMap = new GameMap();
-        int currentLevel = 1;
-        gameMap.initMap(currentLevel);
-        stillObjects = gameMap.getListStillObjects();
-        movingEntities = gameMap.getListMovingEntity();
-        for (Entity entity : movingEntities) {
-            if (entity instanceof Bomber) {
-                bomberman = (MovingEntity) entity;
-                break;
-            }
-        }
-
-        for (Entity entity : movingEntities) {
-            if (entity instanceof Chase) {
-                if (entity instanceof Oneal) {
-                    ((Oneal) entity).setTargetEntity(bomberman);
-                }
-
-                if (entity instanceof Bee) {
-                    ((Bee) entity).setDistanceChase(gameMap.getCol() * gameMap.getRow());
-                    BreadthFirstSearch.CalculatorBreadthFirstSearch(
-                        entity.getYPixel() / Sprite.SCALED_SIZE,
-                        entity.getXPixel() / Sprite.SCALED_SIZE,
-                        gameMap);
-                    int minDist = INF;
-                    for (Entity targetEntity : movingEntities) {
-                        if (targetEntity instanceof Beehive) {
-                            int dist = BreadthFirstSearch.minDistance(
-                                targetEntity.getYPixel() / Sprite.SCALED_SIZE,
-                                targetEntity.getXPixel() / Sprite.SCALED_SIZE);
-                            if (minDist > dist) {
-                                minDist = dist;
-                                ((Bee) entity).setTargetEntity(targetEntity);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private void move() {
-        bomberman.move(gameMap);
-        ((Bomber) bomberman).pickUpItem(gameMap);
-        for (Entity entity : movingEntities) {
-            if (entity instanceof Bomber) {
-                continue;
-            }
-            if (entity instanceof Enemies) {
-                ((Enemies) entity).chooseDirection(gameMap);
-            }
-            ((MovingEntity) entity).checkRun();
-        }
-        bomberman.checkRun();
-    }
-
-    private void checkBomb() {
-        for (Entity entity : movingEntities) {
-            if (entity instanceof MovingEntity) {
-                List<Bomb> bombList = ((MovingEntity) entity).getBombList();
-                for (Bomb bomb : bombList) {
-                    bomb.checkExplosion(gameMap, movingEntities);
-                }
-                for (Bomb bomb : bombList) {
-                    ((MovingEntity) entity).explodedBomb(bomb, gameMap);
-                }
-                for (int i = 0; i < bombList.size(); ++i) {
-                    Bomb bomb = bombList.get(i);
-                    if (!bomb.getAnimations()) {
-                        for (Entity deedee: movingEntities) {
-                            if (deedee instanceof DeeDee
-                                && ((DeeDee) deedee).getTargetEntity() == bomb) {
-                                ((DeeDee) deedee).setTargetEntity(null);
-                            }
-                        }
-                        bombList.remove(i);
-                        --i;
-                    }
-                }
-                for (Bomb bomb : bombList) {
-                    bomb.update();
-                }
-            }
-        }
-    }
-
-    private void checkDestroyBrick() {
-        for (int i = 0; i < stillObjects.size(); ++i) {
-            Entity brick = stillObjects.get(i);
-            if (brick instanceof Brick) {
-                if (((Brick) brick).checkDestroy()) {
-                    stillObjects.remove(i);
-                    --i;
-                }
-            }
-        }
-    }
-
-    private void checkKillEntity() {
-        for (int i = 0; i < movingEntities.size(); ++i) {
-            Entity entity = movingEntities.get(i);
-            if (entity instanceof AnimationEntity) {
-                if (((AnimationEntity) entity).getlives() == 0
-                        && !((AnimationEntity) entity).getAnimations()) {
-                    if (entity instanceof Bomber) {
-                        bomberman = null;
-                    }
-                    if (entity instanceof Beehive) {
-                        ((Beehive) entity).createBee(gameMap, (Bomber) bomberman);
-                    }
-                    if (entity instanceof Creeper) {
-                        List<Bomb> bombList = ((Creeper) entity).getBombList();
-                        for (int j = 0; j < bombList.size(); ++j) {
-                            gameMap.setPosIsBombOpened(
-                                bombList.get(j).getYPixel() / Sprite.SCALED_SIZE,
-                                bombList.get(j).getXPixel() / Sprite.SCALED_SIZE);
-                        }
-                    }
-                    movingEntities.remove(i);
-                    --i;
-                }
-            }
-        }
-    }
-
-    private void fps() {
-        try {
-            Thread.sleep(40);
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
-    }
-
-    public void update() {
-        if (bomberman != null) {
-            move();
-        }
-        checkBomb();
-        checkDestroyBrick();
-        checkKillEntity();
-        stillObjects.forEach(Entity::update);
-        movingEntities.forEach(Entity::update);
-        fps();
-    }
-
-    public void render() {
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        updateCamera();
-        stillObjects.forEach(g -> g.render(gc));
-        for (Entity entity : movingEntities) {
-            if (entity instanceof MovingEntity) {
-                List<Bomb> bombList = ((MovingEntity) entity).getBombList();
-                bombList.forEach(g -> g.render(gc));
-            }
-        }
-        movingEntities.forEach(g -> g.render(gc));
-    }
-
-    public void updateCamera() {
-        if (bomberman == null) {
-            return;
-        }
-        int midX = ((Bomber) bomberman).getXPixel() + Sprite.SCALED_SIZE / 2;
-        int midY = ((Bomber) bomberman).getYPixel() + Sprite.SCALED_SIZE / 2;
-
-        boolean setX = false;
-        boolean setY = false;
-
-        if(midX - WIDTH * Sprite.SCALED_SIZE / 2 < 0) {
-            Camera.setX(0);
-            setX = true;
-        }
-
-        if(midX + WIDTH * Sprite.SCALED_SIZE / 2 > gameMap.getWidth()) {
-            Camera.setX(gameMap.getWidth() - WIDTH * Sprite.SCALED_SIZE);
-            setX = true;
-        }
-
-        if(!setX) {
-            Camera.setX(midX - WIDTH * Sprite.SCALED_SIZE / 2);
-        }
-
-        if(midY - HEIGHT * Sprite.SCALED_SIZE / 2 < 0) {
-            Camera.setY(0);
-            setY = true;
-        }
-
-        if(midY + HEIGHT * Sprite.SCALED_SIZE / 2 > gameMap.getHeight()) {
-            Camera.setY(gameMap.getHeight() - HEIGHT * Sprite.SCALED_SIZE);
-            setY = true;
-        }
-
-        if(!setY) {
-            Camera.setY(midY - HEIGHT * Sprite.SCALED_SIZE / 2);
-        }
     }
 }

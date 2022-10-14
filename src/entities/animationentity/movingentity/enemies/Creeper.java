@@ -1,8 +1,11 @@
 package entities.animationentity.movingentity.enemies;
 
+import entities.animationentity.bomb.Bomb;
+import entities.animationentity.movingentity.bomber.Bomber;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
+import java.util.List;
 import javafx.scene.image.Image;
 
 public class Creeper extends Enemies {
@@ -106,4 +109,13 @@ public class Creeper extends Enemies {
         }
     }
 
+    @Override
+    public void die(GameMap gameMap, Bomber bomberman) {
+        List<Bomb> bombList = ((Creeper) this).getBombList();
+        for (int j = 0; j < bombList.size(); ++j) {
+            gameMap.setPosIsBombOpened(
+                bombList.get(j).getYPixel() / Sprite.SCALED_SIZE,
+                bombList.get(j).getXPixel() / Sprite.SCALED_SIZE);
+        }
+    }
 }

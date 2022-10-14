@@ -1,6 +1,7 @@
 package entities.animationentity.movingentity.enemies;
 
 import entities.Entity;
+import entities.animationentity.movingentity.MovingEntity;
 import entities.animationentity.movingentity.bomber.Bomber;
 import entities.animationentity.movingentity.enemies.chase.Bee;
 import entities.animationentity.movingentity.enemies.chase.Chase;
@@ -71,5 +72,10 @@ public class Beehive extends Chase {
 
         Timer timer = new Timer();
         timer.schedule(timerTask, WAIT_CREATE_BEE);
+    }
+
+    @Override
+    public void die(GameMap gameMap, Bomber bomberman) {
+        createBee(gameMap, (Bomber) bomberman);
     }
 }

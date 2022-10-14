@@ -1,7 +1,9 @@
 package entities.animationentity;
 
 import entities.Entity;
+import entities.animationentity.movingentity.bomber.Bomber;
 import enumeration.Direction;
+import gamemap.GameMap;
 import javafx.scene.image.Image;
 
 public abstract class AnimationEntity extends Entity {
@@ -151,5 +153,9 @@ public abstract class AnimationEntity extends Entity {
 
     public void setLengthExplosionOfBomb(int lengthExplosionOfBomb) {
         this.lengthExplosionOfBomb = lengthExplosionOfBomb;
+    }
+
+    public void die(GameMap gameMap, Bomber bomberman) {
+
     }
 }
