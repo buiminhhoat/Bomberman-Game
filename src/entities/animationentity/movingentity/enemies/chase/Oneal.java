@@ -1,7 +1,12 @@
 package entities.animationentity.movingentity.enemies.chase;
 
+import static algorithm.ShuffleArray.shuffleArray;
+
+import algorithm.BreadthFirstSearch;
 import enumeration.Direction;
+import gamemap.GameMap;
 import graphics.Sprite;
+import java.util.Random;
 import javafx.scene.image.Image;
 
 public class Oneal extends Chase {

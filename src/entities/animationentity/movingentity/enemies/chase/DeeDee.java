@@ -19,6 +19,8 @@ import javafx.scene.image.Image;
 
 public class DeeDee extends Chase {
     protected boolean eating = false;
+
+    private int DIGESTION_TIME = 15 * 1000; // 1s = 1000ms
     public DeeDee() {
         distanceChase = INF;
     }
@@ -209,9 +211,6 @@ public class DeeDee extends Chase {
                     }
                 }
             }
-            if (Min != INF) {
-                System.out.println(Min);
-            }
         }
 
         if (targetEntity == null || !(targetEntity instanceof Bomb)) {
@@ -360,7 +359,7 @@ public class DeeDee extends Chase {
                             }
                         };
                         Timer timer = new Timer();
-                        timer.schedule(timerTask, 5000);
+                        timer.schedule(timerTask, DIGESTION_TIME);
                         bombList.remove(i);
                         --i;
                     }

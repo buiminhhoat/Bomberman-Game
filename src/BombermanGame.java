@@ -235,6 +235,17 @@ public class BombermanGame extends Application {
                     if (entity instanceof Bomber) {
                         bomberman = null;
                     }
+                    if (entity instanceof Beehive) {
+                        ((Beehive) entity).createBee(gameMap, (Bomber) bomberman);
+                    }
+                    if (entity instanceof Creeper) {
+                        List<Bomb> bombList = ((Creeper) entity).getBombList();
+                        for (int j = 0; j < bombList.size(); ++j) {
+                            gameMap.setPosIsBombOpened(
+                                bombList.get(j).getYPixel() / Sprite.SCALED_SIZE,
+                                bombList.get(j).getXPixel() / Sprite.SCALED_SIZE);
+                        }
+                    }
                     movingEntities.remove(i);
                     --i;
                 }
