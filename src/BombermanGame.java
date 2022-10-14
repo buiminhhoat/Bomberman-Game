@@ -39,6 +39,5 @@ public class BombermanGame extends Application {
 
         LevelGame levelGame = new LevelGame(1);
         levelGame.start();
-
     }
 }

@@ -183,6 +183,9 @@ public class GameMap {
                         case BOMB_ITEM:
                             object = new Brick(j, i, Sprite.brick.getFxImage());
                             break;
+                        case PORTAL:
+                            object = new Brick(j, i, Sprite.brick.getFxImage());
+                            break;
                     }
                     if (object == null) {
                         continue;
@@ -328,6 +331,9 @@ public class GameMap {
                         object = new Brick(j, i, Sprite.brick.getFxImage());
                         break;
                     case BOMB_ITEM:
+                        object = new Brick(j, i, Sprite.brick.getFxImage());
+                        break;
+                    case PORTAL:
                         object = new Brick(j, i, Sprite.brick.getFxImage());
                         break;
                 }

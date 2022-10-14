@@ -2,15 +2,18 @@ package entities.animationentity.movingentity.bomber;
 
 import entities.Entity;
 import entities.animationentity.hiddenitem.HiddenItem;
+import entities.animationentity.hiddenitem.Portal;
 import entities.animationentity.movingentity.MovingEntity;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import javafx.scene.image.Image;
 
 public class Bomber extends MovingEntity {
+    private boolean win = false;
 
     public Bomber() {
 
@@ -26,6 +29,10 @@ public class Bomber extends MovingEntity {
             Entity hiddenItem = gameMap.getStillObjects().get(i);
             if (hiddenItem instanceof HiddenItem) {
                 if (((HiddenItem) hiddenItem).pickUp(this)) {
+                    if (hiddenItem instanceof Portal) {
+                        ((Portal) hiddenItem).featureItem(this, gameMap);
+                        continue;
+                    }
                     ((HiddenItem) hiddenItem).featureItem(this);
                     gameMap.getStillObjects().remove(hiddenItem);
                     --i;
@@ -109,5 +116,13 @@ public class Bomber extends MovingEntity {
                     break;
             }
         }
+    }
+
+    public boolean isWin() {
+        return win;
+    }
+
+    public void setWin(boolean win) {
+        this.win = win;
     }
 }

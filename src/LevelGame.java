@@ -20,6 +20,7 @@ import javafx.animation.AnimationTimer;
 
 public class LevelGame {
     private int level;
+    private boolean win = false;
 
     public LevelGame() {
 
@@ -84,16 +85,21 @@ public class LevelGame {
             }
         });
 
+        initGame();
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
                 render();
                 update();
+                if (((Bomber) bomberman).isWin()) {
+                    level++;
+                    ((Bomber) bomberman).setWin(false);
+                    initGame();
+                }
             }
         };
 
         timer.start();
-        initGame();
     }
     private void initGame() {
         Camera.setX(0);

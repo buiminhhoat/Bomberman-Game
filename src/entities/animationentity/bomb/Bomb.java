@@ -5,6 +5,7 @@ import entities.animationentity.AnimationEntity;
 import entities.animationentity.hiddenitem.BombItem;
 import entities.animationentity.hiddenitem.FlameItem;
 import entities.animationentity.hiddenitem.HiddenItem;
+import entities.animationentity.hiddenitem.Portal;
 import entities.animationentity.hiddenitem.SpeedItem;
 import entities.animationentity.movingentity.MovingEntity;
 import entities.animationentity.movingentity.bomber.Bomber;
@@ -264,6 +265,9 @@ public class Bomb extends AnimationEntity {
                             break;
                         case FLAME_ITEM:
                             item = new FlameItem(y, x, Sprite.powerup_flames.getFxImage());
+                            break;
+                        case PORTAL:
+                            item = new Portal(y, x, Sprite.portal.getFxImage());
                             break;
                     }
                     if (item == null) continue;
