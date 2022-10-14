@@ -204,7 +204,7 @@ public class Bomb extends AnimationEntity {
             }
             flame_center.render(gc);
         } else {
-            gc.drawImage(img, xPixel, yPixel);
+            super.render(gc);
         }
     }
 

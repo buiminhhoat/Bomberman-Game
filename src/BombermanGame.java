@@ -276,6 +276,9 @@ public class BombermanGame extends Application {
     }
 
     public void updateCamera() {
+        if (bomberman == null) {
+            return;
+        }
         int midX = ((Bomber) bomberman).getXPixel() + Sprite.SCALED_SIZE / 2;
         int midY = ((Bomber) bomberman).getYPixel() + Sprite.SCALED_SIZE / 2;
 
