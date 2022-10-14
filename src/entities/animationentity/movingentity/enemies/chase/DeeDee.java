@@ -12,6 +12,9 @@ import gamemap.GameMap;
 import graphics.Sprite;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javafx.scene.image.Image;
 
 public class DeeDee extends Chase {
@@ -349,6 +352,15 @@ public class DeeDee extends Chase {
                             }
                         }
                         this.eating = true;
+
+                        TimerTask timerTask = new TimerTask() {
+                            @Override
+                            public void run() {
+                                eating = false;
+                            }
+                        };
+                        Timer timer = new Timer();
+                        timer.schedule(timerTask, 5000);
                         bombList.remove(i);
                         --i;
                     }
