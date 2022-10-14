@@ -14,12 +14,13 @@ public class Chase extends Enemies {
 
     protected static final int dx[] = {-1, 0, 1, 0};
     protected static final int dy[] = {0, 1, 0, -1};
+    protected static final int INF = (int) 1e9 + 7;
 
     protected static final int DEFAULT_DISTANCE_CHASE = 7;
 
     protected int distanceChase = DEFAULT_DISTANCE_CHASE;
     Entity targetEntity;
-    private int[] randomShuffle = new int[4];
+    protected int[] randomShuffle = new int[4];
 
     public Chase() {
 

@@ -9,6 +9,7 @@ import entities.animationentity.movingentity.enemies.Creeper;
 import entities.animationentity.movingentity.enemies.Enemies;
 import entities.animationentity.movingentity.enemies.chase.Bee;
 import entities.animationentity.movingentity.enemies.chase.Chase;
+import entities.animationentity.movingentity.enemies.chase.DeeDee;
 import entities.animationentity.movingentity.enemies.chase.Oneal;
 import entities.block.Brick;
 import gamemap.GameMap;
@@ -35,7 +36,6 @@ public class BombermanGame extends Application {
     private Canvas canvas;
     private List<Entity> movingEntities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
-    private List<Entity> listBombingEntity = new ArrayList<>();
     private MovingEntity bomberman;
     private GameMap gameMap;
 
@@ -134,12 +134,6 @@ public class BombermanGame extends Application {
                 break;
             }
         }
-        for (Entity entity : movingEntities) {
-            if (entity instanceof Bomber
-                || entity instanceof Creeper) {
-                listBombingEntity.add(entity);
-            }
-        }
 
         for (Entity entity : movingEntities) {
             if (entity instanceof Chase) {
@@ -186,7 +180,7 @@ public class BombermanGame extends Application {
     }
 
     private void checkBomb() {
-        for (Entity entity : listBombingEntity) {
+        for (Entity entity : movingEntities) {
             if (entity instanceof MovingEntity) {
                 List<Bomb> bombList = ((MovingEntity) entity).getBombList();
                 for (Bomb bomb : bombList) {
@@ -195,7 +189,19 @@ public class BombermanGame extends Application {
                 for (Bomb bomb : bombList) {
                     ((MovingEntity) entity).explodedBomb(bomb, gameMap);
                 }
-                bombList.removeIf(bomb -> !bomb.getAnimations());
+                for (int i = 0; i < bombList.size(); ++i) {
+                    Bomb bomb = bombList.get(i);
+                    if (!bomb.getAnimations()) {
+                        for (Entity deedee: movingEntities) {
+                            if (deedee instanceof DeeDee
+                                && ((DeeDee) deedee).getTargetEntity() == bomb) {
+                                ((DeeDee) deedee).setTargetEntity(null);
+                            }
+                        }
+                        bombList.remove(i);
+                        --i;
+                    }
+                }
                 for (Bomb bomb : bombList) {
                     bomb.update();
                 }
@@ -254,7 +260,7 @@ public class BombermanGame extends Application {
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
-        for (Entity entity : listBombingEntity) {
+        for (Entity entity : movingEntities) {
             if (entity instanceof MovingEntity) {
                 List<Bomb> bombList = ((MovingEntity) entity).getBombList();
                 bombList.forEach(g -> g.render(gc));

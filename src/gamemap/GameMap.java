@@ -9,6 +9,7 @@ import entities.animationentity.movingentity.enemies.Beehive;
 import entities.animationentity.movingentity.enemies.Creeper;
 import entities.animationentity.movingentity.enemies.Ghost;
 import entities.animationentity.movingentity.enemies.chase.Bee;
+import entities.animationentity.movingentity.enemies.chase.DeeDee;
 import entities.animationentity.movingentity.enemies.chase.Oneal;
 import entities.block.Brick;
 import entities.block.Grass;
@@ -104,6 +105,8 @@ public class GameMap {
                 return BombermanObject.BEEHIVE;
             case '6':
                 return BombermanObject.BEE;
+            case '7':
+                return BombermanObject.DEEDEE;
             case 'b':
                 return BombermanObject.BOMB_ITEM;
             case 'f':
@@ -155,6 +158,9 @@ public class GameMap {
                             break;
                         case CREEPER:
                             object = new Creeper(j, i, Sprite.ghost_left1.getFxImage());
+                            break;
+                        case DEEDEE:
+                            object = new DeeDee(j, i, Sprite.deedee_left.getFxImage());
                             break;
 
                         case WALL:
@@ -395,6 +401,9 @@ public class GameMap {
                         break;
                     case CREEPER:
                         movingEntity = new Creeper(j, i, Sprite.ghost_left1.getFxImage());
+                        break;
+                    case DEEDEE:
+                        movingEntity = new DeeDee(j, i, Sprite.deedee_left.getFxImage());
                         break;
                 }
                 if (movingEntity == null) {
