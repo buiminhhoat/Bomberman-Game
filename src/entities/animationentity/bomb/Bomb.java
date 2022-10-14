@@ -7,6 +7,7 @@ import entities.animationentity.hiddenitem.FlameItem;
 import entities.animationentity.hiddenitem.HiddenItem;
 import entities.animationentity.hiddenitem.SpeedItem;
 import entities.animationentity.movingentity.MovingEntity;
+import entities.animationentity.movingentity.bomber.Bomber;
 import entities.animationentity.movingentity.enemies.Creeper;
 import entities.animationentity.movingentity.enemies.Enemies;
 import entities.block.Brick;
@@ -182,16 +183,30 @@ public class Bomb extends AnimationEntity {
     @Override
     public void update() {
         if (this.animations) {
-            switch (this.currentFrame) {
-                case 0:
-                    this.img = Sprite.bomb.getFxImage();
-                    break;
-                case 1:
-                    this.img = Sprite.bomb_1.getFxImage();
-                    break;
-                case 2:
-                    this.img = Sprite.bomb_2.getFxImage();
-                    break;
+            if (dynamicEntity instanceof Bomber) {
+                switch (this.currentFrame) {
+                    case 0:
+                        this.img = Sprite.bomb.getFxImage();
+                        break;
+                    case 1:
+                        this.img = Sprite.bomb_1.getFxImage();
+                        break;
+                    case 2:
+                        this.img = Sprite.bomb_2.getFxImage();
+                        break;
+                }
+            } else {
+                switch (this.currentFrame) {
+                    case 0:
+                        this.img = Sprite.bomb_enemy.getFxImage();
+                        break;
+                    case 1:
+                        this.img = Sprite.bomb_enemy_1.getFxImage();
+                        break;
+                    case 2:
+                        this.img = Sprite.bomb_enemy_2.getFxImage();
+                        break;
+                }
             }
         }
     }

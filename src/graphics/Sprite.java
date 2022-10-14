@@ -293,6 +293,12 @@ public class Sprite {
         DEFAULT_SIZE);
     public static Sprite bomb_2 = new Sprite(DEFAULT_SIZE, 2, 3, SpriteSheet.tiles, DEFAULT_SIZE,
         DEFAULT_SIZE);
+    public static Sprite bomb_enemy = new Sprite(DEFAULT_SIZE, 0, 4, SpriteSheet.tiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite bomb_enemy_1 = new Sprite(DEFAULT_SIZE, 1, 4, SpriteSheet.tiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite bomb_enemy_2 = new Sprite(DEFAULT_SIZE, 2, 4, SpriteSheet.tiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
     /*
     |--------------------------------------------------------------------------
     | FlameSegment Sprites
