@@ -162,7 +162,7 @@ public class GameMap {
                             object = new Ghost(j, i, Sprite.ghost_left1.getFxImage());
                             break;
                         case CREEPER:
-                            object = new Creeper(j, i, Sprite.ghost_left1.getFxImage());
+                            object = new Creeper(j, i, Sprite.ghost_left1.getFxImage(), this);
                             break;
                         case DEEDEE:
                             object = new DeeDee(j, i, Sprite.deedee_left.getFxImage());
@@ -411,7 +411,7 @@ public class GameMap {
                         movingEntity = new Ghost(j, i, Sprite.ghost_left1.getFxImage());
                         break;
                     case CREEPER:
-                        movingEntity = new Creeper(j, i, Sprite.ghost_left1.getFxImage());
+                        movingEntity = new Creeper(j, i, Sprite.ghost_left1.getFxImage(), this);
                         break;
                     case DEEDEE:
                         movingEntity = new DeeDee(j, i, Sprite.deedee_left.getFxImage());

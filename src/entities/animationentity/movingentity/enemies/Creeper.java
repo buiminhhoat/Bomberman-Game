@@ -5,27 +5,27 @@ import entities.animationentity.movingentity.bomber.Bomber;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
+
+import java.sql.Time;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javafx.scene.image.Image;
 
 public class Creeper extends Enemies {
-
+    private final int TIME_CREATE_BOMB = 5 * 1000;
+    private long lastTimeCreateBomb;
+    GameMap gameMap;
     public Creeper() {
-
+        lastTimeCreateBomb = System.currentTimeMillis();
     }
 
-    public Creeper(int x, int y, Image img) {
+    public Creeper(int x, int y, Image img, GameMap gameMap) {
         super(x, y, img);
         numberBombs = 1;
-    }
-
-    public void chooseDirection(GameMap gameMap) {
-        ++timeline;
-        super.chooseDirection(gameMap);
-        if (numberBombs > 0 && !animations && timeline >= 25 * 5) {
-            createBomb(gameMap);
-            timeline = 0;
-        }
+        lastTimeCreateBomb = System.currentTimeMillis();
+        this.gameMap = gameMap;
     }
 
     @Override
@@ -98,6 +98,11 @@ public class Creeper extends Enemies {
                 }
             }
         } else {
+            long curTime = System.currentTimeMillis();
+            if (curTime - lastTimeCreateBomb >= 5000) {
+                createBomb(gameMap);
+                lastTimeCreateBomb = curTime;
+            }
             switch (this.faceDirection) {
                 case LEFT:
                     this.img = Sprite.creeper_left1.getFxImage();

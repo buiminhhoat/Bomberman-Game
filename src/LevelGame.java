@@ -163,9 +163,9 @@ public class LevelGame {
         for (Entity entity : movingEntities) {
             if (entity instanceof MovingEntity) {
                 List<Bomb> bombList = ((MovingEntity) entity).getBombList();
-                for (Bomb bomb : bombList) {
-                    bomb.checkExplosion(gameMap, movingEntities);
-                }
+//                for (Bomb bomb : bombList) {
+//                    bomb.checkExplosion(gameMap, movingEntities);
+//                }
                 for (Bomb bomb : bombList) {
                     ((MovingEntity) entity).explodedBomb(bomb, gameMap);
                 }

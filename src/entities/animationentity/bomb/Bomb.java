@@ -18,13 +18,16 @@ import gamemap.GameMap;
 import graphics.Sprite;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javafx.scene.canvas.GraphicsContext;
 
 public class Bomb extends AnimationEntity {
 
-    private final int DEFAULT_TIME_BOMB = 50; // 25 = 1s
+    private final int DEFAULT_TIME_BOMB = 3 * 1000;
 
-    private int timeBomb = DEFAULT_TIME_BOMB;
+    private boolean exploded = false;
 
     private Flame flame_center;
     private List<Flame> listFlame = new ArrayList<>();
@@ -34,19 +37,33 @@ public class Bomb extends AnimationEntity {
 
     public Bomb() {
         isBlocked = true;
+        update();
     }
 
     public Bomb(AnimationEntity dynamicEntity, GameMap gameMap) {
         super(dynamicEntity.getXPixel() / Sprite.SCALED_SIZE,
-            dynamicEntity.getYPixel() / Sprite.SCALED_SIZE,
-            Sprite.bomb.getFxImage(), 8, 3, true, 3, Direction.DOWN);
+                dynamicEntity.getYPixel() / Sprite.SCALED_SIZE,
+                Sprite.bomb.getFxImage(), 8, 3, false, 3, Direction.DOWN);
 
         isBlocked = true;
-
         this.dynamicEntity = dynamicEntity;
+        startAnimations();
 
-        int x = dynamicEntity.getXPixel() / Sprite.SCALED_SIZE;
-        int y = dynamicEntity.getYPixel() / Sprite.SCALED_SIZE;
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                createFlame(gameMap);
+                explode(gameMap, gameMap.getMovingEntities());
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(timerTask, DEFAULT_TIME_BOMB);
+        update();
+    }
+
+    void createFlame(GameMap gameMap) {
+        int x = this.getXPixel() / Sprite.SCALED_SIZE;
+        int y = this.getYPixel() / Sprite.SCALED_SIZE;
         int lth = dynamicEntity.getLengthExplosionOfBomb();
 
         flame_center = new Flame(x, y);
@@ -80,26 +97,6 @@ public class Bomb extends AnimationEntity {
         }
     }
 
-    public int getTimeBomb() {
-        return timeBomb;
-    }
-
-    public void setTimeBomb(int timeBomb) {
-        this.timeBomb = timeBomb;
-    }
-
-    private void countdown() {
-        this.timeBomb = Math.max(0, this.timeBomb - 1);
-    }
-
-    public void checkExplosion(GameMap gameMap, List<Entity> movingEntities) {
-        this.nextTimeline();
-        this.countdown();
-        if (this.timeBomb == 0) {
-            this.explode(gameMap, movingEntities);
-        }
-    }
-
     private void killEntity(int xPixel, int yPixel, List<Entity> movingEntities) {
         for (Entity entity : movingEntities) {
             if (listKill.contains(entity)) {
@@ -120,6 +117,8 @@ public class Bomb extends AnimationEntity {
     }
 
     private void explode(GameMap gameMap, List<Entity> movingEntities) {
+        exploded = true;
+
         int x = this.getXPixel() / Sprite.SCALED_SIZE;
         int y = this.getYPixel() / Sprite.SCALED_SIZE;
         int lth = ((AnimationEntity) dynamicEntity).getLengthExplosionOfBomb();
@@ -128,8 +127,7 @@ public class Bomb extends AnimationEntity {
 
         for (int i = y - 1; i >= y - lth; --i) {
             if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
-                if (gameMap.getEntityMap()[i][x] instanceof Brick
-                    && flame_center.getTimeline() == 3) {
+                if (gameMap.getEntityMap()[i][x] instanceof Brick) {
                     destroyEntity(i, x, gameMap);
                 }
                 break;
@@ -139,8 +137,7 @@ public class Bomb extends AnimationEntity {
 
         for (int i = y + 1; i <= y + lth; ++i) {
             if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
-                if (gameMap.getEntityMap()[i][x] instanceof Brick
-                    && flame_center.getTimeline() == 3) {
+                if (gameMap.getEntityMap()[i][x] instanceof Brick) {
                     destroyEntity(i, x, gameMap);
                 }
                 break;
@@ -150,8 +147,7 @@ public class Bomb extends AnimationEntity {
 
         for (int i = x - 1; i >= x - lth; --i) {
             if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
-                if (gameMap.getEntityMap()[y][i] instanceof Brick
-                    && flame_center.getTimeline() == 3) {
+                if (gameMap.getEntityMap()[y][i] instanceof Brick) {
                     destroyEntity(y, i, gameMap);
                 }
                 break;
@@ -161,8 +157,7 @@ public class Bomb extends AnimationEntity {
 
         for (int i = x + 1; i <= x + lth; ++i) {
             if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
-                if (gameMap.getEntityMap()[y][i] instanceof Brick
-                    && flame_center.getTimeline() == 3) {
+                if (gameMap.getEntityMap()[y][i] instanceof Brick) {
                     destroyEntity(y, i, gameMap);
                 }
                 break;
@@ -170,19 +165,21 @@ public class Bomb extends AnimationEntity {
             killEntity(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE, movingEntities);
         }
 
-        flame_center.flaming();
-        for (Flame flame : listFlame) {
-            flame.flaming();
-        }
 
-        if (!flame_center.getAnimations()) {
-            this.setAnimations(false);
-            this.setTimeBomb(DEFAULT_TIME_BOMB);
-        }
     }
 
     @Override
     public void update() {
+        if (exploded) {
+            flame_center.updateFlame();
+            for (Flame flame : listFlame) {
+                flame.updateFlame();
+            }
+            if (!flame_center.getAnimations()) {
+                finishAnimations();
+            }
+        }
+
         if (this.animations) {
             if (dynamicEntity instanceof Bomber) {
                 switch (this.currentFrame) {
@@ -214,7 +211,7 @@ public class Bomb extends AnimationEntity {
 
     @Override
     public void render(GraphicsContext gc) {
-        if (this.timeBomb == 0) {
+        if (exploded) {
             for (Flame flame : listFlame) {
                 flame.render(gc);
             }
@@ -249,9 +246,9 @@ public class Bomb extends AnimationEntity {
         for (Entity brick : gameMap.getStillObjects()) {
             if (brick instanceof Brick) {
                 if (brick.getXPixel() / Sprite.SCALED_SIZE == y
-                    && brick.getYPixel() / Sprite.SCALED_SIZE == x) {
+                        && brick.getYPixel() / Sprite.SCALED_SIZE == x) {
 
-                    ((Brick) brick).setAnimations(true);
+                    ((Brick) brick).startAnimations();
 
                     BombermanObject bombermanObject = gameMap.getMapObject(x, y);
 

@@ -284,7 +284,7 @@ public class DeeDee extends Chase {
                 this.getYPixel() - Sprite.SCALED_SIZE)) {
                 return;
             }
-            this.setAnimations(true);
+            startAnimations();
         }
     }
 
@@ -296,7 +296,7 @@ public class DeeDee extends Chase {
                 this.getYPixel() + Sprite.SCALED_SIZE)) {
                 return;
             }
-            setAnimations(true);
+            startAnimations();
         }
     }
 
@@ -308,7 +308,7 @@ public class DeeDee extends Chase {
                 this.getYPixel())) {
                 return;
             }
-            this.setAnimations(true);
+            startAnimations();
         }
     }
 
@@ -320,7 +320,7 @@ public class DeeDee extends Chase {
                 this.getYPixel())) {
                 return;
             }
-            this.setAnimations(true);
+            startAnimations();
         }
     }
 

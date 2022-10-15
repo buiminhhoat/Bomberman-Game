@@ -6,6 +6,9 @@ import enumeration.Direction;
 import graphics.Sprite;
 import javafx.scene.image.Image;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Brick extends AnimationEntity {
 
     private boolean isDestroy = false;
@@ -23,9 +26,6 @@ public class Brick extends AnimationEntity {
     }
 
     public boolean checkDestroy() {
-        if (this.animations) {
-            this.nextTimeline();
-        }
         if (this.isDestroy) {
             return true;
         }
@@ -33,17 +33,23 @@ public class Brick extends AnimationEntity {
     }
 
     @Override
-    public void nextTimeline() {
-        ++this.timeline;
-        int timeToTransitionFrame = 2;
-        if (this.timeline % timeToTransitionFrame == 0) {
-            ++this.currentFrame;
-            if (this.currentFrame == this.maxFrame) {
-                this.isDestroy = true;
-                this.animations = false;
-                return;
+    public void startAnimations() {
+        this.animations = true;
+        int timeToTransitionFrame = 110;
+
+        Timer time = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                ++currentFrame;
+                if (currentFrame == maxFrame) {
+                    isDestroy = true;
+                    finishAnimations();
+                    time.cancel();
+                }
             }
-        }
+        };
+        time.schedule(timerTask, 0, timeToTransitionFrame);
     }
 
     @Override

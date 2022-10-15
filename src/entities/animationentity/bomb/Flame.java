@@ -5,6 +5,9 @@ import enumeration.Axis;
 import enumeration.Direction;
 import graphics.Sprite;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Flame extends AnimationEntity {
 
     private boolean lastFlame = false;
@@ -16,41 +19,50 @@ public class Flame extends AnimationEntity {
     }
 
     public Flame(int x, int y) {
-        super(x, y, Sprite.bomb_exploded.getFxImage(), 4, 3,
-            true, 3, Direction.DOWN);
+        super(x, y, Sprite.bomb_exploded.getFxImage(), 8, 3,
+            false, 3, Direction.DOWN);
         axisFlame = Axis.CENTER;
+        startAnimations();
+        update();
     }
 
     public Flame(int x, int y, Direction direction, boolean lastFlame) {
-        super(x, y, Sprite.explosion_horizontal.getFxImage(), 4, 3,
-            true, 3, direction);
+        super(x, y, Sprite.explosion_horizontal.getFxImage(), 8, 3,
+            false, 3, direction);
         this.lastFlame = lastFlame;
-
+        startAnimations();
         if (direction == Direction.UP || direction == Direction.DOWN) {
             axisFlame = Axis.VERTICAL;
         }
         if (direction == Direction.LEFT || direction == Direction.RIGHT) {
             axisFlame = Axis.HORIZONTAL;
         }
+        update();
     }
 
-    public void flaming() {
-        this.nextTimeline();
+    public void updateFlame() {
         this.update();
     }
 
     @Override
-    public void nextTimeline() {
-        ++this.timeline;
-        int timeToTransitionFrame = 2;
-        if (this.timeline % timeToTransitionFrame == 0) {
-            ++this.idFrame;
-            if (this.idFrame == this.frame.length) {
-                this.animations = false;
-                return;
+    public void startAnimations() {
+        this.animations = true;
+        int timeToTransitionFrame = 70;
+
+        Timer time = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                ++idFrame;
+                if (idFrame == frame.length) {
+                    finishAnimations();
+                    time.cancel();
+                    return;
+                }
+                currentFrame = frame[idFrame];
             }
-            this.currentFrame = this.frame[this.idFrame];
-        }
+        };
+        time.schedule(timerTask, 0, timeToTransitionFrame);
     }
 
     @Override

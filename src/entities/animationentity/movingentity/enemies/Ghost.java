@@ -105,7 +105,7 @@ public class Ghost extends Enemies {
                 this.getXPixel() / Sprite.SCALED_SIZE) == BombermanObject.WALL) {
                 return;
             }
-            this.setAnimations(true);
+            startAnimations();
         }
     }
 
@@ -116,7 +116,7 @@ public class Ghost extends Enemies {
                 this.getXPixel() / Sprite.SCALED_SIZE) == BombermanObject.WALL) {
                 return;
             }
-            setAnimations(true);
+            startAnimations();
         }
     }
 
@@ -128,7 +128,7 @@ public class Ghost extends Enemies {
                 == BombermanObject.WALL) {
                 return;
             }
-            this.setAnimations(true);
+            startAnimations();
         }
     }
 
@@ -140,7 +140,7 @@ public class Ghost extends Enemies {
                 == BombermanObject.WALL) {
                 return;
             }
-            this.setAnimations(true);
+            startAnimations();
         }
     }
 }

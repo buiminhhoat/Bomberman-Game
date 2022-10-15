@@ -119,7 +119,7 @@ public class MovingEntity extends AnimationEntity {
                 this.getYPixel() - Sprite.SCALED_SIZE)) {
                 return;
             }
-            this.setAnimations(true);
+            startAnimations();
         }
     }
 
@@ -130,7 +130,7 @@ public class MovingEntity extends AnimationEntity {
                 this.getYPixel() + Sprite.SCALED_SIZE)) {
                 return;
             }
-            setAnimations(true);
+            startAnimations();
         }
     }
 
@@ -141,7 +141,7 @@ public class MovingEntity extends AnimationEntity {
                 this.getYPixel())) {
                 return;
             }
-            this.setAnimations(true);
+            startAnimations();
         }
     }
 
@@ -152,7 +152,7 @@ public class MovingEntity extends AnimationEntity {
                 this.getYPixel())) {
                 return;
             }
-            this.setAnimations(true);
+            startAnimations();
         }
     }
 
@@ -167,13 +167,9 @@ public class MovingEntity extends AnimationEntity {
         if (entity.getDirection() == null) {
             return;
         }
-
-        entity.nextTimeline();
-
         if (this.getlives() == 0) {
             return;
         }
-
         switch (entity.getDirection()) {
             case UP:
                 entity.setYPixel(entity.getYPixel() - Sprite.SCALED_SIZE / entity.getLevelSpeed());
@@ -191,7 +187,7 @@ public class MovingEntity extends AnimationEntity {
 
         if (entity.getXPixel() % Sprite.SCALED_SIZE == 0
             && entity.getYPixel() % Sprite.SCALED_SIZE == 0) {
-            entity.setAnimations(false);
+            entity.finishAnimations();
         }
     }
 
@@ -222,7 +218,7 @@ public class MovingEntity extends AnimationEntity {
         }
         --this.lives;
         if (this.lives == 0) {
-            this.setAnimations(true);
+            startAnimations();
         }
     }
 
