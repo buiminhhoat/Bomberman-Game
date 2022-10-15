@@ -43,7 +43,7 @@ public abstract class Enemies extends MovingEntity {
     }
 
     public void chooseDirection(GameMap gameMap) {
-        if (animations) {
+        if (animations || getlives() == 0) {
             return;
         }
         Random generator = new Random();

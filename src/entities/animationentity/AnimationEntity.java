@@ -2,6 +2,7 @@ package entities.animationentity;
 
 import entities.Entity;
 import entities.animationentity.movingentity.bomber.Bomber;
+import entities.animationentity.movingentity.enemies.chase.Oneal;
 import enumeration.Direction;
 import gamemap.GameMap;
 import javafx.scene.image.Image;
@@ -22,6 +23,7 @@ public abstract class AnimationEntity extends Entity {
     protected int maxFrame;
     protected Boolean animations;
 
+    protected boolean disappeared = false;
     protected int lives = 1;
     protected int levelSpeed; // {16, 8, 4, 2}
 
@@ -30,6 +32,8 @@ public abstract class AnimationEntity extends Entity {
     private final int[] frame = {0, 0, 0, 1, 2};
     private int idFrame = 0;
 
+    private Timer liveTimer = new Timer();
+    private Timer deathTimer = new Timer();
 
     public AnimationEntity() {
 
@@ -87,7 +91,6 @@ public abstract class AnimationEntity extends Entity {
 
     public void startAnimations() {
         this.animations = true;
-
         if (this.getlives() != 0) {
             int timeToTransitionFrame = 500;
             switch (levelSpeed) {
@@ -101,38 +104,35 @@ public abstract class AnimationEntity extends Entity {
                     timeToTransitionFrame = 100;
                     break;
             }
-
-            Timer timer = new Timer();
             TimerTask timerTask = new TimerTask() {
                 @Override
                 public void run() {
                     currentFrame = (currentFrame + 1) % maxFrame;
-                    if (!animations) {
-                        timer.cancel();
-                    }
                 }
             };
-
-            timer.schedule(timerTask, 0, timeToTransitionFrame);
-
+            liveTimer.schedule(timerTask, 0, timeToTransitionFrame);
         } else {
-            int timeToTransitionFrame = 500;
+            int timeToTransitionFrame = 200;
 
-            Timer timer = new Timer();
             TimerTask timerTask = new TimerTask() {
                 @Override
                 public void run() {
                     ++idFrame;
                     if (idFrame == frame.length) {
                         finishAnimations();
-                        timer.cancel();
+                        disappeared = true;
+                        deathTimer.cancel();
                         return;
                     }
                     currentFrame = frame[idFrame];
                 }
             };
-            timer.schedule(timerTask, 0, timeToTransitionFrame);
+            deathTimer.schedule(timerTask, 0, timeToTransitionFrame);
         }
+    }
+
+    public void cancelLiveTimer() {
+          liveTimer.cancel();
     }
 
     public void finishAnimations() {
@@ -141,44 +141,13 @@ public abstract class AnimationEntity extends Entity {
         currentFrame = 0;
     }
 
-
-
-//    public void nextTimeline() {
-//        int timeToTransitionFrame;
-//
-//        ++this.timeline;
-//        if (this.getlives() != 0) {
-//            timeToTransitionFrame = 1;
-//            switch (levelSpeed) {
-//                case 16:
-//                    timeToTransitionFrame = 5;
-//                    break;
-//                case 8:
-//                    timeToTransitionFrame = 4;
-//                    break;
-//                case 4:
-//                    timeToTransitionFrame = 2;
-//                    break;
-//            }
-//            if (this.timeline % timeToTransitionFrame == 0) {
-//                this.currentFrame = (this.currentFrame + 1) % this.maxFrame;
-//            }
-//        } else {
-//            timeToTransitionFrame = 3;
-//            if (this.timeline % timeToTransitionFrame == 0) {
-//                ++this.idFrame;
-//                if (this.idFrame == this.frame.length) {
-//                    this.animations = false;
-//                    return;
-//                }
-//                this.currentFrame = this.frame[this.idFrame];
-//            }
-//        }
-//    }
-
     @Override
     public void update() {
 
+    }
+
+    public boolean isDisappeared() {
+        return disappeared;
     }
 
     public int getNumberBombs() {

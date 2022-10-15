@@ -178,7 +178,7 @@ public class DeeDee extends Chase {
     }
 
     public void chooseDirection(GameMap gameMap) {
-        if (animations) {
+        if (animations || getlives() == 0) {
             return;
         }
         eatBomb(gameMap);
@@ -351,7 +351,7 @@ public class DeeDee extends Chase {
                             }
                         }
                         this.eating = true;
-
+                        bomb.setExploded(true);
                         TimerTask timerTask = new TimerTask() {
                             @Override
                             public void run() {

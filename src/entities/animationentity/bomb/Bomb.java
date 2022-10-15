@@ -4,7 +4,6 @@ import entities.Entity;
 import entities.animationentity.AnimationEntity;
 import entities.animationentity.hiddenitem.BombItem;
 import entities.animationentity.hiddenitem.FlameItem;
-import entities.animationentity.hiddenitem.HiddenItem;
 import entities.animationentity.hiddenitem.Portal;
 import entities.animationentity.hiddenitem.SpeedItem;
 import entities.animationentity.movingentity.MovingEntity;
@@ -33,6 +32,8 @@ public class Bomb extends AnimationEntity {
     private List<Flame> listFlame = new ArrayList<>();
     private List<Entity> listKill = new ArrayList<>();
 
+    private GameMap gameMap;
+
     private AnimationEntity dynamicEntity;
 
     public Bomb() {
@@ -45,6 +46,7 @@ public class Bomb extends AnimationEntity {
                 dynamicEntity.getYPixel() / Sprite.SCALED_SIZE,
                 Sprite.bomb.getFxImage(), 8, 3, false, 3, Direction.DOWN);
 
+        this.gameMap = gameMap;
         isBlocked = true;
         this.dynamicEntity = dynamicEntity;
         startAnimations();
@@ -52,8 +54,7 @@ public class Bomb extends AnimationEntity {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                createFlame(gameMap);
-                explode(gameMap, gameMap.getMovingEntities());
+                explode();
             }
         };
         Timer timer = new Timer();
@@ -61,14 +62,22 @@ public class Bomb extends AnimationEntity {
         update();
     }
 
-    void createFlame(GameMap gameMap) {
+    private void explode() {
+        if (exploded) return;
+        exploded = true;
+        createFlame();
+        checkKill();
+        destroyBrick();
+    }
+
+    void createFlame() {
         int x = this.getXPixel() / Sprite.SCALED_SIZE;
         int y = this.getYPixel() / Sprite.SCALED_SIZE;
         int lth = dynamicEntity.getLengthExplosionOfBomb();
 
         flame_center = new Flame(x, y);
 
-        for (int i = y - 1; i >= y - lth; --i) {
+        for (int i = y - 1; i >= Math.max(y - lth, 0); --i) {
             if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
                 break;
             }
@@ -82,7 +91,7 @@ public class Bomb extends AnimationEntity {
             listFlame.add(new Flame(x, i, Direction.DOWN, (boolean) (i == y + lth)));
         }
 
-        for (int i = x - 1; i >= x - lth; --i) {
+        for (int i = x - 1; i >= Math.max(x - lth, 0); --i) {
             if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
                 break;
             }
@@ -97,7 +106,47 @@ public class Bomb extends AnimationEntity {
         }
     }
 
-    private void killEntity(int xPixel, int yPixel, List<Entity> movingEntities) {
+    void destroyBrick() {
+        int x = this.getXPixel() / Sprite.SCALED_SIZE;
+        int y = this.getYPixel() / Sprite.SCALED_SIZE;
+        int lth = ((AnimationEntity) dynamicEntity).getLengthExplosionOfBomb();
+
+        for (int i = y - 1; i >= Math.max(y - lth, 0); --i) {
+            if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
+                if (gameMap.getEntityMap()[i][x] instanceof Brick) {
+                    destroyEntity(i, x, gameMap);
+                }
+                break;
+            }
+        }
+        for (int i = y + 1; i <= y + lth; ++i) {
+            if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
+                if (gameMap.getEntityMap()[i][x] instanceof Brick) {
+                    destroyEntity(i, x, gameMap);
+                }
+                break;
+            }
+        }
+        for (int i = x - 1; i >= Math.max(x - lth, 0); --i) {
+            if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
+                if (gameMap.getEntityMap()[y][i] instanceof Brick) {
+                    destroyEntity(y, i, gameMap);
+                }
+                break;
+            }
+        }
+        for (int i = x + 1; i <= x + lth; ++i) {
+            if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
+                if (gameMap.getEntityMap()[y][i] instanceof Brick) {
+                    destroyEntity(y, i, gameMap);
+                }
+                break;
+            }
+        }
+    }
+
+    private void killEntity(int startXPixel, int endXPixel, int startyPixel, int endYPixel,
+                            List<Entity> movingEntities) {
         for (Entity entity : movingEntities) {
             if (listKill.contains(entity)) {
                 continue;
@@ -109,73 +158,71 @@ public class Bomb extends AnimationEntity {
                 }
             }
 
-            if (entity.getXPixel() == xPixel && entity.getYPixel() == yPixel) {
+            if (startXPixel <= entity.getXPixel() && entity.getXPixel() <= endXPixel
+                    && startyPixel <= entity.getYPixel() && entity.getYPixel() <= endYPixel) {
                 listKill.add(entity);
-                ((MovingEntity) entity).die();
+                ((MovingEntity) entity).dead();
             }
         }
     }
 
-    private void explode(GameMap gameMap, List<Entity> movingEntities) {
-        exploded = true;
-
+    public void checkKill() {
         int x = this.getXPixel() / Sprite.SCALED_SIZE;
         int y = this.getYPixel() / Sprite.SCALED_SIZE;
         int lth = ((AnimationEntity) dynamicEntity).getLengthExplosionOfBomb();
+        int id = 0;
+        List <Entity> list = gameMap.getMovingEntities();
 
-        killEntity(x * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE, movingEntities);
+//        killEntity(x * Sprite.SCALED_SIZE, x * Sprite.SCALED_SIZE,
+//                y * Sprite.SCALED_SIZE,y * Sprite.SCALED_SIZE, list);
 
-        for (int i = y - 1; i >= y - lth; --i) {
+        for (int i = y; i >= Math.max(y - lth, 0); --i) {
             if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
-                if (gameMap.getEntityMap()[i][x] instanceof Brick) {
-                    destroyEntity(i, x, gameMap);
-                }
                 break;
             }
-            killEntity(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE, movingEntities);
+            id = i;
         }
+        killEntity(x * Sprite.SCALED_SIZE, x * Sprite.SCALED_SIZE,
+                id * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE, list);
 
-        for (int i = y + 1; i <= y + lth; ++i) {
+        for (int i = y; i <= y + lth; ++i) {
             if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
-                if (gameMap.getEntityMap()[i][x] instanceof Brick) {
-                    destroyEntity(i, x, gameMap);
-                }
                 break;
             }
-            killEntity(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE, movingEntities);
+            id = i;
         }
+        killEntity(x * Sprite.SCALED_SIZE, x * Sprite.SCALED_SIZE,
+                y * Sprite.SCALED_SIZE, id * Sprite.SCALED_SIZE, list);
 
-        for (int i = x - 1; i >= x - lth; --i) {
+        for (int i = x; i >= Math.max(x - lth, 0); --i) {
             if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
-                if (gameMap.getEntityMap()[y][i] instanceof Brick) {
-                    destroyEntity(y, i, gameMap);
-                }
                 break;
             }
-            killEntity(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE, movingEntities);
+            id = i;
         }
+        killEntity(id * Sprite.SCALED_SIZE, x * Sprite.SCALED_SIZE,
+                y * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE, list);
 
         for (int i = x + 1; i <= x + lth; ++i) {
             if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
-                if (gameMap.getEntityMap()[y][i] instanceof Brick) {
-                    destroyEntity(y, i, gameMap);
-                }
                 break;
             }
-            killEntity(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE, movingEntities);
+            id = i;
         }
-
-
+        killEntity(x * Sprite.SCALED_SIZE, id * Sprite.SCALED_SIZE,
+                y * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE, list);
     }
 
     @Override
     public void update() {
         if (exploded) {
-            flame_center.updateFlame();
-            for (Flame flame : listFlame) {
-                flame.updateFlame();
+            if (flame_center != null) {
+                flame_center.updateFlame();
             }
-            if (!flame_center.getAnimations()) {
+            for (int i = 0; i < listFlame.size(); ++i) {
+                listFlame.get(i).updateFlame();
+            }
+            if (flame_center != null && !flame_center.getAnimations()) {
                 finishAnimations();
             }
         }
@@ -215,9 +262,13 @@ public class Bomb extends AnimationEntity {
             for (Flame flame : listFlame) {
                 flame.render(gc);
             }
-            flame_center.render(gc);
+            if (flame_center != null) {
+                flame_center.render(gc);
+            }
         } else {
-            super.render(gc);
+            if (this != null) {
+                super.render(gc);
+            }
         }
     }
 
@@ -242,6 +293,7 @@ public class Bomb extends AnimationEntity {
     }
 
     public void destroyEntity(int x, int y, GameMap gameMap) {
+        List<Entity> addItemList = new ArrayList<>();
         gameMap.getIsBlocked()[x][y] = false;
         for (Entity brick : gameMap.getStillObjects()) {
             if (brick instanceof Brick) {
@@ -268,11 +320,45 @@ public class Bomb extends AnimationEntity {
                             break;
                     }
                     if (item == null) continue;
-                    List<Entity> stillObject = gameMap.getStillObjects();
-                    stillObject.add(item);
-                    return;
+                    addItemList.add(item);
+                    break;
                 }
             }
         }
+        for (Entity entity: addItemList) {
+            gameMap.getStillObjects().add(entity);
+        }
+    }
+
+    public boolean isExploded() {
+        return exploded;
+    }
+
+    public void setExploded(boolean exploded) {
+        this.exploded = exploded;
+    }
+
+    public List<Entity> getListKill() {
+        return listKill;
+    }
+
+    public void setListKill(List<Entity> listKill) {
+        this.listKill = listKill;
+    }
+
+    public GameMap getGameMap() {
+        return gameMap;
+    }
+
+    public void setGameMap(GameMap gameMap) {
+        this.gameMap = gameMap;
+    }
+
+    public AnimationEntity getDynamicEntity() {
+        return dynamicEntity;
+    }
+
+    public void setDynamicEntity(AnimationEntity dynamicEntity) {
+        this.dynamicEntity = dynamicEntity;
     }
 }

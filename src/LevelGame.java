@@ -205,12 +205,12 @@ public class LevelGame {
         for (int i = 0; i < movingEntities.size(); ++i) {
             Entity entity = movingEntities.get(i);
             if (entity instanceof AnimationEntity) {
-                if (((AnimationEntity) entity).getlives() == 0
-                    && !((AnimationEntity) entity).getAnimations()) {
+                if (((AnimationEntity) entity).isDisappeared()) {
                     if (entity instanceof Bomber) {
                         bomberman = null;
                     }
                     ((AnimationEntity) entity).die(gameMap, (Bomber) bomberman);
+
                     movingEntities.remove(i);
                     --i;
                 }

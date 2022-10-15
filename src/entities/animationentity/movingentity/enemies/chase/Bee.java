@@ -102,7 +102,7 @@ public class Bee extends Chase {
 
     @Override
     public void chooseDirection(GameMap gameMap) {
-        if (animations) {
+        if (animations || getlives() == 0) {
             return;
         }
 

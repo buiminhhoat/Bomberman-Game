@@ -7,6 +7,8 @@ import gamemap.GameMap;
 import graphics.Sprite;
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.animation.Animation;
 import javafx.scene.image.Image;
 
 public class MovingEntity extends AnimationEntity {
@@ -212,14 +214,23 @@ public class MovingEntity extends AnimationEntity {
         }
     }
 
-    public void die() {
+    public void dead() {
         if (this.lives == 0) {
             return;
         }
+
         --this.lives;
         if (this.lives == 0) {
+            cancelLiveTimer();
+            if (getAnimations()) {
+                finishAnimations();
+            }
             startAnimations();
         }
     }
 
+    @Override
+    public void update() {
+
+    }
 }
