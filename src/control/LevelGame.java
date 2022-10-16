@@ -1,3 +1,5 @@
+package control;
+
 import algorithm.BreadthFirstSearch;
 import entities.Entity;
 import entities.animationentity.AnimationEntity;
@@ -227,6 +229,7 @@ public class LevelGame {
     }
 
     public void update() {
+        BombermanGame.statusBar.updateStatusBar(this);
         if (bomberman != null) {
             move();
         }

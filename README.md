@@ -19,7 +19,7 @@ dụng code, dễ dàng maintain.*
 - ![](res/sprites/player_down.png) *Bomber* là nhân vật chính của trò chơi. Bomber có thể di chuyển
   theo 4 hướng trái/phải/lên/xuống theo sự điều khiển của người chơi.
 - ![](res/sprites/balloom_left1.png) *Enemy* là các đối tượng mà Bomber phải tiêu diệt hết để có thể
-  qua LevelGame. Enemy có thể di chuyển ngẫu nhiên hoặc tự đuổi theo Bomber tùy theo loại Enemy. Các
+  qua control.LevelGame. Enemy có thể di chuyển ngẫu nhiên hoặc tự đuổi theo Bomber tùy theo loại Enemy. Các
   loại Enemy sẽ được mô tả cụ thể ở phần dưới.
 - ![](res/sprites/bomb.png) *Bomb* là đối tượng mà Bomber sẽ đặt và kích hoạt tại các ô Grass. Khi
   đã được kích hoạt, Bomber và Enemy không thể di chuyển vào vị trí Bomb. Tuy nhiên ngay khi Bomber
@@ -39,7 +39,7 @@ dụng code, dễ dàng maintain.*
 
 - ![](res/sprites/portal.png) *Portal* là đối tượng được giấu phía sau một đối tượng Brick. Khi
   Brick đó bị phá hủy, Portal sẽ hiện ra và nếu tất cả Enemy đã bị tiêu diệt thì người chơi có thể
-  qua LevelGame khác bằng cách di chuyển vào vị trí của Portal.
+  qua control.LevelGame khác bằng cách di chuyển vào vị trí của Portal.
 
 Các *Item* cũng được giấu phía sau Brick và chỉ hiện ra khi Brick bị phá hủy. Bomber có thể sử dụng
 Item bằng cách di chuyển vào vị trí của Item. Thông tin về chức năng của các Item được liệt kê như

@@ -1,3 +1,5 @@
+package control;
+
 import graphics.Sprite;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -16,17 +18,23 @@ public class BombermanGame extends Application {
     public static Scene scene = null;
     public static GraphicsContext gc;
     public static Canvas canvas;
+    public static StatusBar statusBar;
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
     }
     public void start(Stage stage) {
+        LevelGame levelGame = new LevelGame(2);
+
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+        canvas.setTranslateY(32);
         gc = canvas.getGraphicsContext2D();
 
         // Tao root container
         Group root = new Group();
+        statusBar = new StatusBar();
+        statusBar.createStatusBar(root, levelGame);
         root.getChildren().add(canvas);
 
         // Tao scene
@@ -37,7 +45,6 @@ public class BombermanGame extends Application {
         stage.setTitle(TITLE);
         stage.show();
 
-        LevelGame levelGame = new LevelGame(1);
         levelGame.start();
     }
 }

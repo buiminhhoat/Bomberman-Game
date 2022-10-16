@@ -19,7 +19,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>BombermanGame</mainClass>
+              <mainClass>control.BombermanGame</mainClass>
             </manifest>
           </archive>
         </configuration>

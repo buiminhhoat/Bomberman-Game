@@ -20,8 +20,8 @@ public class Bomber extends MovingEntity {
     }
 
     public Bomber(int x, int y, Image img) {
-        super(x, y, img, 4, 2,
-            false, 100, Direction.DOWN);
+        super(x, y, img, 8, 2,
+            false, 3, Direction.DOWN);
     }
 
     public void pickUpItem(GameMap gameMap) {

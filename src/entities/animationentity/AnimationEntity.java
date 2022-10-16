@@ -2,6 +2,7 @@ package entities.animationentity;
 
 import entities.Entity;
 import entities.animationentity.movingentity.bomber.Bomber;
+import entities.animationentity.movingentity.enemies.chase.DeeDee;
 import entities.animationentity.movingentity.enemies.chase.Oneal;
 import enumeration.Direction;
 import gamemap.GameMap;
@@ -93,15 +94,18 @@ public abstract class AnimationEntity extends Entity {
         this.animations = true;
         if (this.getlives() != 0) {
             int timeToTransitionFrame = 500;
-            switch (levelSpeed) {
+            if (this instanceof DeeDee) {
+                System.out.println(this.levelSpeed);
+            }
+            switch (this.levelSpeed) {
                 case 16:
-                    timeToTransitionFrame = 1000;
+                    timeToTransitionFrame = 400;
                     break;
                 case 8:
-                    timeToTransitionFrame = 500;
+                    timeToTransitionFrame = 250;
                     break;
                 case 4:
-                    timeToTransitionFrame = 100;
+                    timeToTransitionFrame = 150;
                     break;
             }
             TimerTask timerTask = new TimerTask() {

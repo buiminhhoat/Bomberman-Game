@@ -44,7 +44,7 @@ public class Bomb extends AnimationEntity {
     public Bomb(AnimationEntity dynamicEntity, GameMap gameMap) {
         super(dynamicEntity.getXPixel() / Sprite.SCALED_SIZE,
                 dynamicEntity.getYPixel() / Sprite.SCALED_SIZE,
-                Sprite.bomb.getFxImage(), 8, 3, false, 3, Direction.DOWN);
+                Sprite.bomb.getFxImage(), 4, 3, false, 3, Direction.DOWN);
 
         this.gameMap = gameMap;
         isBlocked = true;
@@ -259,7 +259,8 @@ public class Bomb extends AnimationEntity {
     @Override
     public void render(GraphicsContext gc) {
         if (exploded) {
-            for (Flame flame : listFlame) {
+            for (int i = 0; i < listFlame.size(); ++i) {
+                Flame flame = listFlame.get(i);
                 flame.render(gc);
             }
             if (flame_center != null) {
