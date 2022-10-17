@@ -1,35 +1,62 @@
 package control;
 
 import enumeration.Chunk;
-import javafx.application.Application;
+import enumeration.Music;
 import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import java.io.File;
-import javafx.stage.Stage;
 
 public abstract class SoundManager {
-    private static AudioClip music;
-    private static AudioClip chunkSetBomb;
-    private static AudioClip chunkExplodeBomb;
-    private static AudioClip chuckPickUpItem;
-    private static AudioClip chuckLevelComplete;
-    private static AudioClip chuckWalkBomber;
-    private static AudioClip chuckBomberDie;
-
-    public static void playMusic() {
-        music = new AudioClip(SoundManager.class.getResource("/sounds/FindTheDoor.mp3").toExternalForm());
-        music.setCycleCount(AudioClip.INDEFINITE);
-        music.play();
-    }
+    public static AudioClip musicGame;
+    public static AudioClip musicMenu;
+    public static AudioClip chunkSetBomb;
+    public static AudioClip chunkExplodeBomb;
+    public static AudioClip chuckPickUpItem;
+    public static AudioClip chuckLevelComplete;
+    public static AudioClip chuckWalkBomber;
+    public static AudioClip chuckBomberDie;
 
     public static void initSound() {
-        chunkSetBomb = new AudioClip(SoundManager.class.getResource("/sounds/set_bomb.wav").toExternalForm());
-        chunkExplodeBomb = new AudioClip(SoundManager.class.getResource("/sounds/explode_bomb.wav").toExternalForm());
-        chuckPickUpItem = new AudioClip(SoundManager.class.getResource("/sounds/pickUpItem.wav").toExternalForm());
-        chuckLevelComplete = new AudioClip(SoundManager.class.getResource("/sounds/level_complete.wav").toExternalForm());
-        chuckWalkBomber = new AudioClip(SoundManager.class.getResource("/sounds/walkBomber.mp3").toExternalForm());
-        chuckBomberDie = new AudioClip(SoundManager.class.getResource("/sounds/bomberdie.wav").toExternalForm());
+        chunkSetBomb = new AudioClip(SoundManager.class.getResource("/sounds/set_bomb.wav")
+                .toExternalForm());
+        chunkExplodeBomb = new AudioClip(SoundManager.class.getResource("/sounds/explode_bomb.wav")
+                .toExternalForm());
+        chuckPickUpItem = new AudioClip(SoundManager.class.getResource("/sounds/pickUpItem.wav")
+                .toExternalForm());
+        chuckLevelComplete = new AudioClip(SoundManager.class.getResource("/sounds/level_complete.wav")
+                .toExternalForm());
+        chuckWalkBomber = new AudioClip(SoundManager.class.getResource("/sounds/walkBomber.mp3")
+                .toExternalForm());
+        chuckBomberDie = new AudioClip(SoundManager.class.getResource("/sounds/bomberdie.wav")
+                .toExternalForm());
+
+        musicGame = new AudioClip(SoundManager.class.getResource("/sounds/FindTheDoor.mp3")
+                .toExternalForm());
+        musicMenu = new AudioClip(SoundManager.class.getResource("/sounds/menu_screen.mp3")
+                .toExternalForm());
+
+        musicGame.setCycleCount(AudioClip.INDEFINITE);
+        musicMenu.setCycleCount(AudioClip.INDEFINITE);
+    }
+
+    public static void playMusic(Music music) {
+        switch (music) {
+            case MENU:
+                musicMenu.play();
+                break;
+            case GAME:
+                musicGame.play();
+                break;
+        }
+    }
+
+    public static void stopMusic(Music music) {
+        switch (music) {
+            case MENU:
+                musicMenu.stop();
+                break;
+            case GAME:
+                musicGame.stop();
+                break;
+        }
     }
 
     public static void playChunk(Chunk chunk) {

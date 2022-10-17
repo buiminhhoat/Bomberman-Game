@@ -17,36 +17,39 @@ public class BombermanGame extends Application {
     public static final int INF = (int) 1e9 + 7;
     public static final String TITLE = "Bomberman Game";
 
-    public static Scene scene = null;
+    public static Stage stage;
     public static GraphicsContext gc;
     public static Canvas canvas;
-    public static StatusBar statusBar;
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
     }
+
     public void start(Stage stage) {
-        LevelGame levelGame = new LevelGame();
+        this.stage = stage;
 
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
-//        canvas.setTranslateY(32);
         gc = canvas.getGraphicsContext2D();
 
-        Group root = new Group();
-        statusBar = new StatusBar();
-        statusBar.createStatusBar(root, levelGame);
-        root.getChildren().add(canvas);
-
-
-        scene = new Scene(root);
-
-        stage.setScene(scene);
         stage.setTitle(TITLE);
-        stage.show();
 
+        SoundManager.initSound();
+        displayMenu();
+
+        stage.show();
+    }
+
+    public static void displayMenu() {
+        canvas.setTranslateY(0);
         Menu menu = new Menu();
-        menu.display(root);
-//        levelGame.setLevel(1);
-//        levelGame.start();
+        stage.setScene(menu.getScene());
+        menu.display();
+    }
+
+    public static void displayGame() {
+        canvas.setTranslateY(32);
+        LevelGame levelGame = new LevelGame();
+        stage.setScene(levelGame.getScene());
+        levelGame.start();
     }
 }

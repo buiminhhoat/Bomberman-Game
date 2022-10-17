@@ -14,6 +14,7 @@ public class Sprite {
     public static final int DEFAULT_SIZE = 32;
     public static final int SCALED_SIZE = DEFAULT_SIZE;
     private static final int TRANSPARENT_COLOR = 0xffff00ff;
+
     /*
     |--------------------------------------------------------------------------
     | Forest map

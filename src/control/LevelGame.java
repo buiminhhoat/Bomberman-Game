@@ -15,6 +15,7 @@ import entities.animationentity.movingentity.enemies.chase.Doll;
 import entities.animationentity.movingentity.enemies.chase.Oneal;
 import entities.block.Brick;
 import enumeration.Chunk;
+import enumeration.Music;
 import gamemap.GameMap;
 import graphics.Camera;
 import graphics.Sprite;
@@ -23,30 +24,47 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.animation.AnimationTimer;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 
 public class LevelGame {
+    private Group root;
+    private StatusBar statusBar;
+    private Scene scene;
+
     private int level;
     private int score;
     private int time;
 
     private boolean win = false;
 
-    public LevelGame() {
-        time = 0;
-    }
-
-    public LevelGame(int level) {
-        time = 0;
-        this.level = level;
-    }
-
     private List<Entity> movingEntities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
     private MovingEntity bomberman;
     private GameMap gameMap;
 
+    public LevelGame() {
+        time = 0;
+        this.level = 1;
+        root = new Group();
+        statusBar = new StatusBar();
+        statusBar.createStatusBar(root, this);
+        root.getChildren().add(BombermanGame.canvas);
+        scene = new Scene(root);
+    }
+
+    public LevelGame(int level) {
+        time = 0;
+        this.level = level;
+        root = new Group();
+        statusBar = new StatusBar();
+        statusBar.createStatusBar(root, this);
+        root.getChildren().add(BombermanGame.canvas);
+        scene = new Scene(root);
+    }
+
     public void start() {
-        BombermanGame.scene.setOnKeyPressed(event -> {
+        scene.setOnKeyPressed(event -> {
             if (bomberman != null) {
                 switch (event.getCode()) {
                     case UP:
@@ -76,7 +94,7 @@ public class LevelGame {
             }
         });
 
-        BombermanGame.scene.setOnKeyReleased(event -> {
+        scene.setOnKeyReleased(event -> {
             if (bomberman != null) {
                 switch (event.getCode()) {
                     case UP:
@@ -102,6 +120,7 @@ public class LevelGame {
                 render();
                 update();
                 if (((Bomber) bomberman).isWin()) {
+                    SoundManager.stopMusic(Music.GAME);
                     SoundManager.playChunk(Chunk.LEVEL_COMPLETE);
                     level++;
                     ((Bomber) bomberman).setWin(false);
@@ -122,8 +141,7 @@ public class LevelGame {
         countTime.schedule(timerTask, 0, 1000);
     }
     private void initGame() {
-        SoundManager.playMusic();
-        SoundManager.initSound();
+        SoundManager.playMusic(Music.GAME);
         Camera.setX(0);
         Camera.setY(0);
         gameMap = new GameMap();
@@ -263,7 +281,7 @@ public class LevelGame {
         if (bomberman != null) {
             move();
         }
-        BombermanGame.statusBar.updateStatusBar(this);
+        statusBar.updateStatusBar(this);
         stillObjects.forEach(Entity::update);
         for (int i = 0; i < movingEntities.size(); ++i) {
             Entity entity = movingEntities.get(i);
@@ -290,7 +308,6 @@ public class LevelGame {
             Entity entity = movingEntities.get(i);
             entity.render(BombermanGame.gc);
         }
-//        movingEntities.forEach(g -> g.render(BombermanGame.gc));
     }
 
     public void updateCamera() {
@@ -394,5 +411,9 @@ public class LevelGame {
 
     public void setTime(int time) {
         this.time = time;
+    }
+
+    public Scene getScene() {
+        return scene;
     }
 }
