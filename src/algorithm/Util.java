@@ -18,10 +18,8 @@ public abstract class Util {
     }
 
     public static boolean checkMouseInRect(double x, double y, double w, double h) {
-        PointerInfo inf = MouseInfo.getPointerInfo();
-        Point p = inf.getLocation();
-        double mouseX = p.getX();
-        double mouseY = p.getY();
+        double mouseX = getMouseX();
+        double mouseY = getMouseY();
         x += BombermanGame.stage.getX() + 8;
         y += BombermanGame.stage.getY() + 30;
 
@@ -34,5 +32,12 @@ public abstract class Util {
     public static boolean checkMouseInImageView(ImageView imageView) {
         return checkMouseInRect(imageView.getX(), imageView.getY(),
                 imageView.getFitWidth(), imageView.getFitHeight());
+    }
+
+    public static double getMouseX() {
+        return MouseInfo.getPointerInfo().getLocation().getX();
+    }
+    public static double getMouseY() {
+        return MouseInfo.getPointerInfo().getLocation().getY();
     }
 }

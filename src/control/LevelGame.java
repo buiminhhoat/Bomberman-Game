@@ -1,6 +1,7 @@
 package control;
 
 import algorithm.BreadthFirstSearch;
+import algorithm.Util;
 import entities.Entity;
 import entities.animationentity.AnimationEntity;
 import entities.animationentity.bomb.Bomb;
@@ -19,12 +20,16 @@ import enumeration.Music;
 import gamemap.GameMap;
 import graphics.Camera;
 import graphics.Sprite;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
+import javafx.scene.ImageCursor;
+import javafx.scene.image.Image;
 import javafx.scene.Scene;
 
 public class LevelGame {
@@ -51,6 +56,7 @@ public class LevelGame {
         statusBar.createStatusBar(root, this);
         root.getChildren().add(BombermanGame.canvas);
         scene = new Scene(root);
+        scene.setCursor(new ImageCursor(Sprite.mouseImg));
     }
 
     public LevelGame(int level) {
@@ -61,6 +67,7 @@ public class LevelGame {
         statusBar.createStatusBar(root, this);
         root.getChildren().add(BombermanGame.canvas);
         scene = new Scene(root);
+        scene.setCursor(new ImageCursor(Sprite.mouseImg));
     }
 
     public void start() {

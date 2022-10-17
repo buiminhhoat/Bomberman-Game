@@ -7,6 +7,7 @@ import graphics.Sprite;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,28 +19,29 @@ public class Menu {
     private Group root;
     private Scene scene;
 
-    Image background;
-    Image playButton1;
-    Image playButton2;
-    Image continueButton1;
-    Image continueButton2;
-    Image exitButton1;
-    Image exitButton2;
+    private Image background;
+    private Image playButton1;
+    private Image playButton2;
+    private Image continueButton1;
+    private Image continueButton2;
+    private Image exitButton1;
+    private Image exitButton2;
 
-    ImageView backgroundView;
-    ImageView playButtonView;
-    ImageView continueButtonView;
-    ImageView exitButtonView;
+    private ImageView backgroundView;
+    private ImageView playButtonView;
+    private ImageView continueButtonView;
+    private ImageView exitButtonView;
 
-    AnimationTimer timer;
+    private AnimationTimer timer;
 
     public Menu() {
         root = new Group();
         root.getChildren().add(BombermanGame.canvas);
         scene = new Scene(root);
+        scene.setCursor(new ImageCursor(Sprite.mouseImg));
     }
 
-    void initImg() {
+    private void initImg() {
         background = new Image("/Images/Background.jpg", true);
         playButton1 = new Image("/Images/play_button1.png");
         playButton2 = new Image("/Images/play_button2.png");

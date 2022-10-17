@@ -11,9 +11,11 @@ import javafx.scene.image.WritableImage;
  */
 public class Sprite {
 
+    public static final Image mouseImg = new Image("/Images/mouse.png");
     public static final int DEFAULT_SIZE = 32;
     public static final int SCALED_SIZE = DEFAULT_SIZE;
     private static final int TRANSPARENT_COLOR = 0xffff00ff;
+
 
     /*
     |--------------------------------------------------------------------------

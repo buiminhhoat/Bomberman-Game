@@ -14,13 +14,13 @@ public class StatusBar {
     private Text levelText;
     private Text timeText;
     private Text scoreText;
-
     private Text livesText;
 
     private Image pauseButton;
     private Image resumeButton;
 
     private boolean isPause = false;
+
     public StatusBar() {
     }
 

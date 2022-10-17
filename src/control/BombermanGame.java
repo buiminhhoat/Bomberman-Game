@@ -1,6 +1,7 @@
 package control;
 
 import graphics.Sprite;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -9,13 +10,16 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+
+import java.awt.*;
 
 public class BombermanGame extends Application {
     public static final int WIDTH = 25;
     public static final int HEIGHT = 20;
 
-    public static final int INF = (int) 1e9 + 7;
     public static final String TITLE = "Bomberman Game";
+    public static final int INF = (int) 1e9 + 7;
 
     public static Stage stage;
     public static GraphicsContext gc;
