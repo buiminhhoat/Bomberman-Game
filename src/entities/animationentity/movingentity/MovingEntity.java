@@ -1,7 +1,12 @@
 package entities.animationentity.movingentity;
 
+import control.SoundManager;
+import entities.animationentity.movingentity.bomber.Bomber;
+import enumeration.Chunk;
+import control.LevelGame;
 import entities.animationentity.AnimationEntity;
 import entities.animationentity.bomb.Bomb;
+import enumeration.Chunk;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
@@ -198,6 +203,10 @@ public class MovingEntity extends AnimationEntity {
         if (numBomb == 0 || gameMap.checkBlockedPixel(this.getXPixel(), this.getYPixel())) {
             return;
         }
+        if (this instanceof Bomber) {
+            SoundManager.playChunk(Chunk.SET_BOMB);
+        }
+
         setNumberBombs(numBomb - 1);
         Bomb bomb = new Bomb(this, gameMap);
         bombList.add(bomb);

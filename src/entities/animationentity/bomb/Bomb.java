@@ -1,6 +1,7 @@
 package entities.animationentity.bomb;
 
 import algorithm.Util;
+import control.SoundManager;
 import entities.Entity;
 import entities.animationentity.AnimationEntity;
 import entities.animationentity.hiddenitem.BombItem;
@@ -14,6 +15,7 @@ import entities.animationentity.movingentity.enemies.Creeper;
 import entities.animationentity.movingentity.enemies.Enemies;
 import entities.block.Brick;
 import enumeration.BombermanObject;
+import enumeration.Chunk;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
@@ -67,6 +69,7 @@ public class Bomb extends AnimationEntity {
     private void explode() {
         if (exploded) return;
         exploded = true;
+        SoundManager.playChunk(Chunk.EXPLODE_BOMB);
         createFlame();
         checkKill();
         destroyBrick();
@@ -149,7 +152,8 @@ public class Bomb extends AnimationEntity {
 
     private void killEntity(int startXPixel, int endXPixel, int startYPixel, int endYPixel,
                             List<Entity> movingEntities) {
-        for (Entity entity : movingEntities) {
+        for (int i = 0; i < movingEntities.size(); ++i) {
+            Entity entity = movingEntities.get(i);
             if (listKill.contains(entity)) {
                 continue;
             }
@@ -183,9 +187,6 @@ public class Bomb extends AnimationEntity {
         int lth = ((AnimationEntity) dynamicEntity).getLengthExplosionOfBomb();
         int id = 0;
         List <Entity> list = gameMap.getMovingEntities();
-
-//        killEntity(x * Sprite.SCALED_SIZE, x * Sprite.SCALED_SIZE,
-//                y * Sprite.SCALED_SIZE,y * Sprite.SCALED_SIZE, list);
 
         for (int i = y; i >= Math.max(y - lth, 0); --i) {
             if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {

@@ -28,6 +28,8 @@ public class LevelGame {
     private int score;
     private int time;
 
+//    public static SoundManager soundManager = new SoundManager();
+
     private boolean win = false;
 
     public LevelGame() {
@@ -120,22 +122,25 @@ public class LevelGame {
         countTime.schedule(timerTask, 0, 1000);
     }
     private void initGame() {
-        SoundManager soundManager = new SoundManager();
-        soundManager.playMusic();
+        SoundManager.playMusic();
+        SoundManager.initSound();
         Camera.setX(0);
         Camera.setY(0);
         gameMap = new GameMap();
         gameMap.initMap(level);
         stillObjects = gameMap.getListStillObjects();
         movingEntities = gameMap.getListMovingEntity();
-        for (Entity entity : movingEntities) {
+
+        for (int i = 0; i < movingEntities.size(); ++i) {
+            Entity entity = movingEntities.get(i);
             if (entity instanceof Bomber) {
                 bomberman = (MovingEntity) entity;
                 break;
             }
         }
 
-        for (Entity entity : movingEntities) {
+        for (int i = 0; i < movingEntities.size(); ++i) {
+            Entity entity = movingEntities.get(i);
             if (entity instanceof Chase) {
                 if (entity instanceof Oneal) {
                     ((Oneal) entity).setTargetEntity(bomberman);
@@ -152,7 +157,8 @@ public class LevelGame {
                         entity.getXPixel() / Sprite.SCALED_SIZE,
                         gameMap);
                     int minDist = BombermanGame.INF;
-                    for (Entity targetEntity : movingEntities) {
+                    for (int j = 0; j < movingEntities.size(); ++j) {
+                        Entity targetEntity = movingEntities.get(j);
                         if (targetEntity instanceof Beehive) {
                             int dist = BreadthFirstSearch.minDistance(
                                 targetEntity.getYPixel() / Sprite.SCALED_SIZE,
@@ -171,7 +177,9 @@ public class LevelGame {
     private void move() {
         bomberman.move(gameMap);
         ((Bomber) bomberman).pickUpItem(gameMap);
-        for (Entity entity : movingEntities) {
+
+        for (int i = 0; i < movingEntities.size(); ++i) {
+            Entity entity = movingEntities.get(i);
             if (entity instanceof Bomber) {
                 continue;
             }
@@ -184,7 +192,8 @@ public class LevelGame {
     }
 
     private void checkBomb() {
-        for (Entity entity : movingEntities) {
+        for (int k = 0; k < movingEntities.size(); ++k) {
+            Entity entity = movingEntities.get(k);
             if (entity instanceof MovingEntity) {
                 List<Bomb> bombList = ((MovingEntity) entity).getBombList();
 
@@ -194,7 +203,9 @@ public class LevelGame {
                 for (int i = 0; i < bombList.size(); ++i) {
                     Bomb bomb = bombList.get(i);
                     if (!bomb.getAnimations()) {
-                        for (Entity deedee: movingEntities) {
+
+                        for (int j = 0; j < movingEntities.size(); ++j) {
+                            Entity deedee = movingEntities.get(j);
                             if (deedee instanceof DeeDee
                                 && ((DeeDee) deedee).getTargetEntity() == bomb) {
                                 ((DeeDee) deedee).setTargetEntity(null);
@@ -254,7 +265,11 @@ public class LevelGame {
         }
         BombermanGame.statusBar.updateStatusBar(this);
         stillObjects.forEach(Entity::update);
-        movingEntities.forEach(Entity::update);
+        for (int i = 0; i < movingEntities.size(); ++i) {
+            Entity entity = movingEntities.get(i);
+            entity.update();
+        }
+//        movingEntities.forEach(Entity::update);
         checkBomb();
         checkDestroyBrick();
         checkKillEntity();
@@ -265,13 +280,18 @@ public class LevelGame {
         BombermanGame.gc.clearRect(0, 0, BombermanGame.canvas.getWidth(), BombermanGame.canvas.getHeight());
         updateCamera();
         stillObjects.forEach(g -> g.render(BombermanGame.gc));
-        for (Entity entity : movingEntities) {
+        for (int i = 0; i < movingEntities.size(); ++i) {
+            Entity entity = movingEntities.get(i);
             if (entity instanceof MovingEntity) {
                 List<Bomb> bombList = ((MovingEntity) entity).getBombList();
                 bombList.forEach(g -> g.render(BombermanGame.gc));
             }
         }
-        movingEntities.forEach(g -> g.render(BombermanGame.gc));
+        for (int i = 0; i < movingEntities.size(); ++i) {
+            Entity entity = movingEntities.get(i);
+            entity.render(BombermanGame.gc);
+        }
+//        movingEntities.forEach(g -> g.render(BombermanGame.gc));
     }
 
     public void updateCamera() {
