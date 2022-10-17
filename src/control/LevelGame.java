@@ -6,6 +6,7 @@ import entities.animationentity.AnimationEntity;
 import entities.animationentity.bomb.Bomb;
 import entities.animationentity.movingentity.MovingEntity;
 import entities.animationentity.movingentity.bomber.Bomber;
+import entities.animationentity.movingentity.enemies.Balloon;
 import entities.animationentity.movingentity.enemies.Beehive;
 import entities.animationentity.movingentity.enemies.Enemies;
 import entities.animationentity.movingentity.enemies.chase.Bee;
@@ -165,9 +166,7 @@ public class LevelGame {
         for (Entity entity : movingEntities) {
             if (entity instanceof MovingEntity) {
                 List<Bomb> bombList = ((MovingEntity) entity).getBombList();
-//                for (Bomb bomb : bombList) {
-//                    bomb.checkExplosion(gameMap, movingEntities);
-//                }
+
                 for (Bomb bomb : bombList) {
                     ((MovingEntity) entity).explodedBomb(bomb, gameMap);
                 }
@@ -229,15 +228,15 @@ public class LevelGame {
     }
 
     public void update() {
-        BombermanGame.statusBar.updateStatusBar(this);
         if (bomberman != null) {
             move();
         }
+        BombermanGame.statusBar.updateStatusBar(this);
+        stillObjects.forEach(Entity::update);
+        movingEntities.forEach(Entity::update);
         checkBomb();
         checkDestroyBrick();
         checkKillEntity();
-        stillObjects.forEach(Entity::update);
-        movingEntities.forEach(Entity::update);
         fps();
     }
 

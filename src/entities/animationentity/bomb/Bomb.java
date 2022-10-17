@@ -1,5 +1,6 @@
 package entities.animationentity.bomb;
 
+import algorithm.Util;
 import entities.Entity;
 import entities.animationentity.AnimationEntity;
 import entities.animationentity.hiddenitem.BombItem;
@@ -8,6 +9,7 @@ import entities.animationentity.hiddenitem.Portal;
 import entities.animationentity.hiddenitem.SpeedItem;
 import entities.animationentity.movingentity.MovingEntity;
 import entities.animationentity.movingentity.bomber.Bomber;
+import entities.animationentity.movingentity.enemies.Balloon;
 import entities.animationentity.movingentity.enemies.Creeper;
 import entities.animationentity.movingentity.enemies.Enemies;
 import entities.block.Brick;
@@ -145,7 +147,7 @@ public class Bomb extends AnimationEntity {
         }
     }
 
-    private void killEntity(int startXPixel, int endXPixel, int startyPixel, int endYPixel,
+    private void killEntity(int startXPixel, int endXPixel, int startYPixel, int endYPixel,
                             List<Entity> movingEntities) {
         for (Entity entity : movingEntities) {
             if (listKill.contains(entity)) {
@@ -158,8 +160,17 @@ public class Bomb extends AnimationEntity {
                 }
             }
 
-            if (startXPixel <= entity.getXPixel() && entity.getXPixel() <= endXPixel
-                    && startyPixel <= entity.getYPixel() && entity.getYPixel() <= endYPixel) {
+            int x1 = entity.getXPixel();
+            int y1 = entity.getYPixel();
+            int w1 = Sprite.SCALED_SIZE;
+            int h1 = Sprite.SCALED_SIZE;
+
+            int x2 = startXPixel;
+            int y2 = startYPixel;
+            int w2 = endXPixel - startXPixel + 1;
+            int h2 = endYPixel - startYPixel + 1;
+
+            if (Util.checkRectIntersect(x1, y1, w1, h1, x2, y2, w2, h2)) {
                 listKill.add(entity);
                 ((MovingEntity) entity).dead();
             }
@@ -182,8 +193,8 @@ public class Bomb extends AnimationEntity {
             }
             id = i;
         }
-        killEntity(x * Sprite.SCALED_SIZE, x * Sprite.SCALED_SIZE,
-                id * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE, list);
+        killEntity(x * Sprite.SCALED_SIZE, (x + 1) * Sprite.SCALED_SIZE - 1,
+                id * Sprite.SCALED_SIZE, (y + 1) * Sprite.SCALED_SIZE - 1, list);
 
         for (int i = y; i <= y + lth; ++i) {
             if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
@@ -191,8 +202,8 @@ public class Bomb extends AnimationEntity {
             }
             id = i;
         }
-        killEntity(x * Sprite.SCALED_SIZE, x * Sprite.SCALED_SIZE,
-                y * Sprite.SCALED_SIZE, id * Sprite.SCALED_SIZE, list);
+        killEntity(x * Sprite.SCALED_SIZE, (x + 1) * Sprite.SCALED_SIZE - 1,
+                y * Sprite.SCALED_SIZE, (id + 1) * Sprite.SCALED_SIZE - 1, list);
 
         for (int i = x; i >= Math.max(x - lth, 0); --i) {
             if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
@@ -200,8 +211,8 @@ public class Bomb extends AnimationEntity {
             }
             id = i;
         }
-        killEntity(id * Sprite.SCALED_SIZE, x * Sprite.SCALED_SIZE,
-                y * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE, list);
+        killEntity(id * Sprite.SCALED_SIZE, (x + 1) * Sprite.SCALED_SIZE - 1,
+                y * Sprite.SCALED_SIZE, (y + 1) * Sprite.SCALED_SIZE - 1, list);
 
         for (int i = x + 1; i <= x + lth; ++i) {
             if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
@@ -209,8 +220,8 @@ public class Bomb extends AnimationEntity {
             }
             id = i;
         }
-        killEntity(x * Sprite.SCALED_SIZE, id * Sprite.SCALED_SIZE,
-                y * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE, list);
+        killEntity(x * Sprite.SCALED_SIZE, (id + 1) * Sprite.SCALED_SIZE - 1,
+                y * Sprite.SCALED_SIZE, (y + 1) * Sprite.SCALED_SIZE - 1, list);
     }
 
     @Override

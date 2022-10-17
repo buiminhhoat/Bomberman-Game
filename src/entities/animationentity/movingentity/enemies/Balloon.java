@@ -16,6 +16,11 @@ public class Balloon extends Enemies {
     }
 
     @Override
+    public void chooseDirection(GameMap gameMap) {
+
+    }
+
+    @Override
     public void update() {
         if (this.animations) {
             if (this.getlives() == 0) {
