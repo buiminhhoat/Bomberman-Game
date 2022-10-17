@@ -1,8 +1,6 @@
 package gamemap;
 
 import entities.Entity;
-import entities.animationentity.hiddenitem.FlameItem;
-import entities.animationentity.hiddenitem.SpeedItem;
 import entities.animationentity.movingentity.bomber.Bomber;
 import entities.animationentity.movingentity.enemies.Balloon;
 import entities.animationentity.movingentity.enemies.Beehive;
@@ -10,6 +8,7 @@ import entities.animationentity.movingentity.enemies.Creeper;
 import entities.animationentity.movingentity.enemies.Ghost;
 import entities.animationentity.movingentity.enemies.chase.Bee;
 import entities.animationentity.movingentity.enemies.chase.DeeDee;
+import entities.animationentity.movingentity.enemies.chase.Doll;
 import entities.animationentity.movingentity.enemies.chase.Oneal;
 import entities.block.Brick;
 import entities.block.Grass;
@@ -110,6 +109,8 @@ public class GameMap {
                 return BombermanObject.BEE;
             case '7':
                 return BombermanObject.DEEDEE;
+            case '8':
+                return BombermanObject.MINVO;
             case 'b':
                 return BombermanObject.BOMB_ITEM;
             case 'f':
@@ -166,6 +167,9 @@ public class GameMap {
                             break;
                         case DEEDEE:
                             object = new DeeDee(j, i, Sprite.deedee_left.getFxImage());
+                            break;
+                        case MINVO:
+                            object = new Doll(j, i, Sprite.minvo_left1.getFxImage());
                             break;
 
                         case WALL:
@@ -415,6 +419,9 @@ public class GameMap {
                         break;
                     case DEEDEE:
                         movingEntity = new DeeDee(j, i, Sprite.deedee_left.getFxImage());
+                        break;
+                    case MINVO:
+                        movingEntity = new Doll(j, i, Sprite.minvo_left1.getFxImage());
                         break;
                 }
                 if (movingEntity == null) {

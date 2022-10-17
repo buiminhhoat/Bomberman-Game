@@ -24,7 +24,7 @@ public class BombermanGame extends Application {
         Application.launch(BombermanGame.class);
     }
     public void start(Stage stage) {
-        LevelGame levelGame = new LevelGame(1);
+        LevelGame levelGame = new LevelGame(2);
 
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);

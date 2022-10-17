@@ -23,11 +23,12 @@ public class Chase extends Enemies {
     protected int[] randomShuffle = new int[4];
 
     public Chase() {
-
+        score = 200;
     }
 
     public Chase(int x, int y, Image img) {
         super(x, y, img);
+        score = 200;
     }
 
     public Entity getTargetEntity() {

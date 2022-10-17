@@ -15,6 +15,8 @@ public class StatusBar {
     private Text timeText;
     private Text scoreText;
 
+    private Text livesText;
+
     private Image pauseButton;
     private Image resumeButton;
 
@@ -26,17 +28,25 @@ public class StatusBar {
         levelText = new Text("Level: 1");
         levelText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         levelText.setFill(Color.WHITE);
-        levelText.setX(200);
+        levelText.setX(50);
         levelText.setY(20);
+
+        livesText = new Text("Lives: ");
+        livesText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        livesText.setFill(Color.WHITE);
+        livesText.setX(250);
+        livesText.setY(20);
+
         timeText = new Text("Times: 000");
         timeText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         timeText.setFill(Color.WHITE);
-        timeText.setX(400);
+        timeText.setX(450);
         timeText.setY(20);
+
         scoreText = new Text("Score: 000");
         scoreText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         scoreText.setFill(Color.WHITE);
-        scoreText.setX(600);
+        scoreText.setX(650);
         scoreText.setY(20);
 
         pauseButton = new Image("/textures/pauseButton.png");
@@ -49,7 +59,7 @@ public class StatusBar {
         statusGame.setScaleY(0.8);
 
         Pane pane = new Pane();
-        pane.getChildren().addAll(statusGame, levelText, timeText, scoreText);
+        pane.getChildren().addAll(statusGame, levelText, livesText, timeText, scoreText);
         pane.setMinSize(800, 32);
         pane.setMaxSize(800, 480);
         pane.setStyle("-fx-background-color: #353535");
@@ -64,6 +74,9 @@ public class StatusBar {
 
     public void updateStatusBar(LevelGame levelGame) {
         levelText.setText("Level: " + levelGame.getLevel());
+        scoreText.setText("Score: " + levelGame.getScore());
+        timeText.setText("Time: " + levelGame.getTime());
+        livesText.setText("Lives: " + levelGame.getBomberman().getLives());
         if (isPause) {
             statusGame.setImage(resumeButton);
         } else {

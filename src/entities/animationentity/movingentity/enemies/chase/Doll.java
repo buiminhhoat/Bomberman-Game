@@ -1,22 +1,18 @@
 package entities.animationentity.movingentity.enemies.chase;
 
-import static algorithm.ShuffleArray.shuffleArray;
-
 import algorithm.AstarAlgorithm;
 import algorithm.AstarAlgorithm.Node;
-import algorithm.BreadthFirstSearch;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
-import java.util.Random;
 import javafx.scene.image.Image;
 
-public class Minvo extends Chase{
-    public Minvo() {
+public class Doll extends Chase{
+    public Doll() {
 
     }
 
-    public Minvo(int x, int y, Image img) {
+    public Doll(int x, int y, Image img) {
         super(x, y, img);
     }
 
@@ -26,7 +22,7 @@ public class Minvo extends Chase{
             if (this.getlives() == 0) {
                 switch (this.currentFrame) {
                     case 0:
-                        this.img = Sprite.minvo_dead.getFxImage();
+                        this.img = Sprite.doll_dead.getFxImage();
                         break;
                     case 1:
                         this.img = Sprite.mob_dead_red1.getFxImage();
@@ -46,7 +42,7 @@ public class Minvo extends Chase{
                                 this.img = Sprite.doll_left1.getFxImage();
                                 break;
                             case 1:
-                                this.img = Sprite.minvo_left3.getFxImage();
+                                this.img = Sprite.doll_left3.getFxImage();
                                 break;
                         }
                         break;
@@ -56,10 +52,10 @@ public class Minvo extends Chase{
                         }
                         switch (this.currentFrame) {
                             case 0:
-                                this.img = Sprite.minvo_right2.getFxImage();
+                                this.img = Sprite.doll_right2.getFxImage();
                                 break;
                             case 1:
-                                this.img = Sprite.minvo_right3.getFxImage();
+                                this.img = Sprite.doll_right3.getFxImage();
                                 break;
                         }
                         break;
@@ -68,20 +64,20 @@ public class Minvo extends Chase{
                             case 0:
                                 switch (faceDirection) {
                                     case LEFT:
-                                        this.img = Sprite.minvo_left2.getFxImage();
+                                        this.img = Sprite.doll_left2.getFxImage();
                                         break;
                                     case RIGHT:
-                                        this.img = Sprite.minvo_right2.getFxImage();
+                                        this.img = Sprite.doll_right2.getFxImage();
                                         break;
                                 }
                                 break;
                             case 1:
                                 switch (faceDirection) {
                                     case LEFT:
-                                        this.img = Sprite.minvo_left3.getFxImage();
+                                        this.img = Sprite.doll_left3.getFxImage();
                                         break;
                                     case RIGHT:
-                                        this.img = Sprite.minvo_right3.getFxImage();
+                                        this.img = Sprite.doll_right3.getFxImage();
                                         break;
                                 }
                                 break;
@@ -92,10 +88,10 @@ public class Minvo extends Chase{
         } else {
             switch (this.faceDirection) {
                 case LEFT:
-                    this.img = Sprite.minvo_left1.getFxImage();
+                    this.img = Sprite.doll_left1.getFxImage();
                     break;
                 case RIGHT:
-                    this.img = Sprite.minvo_right1.getFxImage();
+                    this.img = Sprite.doll_right1.getFxImage();
                     break;
             }
         }

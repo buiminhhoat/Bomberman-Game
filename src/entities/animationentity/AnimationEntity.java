@@ -30,6 +30,8 @@ public abstract class AnimationEntity extends Entity {
 
     protected Direction direction;
 
+    protected int score = 100;
+
     private final int[] frame = {0, 0, 0, 1, 2};
     private int idFrame = 0;
 
@@ -172,5 +174,65 @@ public abstract class AnimationEntity extends Entity {
 
     public void die(GameMap gameMap, Bomber bomberman) {
 
+    }
+
+    public void setAnimations(Boolean animations) {
+        this.animations = animations;
+    }
+
+    public void setDisappeared(boolean disappeared) {
+        this.disappeared = disappeared;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    public int getLevelSpeed() {
+        return levelSpeed;
+    }
+
+    public void setLevelSpeed(int levelSpeed) {
+        this.levelSpeed = levelSpeed;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int[] getFrame() {
+        return frame;
+    }
+
+    public int getIdFrame() {
+        return idFrame;
+    }
+
+    public void setIdFrame(int idFrame) {
+        this.idFrame = idFrame;
+    }
+
+    public Timer getLiveTimer() {
+        return liveTimer;
+    }
+
+    public void setLiveTimer(Timer liveTimer) {
+        this.liveTimer = liveTimer;
+    }
+
+    public Timer getDeathTimer() {
+        return deathTimer;
+    }
+
+    public void setDeathTimer(Timer deathTimer) {
+        this.deathTimer = deathTimer;
     }
 }

@@ -6,12 +6,12 @@ import entities.animationentity.AnimationEntity;
 import entities.animationentity.bomb.Bomb;
 import entities.animationentity.movingentity.MovingEntity;
 import entities.animationentity.movingentity.bomber.Bomber;
-import entities.animationentity.movingentity.enemies.Balloon;
 import entities.animationentity.movingentity.enemies.Beehive;
 import entities.animationentity.movingentity.enemies.Enemies;
 import entities.animationentity.movingentity.enemies.chase.Bee;
 import entities.animationentity.movingentity.enemies.chase.Chase;
 import entities.animationentity.movingentity.enemies.chase.DeeDee;
+import entities.animationentity.movingentity.enemies.chase.Doll;
 import entities.animationentity.movingentity.enemies.chase.Oneal;
 import entities.block.Brick;
 import gamemap.GameMap;
@@ -19,17 +19,23 @@ import graphics.Camera;
 import graphics.Sprite;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import javafx.animation.AnimationTimer;
 
 public class LevelGame {
     private int level;
+    private int score;
+    private int time;
+
     private boolean win = false;
 
     public LevelGame() {
-
+        time = 0;
     }
 
     public LevelGame(int level) {
+        time = 0;
         this.level = level;
     }
 
@@ -103,6 +109,15 @@ public class LevelGame {
         };
 
         timer.start();
+
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                ++time;
+            }
+        };
+        Timer countTime = new Timer();
+        countTime.schedule(timerTask, 0, 1000);
     }
     private void initGame() {
         Camera.setX(0);
@@ -122,6 +137,10 @@ public class LevelGame {
             if (entity instanceof Chase) {
                 if (entity instanceof Oneal) {
                     ((Oneal) entity).setTargetEntity(bomberman);
+                }
+
+                if (entity instanceof Doll) {
+                    ((Doll) entity).setTargetEntity(bomberman);
                 }
 
                 if (entity instanceof Bee) {
@@ -211,7 +230,7 @@ public class LevelGame {
                         bomberman = null;
                     }
                     ((AnimationEntity) entity).die(gameMap, (Bomber) bomberman);
-
+                    score += ((AnimationEntity) entity).getScore();
                     movingEntities.remove(i);
                     --i;
                 }
@@ -330,5 +349,29 @@ public class LevelGame {
 
     public void setGameMap(GameMap gameMap) {
         this.gameMap = gameMap;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public boolean isWin() {
+        return win;
+    }
+
+    public void setWin(boolean win) {
+        this.win = win;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
     }
 }

@@ -9,11 +9,13 @@ public class HiddenItem extends AnimationEntity {
 
     public HiddenItem() {
         isBlocked = true;
+        score = 100;
     }
 
     public HiddenItem(int x, int y, Image img) {
         super(x, y, img);
         isBlocked = false;
+        score = 100;
     }
 
     public boolean pickUp(Entity entity) {
