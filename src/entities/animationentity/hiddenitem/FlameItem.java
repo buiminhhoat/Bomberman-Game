@@ -1,8 +1,10 @@
 package entities.animationentity.hiddenitem;
 
+import control.SoundManager;
 import entities.Entity;
 import entities.animationentity.movingentity.MovingEntity;
 import entities.animationentity.movingentity.bomber.Bomber;
+import enumeration.Chunk;
 import javafx.scene.image.Image;
 
 public class FlameItem extends HiddenItem {
@@ -18,6 +20,7 @@ public class FlameItem extends HiddenItem {
     @Override
     public void featureItem(Entity entity) {
         if (entity instanceof Bomber) {
+            SoundManager.playChunk(Chunk.PICKUP_ITEM);
             ((MovingEntity) entity).setLengthExplosionOfBomb(
                     ((MovingEntity) entity).getLengthExplosionOfBomb() + 1);
         }

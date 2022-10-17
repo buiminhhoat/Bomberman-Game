@@ -102,18 +102,22 @@ public class MovingEntity extends AnimationEntity {
 
     public void move(GameMap gameMap) {
         if (up) {
+            SoundManager.playChunk(Chunk.WALK_BOMBER);
             up(gameMap);
             return;
         }
         if (down) {
+            SoundManager.playChunk(Chunk.WALK_BOMBER);
             down(gameMap);
             return;
         }
         if (left) {
+            SoundManager.playChunk(Chunk.WALK_BOMBER);
             left(gameMap);
             return;
         }
         if (right) {
+            SoundManager.playChunk(Chunk.WALK_BOMBER);
             right(gameMap);
             return;
         }
@@ -229,6 +233,9 @@ public class MovingEntity extends AnimationEntity {
         }
 
         --this.lives;
+        if (this instanceof Bomber) {
+            SoundManager.playChunk(Chunk.BOMBER_DIE);
+        }
         if (this.lives == 0) {
             cancelLiveTimer();
             if (getAnimations()) {

@@ -6,6 +6,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class BombermanGame extends Application {
@@ -24,27 +26,27 @@ public class BombermanGame extends Application {
         Application.launch(BombermanGame.class);
     }
     public void start(Stage stage) {
-        LevelGame levelGame = new LevelGame(2);
+        LevelGame levelGame = new LevelGame();
 
-        // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
-        canvas.setTranslateY(32);
+//        canvas.setTranslateY(32);
         gc = canvas.getGraphicsContext2D();
 
-        // Tao root container
         Group root = new Group();
         statusBar = new StatusBar();
         statusBar.createStatusBar(root, levelGame);
         root.getChildren().add(canvas);
 
-        // Tao scene
+
         scene = new Scene(root);
 
-        // Them scene vao stage
         stage.setScene(scene);
         stage.setTitle(TITLE);
         stage.show();
 
-        levelGame.start();
+        Menu menu = new Menu();
+        menu.display(root);
+//        levelGame.setLevel(1);
+//        levelGame.start();
     }
 }

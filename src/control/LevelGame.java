@@ -14,6 +14,7 @@ import entities.animationentity.movingentity.enemies.chase.DeeDee;
 import entities.animationentity.movingentity.enemies.chase.Doll;
 import entities.animationentity.movingentity.enemies.chase.Oneal;
 import entities.block.Brick;
+import enumeration.Chunk;
 import gamemap.GameMap;
 import graphics.Camera;
 import graphics.Sprite;
@@ -27,8 +28,6 @@ public class LevelGame {
     private int level;
     private int score;
     private int time;
-
-//    public static SoundManager soundManager = new SoundManager();
 
     private boolean win = false;
 
@@ -103,6 +102,7 @@ public class LevelGame {
                 render();
                 update();
                 if (((Bomber) bomberman).isWin()) {
+                    SoundManager.playChunk(Chunk.LEVEL_COMPLETE);
                     level++;
                     ((Bomber) bomberman).setWin(false);
                     initGame();
@@ -269,7 +269,6 @@ public class LevelGame {
             Entity entity = movingEntities.get(i);
             entity.update();
         }
-//        movingEntities.forEach(Entity::update);
         checkBomb();
         checkDestroyBrick();
         checkKillEntity();

@@ -1,8 +1,10 @@
 package entities.animationentity.hiddenitem;
 
+import control.SoundManager;
 import entities.Entity;
 import entities.animationentity.movingentity.bomber.Bomber;
 import entities.animationentity.movingentity.enemies.Enemies;
+import enumeration.Chunk;
 import gamemap.GameMap;
 import java.util.List;
 import javafx.scene.image.Image;
