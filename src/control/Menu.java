@@ -42,13 +42,13 @@ public class Menu {
     }
 
     private void initImg() {
-        background = new Image("/Images/Background.jpg", true);
-        playButton1 = new Image("/Images/play_button1.png");
-        playButton2 = new Image("/Images/play_button2.png");
-        continueButton1 = new Image("/Images/continue_button1.png");
-        continueButton2 = new Image("/Images/continue_button2.png");
-        exitButton1 = new Image("/Images/exit_button1.png");
-        exitButton2 = new Image("/Images/exit_button2.png");
+        background = new Image("/images/Background.jpg", true);
+        playButton1 = new Image("/images/play_button1.png");
+        playButton2 = new Image("/images/play_button2.png");
+        continueButton1 = new Image("/images/continue_button1.png");
+        continueButton2 = new Image("/images/continue_button2.png");
+        exitButton1 = new Image("/images/exit_button1.png");
+        exitButton2 = new Image("/images/exit_button2.png");
     }
 
     public void display() {

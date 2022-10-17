@@ -5,6 +5,7 @@ import enumeration.Music;
 import javafx.scene.media.AudioClip;
 
 public abstract class SoundManager {
+    public static boolean isMuted = false;
     public static AudioClip musicGame;
     public static AudioClip musicMenu;
     public static AudioClip chunkSetBomb;
@@ -23,7 +24,7 @@ public abstract class SoundManager {
                 .toExternalForm());
         chuckLevelComplete = new AudioClip(SoundManager.class.getResource("/sounds/level_complete.wav")
                 .toExternalForm());
-        chuckWalkBomber = new AudioClip(SoundManager.class.getResource("/sounds/walkBomber.mp3")
+        chuckWalkBomber = new AudioClip(SoundManager.class.getResource("/sounds/walk_bomber.mp3")
                 .toExternalForm());
         chuckBomberDie = new AudioClip(SoundManager.class.getResource("/sounds/bomberdie.wav")
                 .toExternalForm());
@@ -60,6 +61,9 @@ public abstract class SoundManager {
     }
 
     public static void playChunk(Chunk chunk) {
+        if (isMuted) {
+            return;
+        }
         switch (chunk) {
             case SET_BOMB:
                 chunkSetBomb.play();
@@ -80,6 +84,24 @@ public abstract class SoundManager {
                 chuckBomberDie.play();
                 break;
         }
+    }
 
+    public static void changeStatus() {
+        isMuted = !isMuted;
+        if (isMuted) {
+            if (musicMenu.isPlaying()) {
+                musicMenu.setVolume(0);
+            }
+            if(musicGame.isPlaying()) {
+                musicGame.setVolume(0);
+            }
+        } else {
+            if (musicMenu.isPlaying()) {
+                musicMenu.setVolume(1);
+            }
+            if(musicGame.isPlaying()) {
+                musicGame.setVolume(1);
+            }
+        }
     }
 }

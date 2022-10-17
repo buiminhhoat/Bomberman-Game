@@ -41,6 +41,7 @@ public class LevelGame {
     private int score;
     private int time;
 
+    private boolean isPause = false;
     private boolean win = false;
 
     private List<Entity> movingEntities = new ArrayList<>();
@@ -418,6 +419,18 @@ public class LevelGame {
 
     public void setTime(int time) {
         this.time = time;
+    }
+
+    public boolean isPause() {
+        return isPause;
+    }
+
+    public void setPause(boolean pause) {
+        isPause = pause;
+    }
+
+    public void changePause() {
+        isPause = !isPause;
     }
 
     public Scene getScene() {
