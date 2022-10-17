@@ -120,6 +120,8 @@ public class LevelGame {
         countTime.schedule(timerTask, 0, 1000);
     }
     private void initGame() {
+        SoundManager soundManager = new SoundManager();
+        soundManager.playMusic();
         Camera.setX(0);
         Camera.setY(0);
         gameMap = new GameMap();
