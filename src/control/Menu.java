@@ -1,4 +1,2 @@
-package control;
-
-public class Menu {
+package control;public class Menu {
 }
