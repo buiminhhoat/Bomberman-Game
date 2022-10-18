@@ -11,6 +11,7 @@ import enumeration.Music;
 import gamemap.GameMap;
 import javafx.scene.image.Image;
 
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -153,6 +154,7 @@ public abstract class AnimationEntity extends Entity {
                             ((Bomber) entity).setDie(false);
                             entity.setXPixel(Entity.START_X_PIXEL);
                             entity.setYPixel(Entity.START_Y_PIXEL);
+                            ((Bomber) entity).setLastTimeDeath(new Date().getTime());
                             if (!disappeared) {
                                 SoundManager.playMusic(Music.GAME);
                             }

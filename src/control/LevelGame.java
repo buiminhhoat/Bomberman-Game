@@ -21,11 +21,8 @@ import gamemap.GameMap;
 import graphics.Camera;
 import graphics.Sprite;
 
-import java.util.ArrayList;
-import java.util.Formatter;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
+
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
@@ -37,7 +34,6 @@ public class LevelGame {
     private Group root;
     private StatusBar statusBar;
     private Scene scene;
-
     private int level;
     private int time;
 
@@ -381,6 +377,10 @@ public class LevelGame {
                     entity1.render(BombermanGame.gc);
                 }
             }
+        }
+        if (((Bomber) bomberman).isImmortal()) {
+            BombermanGame.gc.drawImage(Sprite.shield.getFxImage(),
+                    bomberman.getXPixel() - Camera.getX(), bomberman.getYPixel() - Camera.getY());
         }
         for (int i = 0; i < movingEntities.size(); ++i) {
             Entity entity = movingEntities.get(i);

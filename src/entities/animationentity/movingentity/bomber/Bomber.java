@@ -10,22 +10,30 @@ import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import javafx.scene.image.Image;
 
 public class Bomber extends MovingEntity {
-    private boolean win = false;
+    public static final long IMMORTAL_TIME = 7000;
+    private boolean win;
 
-    private boolean immortal = false;
+    private boolean immortal;
+    private long lastTimeDeath;
 
     public Bomber() {
-
+        this.win = false;
+        this.immortal = false;
+        this.lastTimeDeath = 0;
     }
 
     public Bomber(int x, int y, Image img) {
-        super(x, y, img, 4, 2,
+        super(x, y, img, 4 , 2,
             false, 3, Direction.DOWN);
+        this.win = false;
+        this.immortal = false;
+        this.lastTimeDeath = 0;
     }
 
     public void pickUpItem(GameMap gameMap) {
@@ -47,6 +55,12 @@ public class Bomber extends MovingEntity {
 
     @Override
     public void update() {
+        if (new Date().getTime() - this.lastTimeDeath < IMMORTAL_TIME) {
+            this.setImmortal(true);
+        }
+        else  {
+            this.setImmortal(false);
+        }
         if (this.animations) {
             if (this.isDie()) {
                 switch (this.currentFrame) {
@@ -130,10 +144,9 @@ public class Bomber extends MovingEntity {
         if (this.lives == 0 || this.isDie) {
             return;
         }
-//        if (this.isImmortal()) {
-//            return;
-//        }
-//        this.setImmortal(true);
+        if (this.isImmortal()) {
+            return;
+        }
 
         SoundManager.stopMusic();
         SoundManager.playChunk(Chunk.BOMBER_DIE);
@@ -162,5 +175,13 @@ public class Bomber extends MovingEntity {
 
     public void setImmortal(boolean immortal) {
         this.immortal = immortal;
+    }
+
+    public long getLastTimeDeath() {
+        return lastTimeDeath;
+    }
+
+    public void setLastTimeDeath(long lastTimeDeath) {
+        this.lastTimeDeath = lastTimeDeath;
     }
 }
