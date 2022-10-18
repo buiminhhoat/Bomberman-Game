@@ -64,15 +64,17 @@ public class GameOver {
 
     public void update() {
         if (Util.checkMouseInImageView(menuButtonView)) {
-            scene.setOnMouseClicked(event -> {
-                timer.stop();
-                BombermanGame.displayMenu();
-            });
             menuButtonView.setImage(menuButton2);
         }
         else {
             menuButtonView.setImage(menuButton1);
         }
+        scene.setOnMouseClicked(event -> {
+            if (Util.checkMouseInImageView(menuButtonView)) {
+                timer.stop();
+                BombermanGame.displayMenu();
+            }
+        });
     }
 
     public Scene getScene() {

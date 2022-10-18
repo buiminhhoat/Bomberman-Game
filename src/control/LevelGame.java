@@ -29,7 +29,7 @@ import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 
 public class LevelGame {
-    public static final int FINAL_LEVEL = 2;
+    public static final int FINAL_LEVEL = 1;
     private Group root;
     private StatusBar statusBar;
     private Scene scene;
@@ -323,7 +323,7 @@ public class LevelGame {
                             f.format(String.valueOf(highScore));
                             f.close();
                         } catch (Exception e) {
-                            System.out.println("Error write file highscore");
+                            System.out.println("Error write file highscore.txt");
                         }
                     }
                     animationEntities.remove(i);

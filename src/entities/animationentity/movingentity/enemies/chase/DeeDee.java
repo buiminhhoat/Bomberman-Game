@@ -22,7 +22,7 @@ public class DeeDee extends Chase {
 
     private int DIGESTION_TIME = 15 * 1000; // 1s = 1000ms
     public DeeDee() {
-        distanceChase = INF;
+        distanceChase = 10;
     }
 
     public DeeDee(int x, int y, Image img) {

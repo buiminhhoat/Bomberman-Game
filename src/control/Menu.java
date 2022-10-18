@@ -115,6 +115,10 @@ public class Menu {
         }
 
         if (Util.checkMouseInImageView(continueButtonView)) {
+            scene.setOnMouseClicked(event -> {
+                timer.stop();
+                BombermanGame.displayContinue();
+            });
             continueButtonView.setImage(continueButton2);
         }
         else {

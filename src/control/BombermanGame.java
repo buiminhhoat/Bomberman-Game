@@ -3,6 +3,7 @@ package control;
 import graphics.Sprite;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Formatter;
 import java.util.Scanner;
 
 import javafx.application.Application;
@@ -81,7 +82,28 @@ public class BombermanGame extends Application {
     }
 
     public static void displayNextLevel() {
+        File file = new File("res/data/maxunlocklevel.txt");
+        Scanner sc = null;
+        int maxunlocklevel = 0;
+        try {
+            sc = new Scanner(file);
+            maxunlocklevel = sc.nextInt();
+            sc.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
         ++currentLevel;
+        if (currentLevel > maxunlocklevel) {
+            maxunlocklevel = currentLevel;
+            try {
+                Formatter f = new Formatter("res/data/maxunlocklevel.txt");
+                f.format(String.valueOf(maxunlocklevel));
+                f.close();
+            } catch (Exception e) {
+                System.out.println("Error write file maxunlocklevel.txt");
+            }
+        }
         SoundManager.stopMusic();
         canvas.setTranslateY(32);
         NextLevel nextLevel = new NextLevel();
@@ -95,6 +117,33 @@ public class BombermanGame extends Application {
         LevelGame levelGame = new LevelGame(currentLevel);
 
         Scanner sc = null;
+        try {
+            File file = new File("res/data/highscore.txt");
+            sc = new Scanner(file);
+            int highscore = sc.nextInt();
+            levelGame.setHighScore(highscore);
+            sc.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        levelGame.start();
+        stage.setScene(levelGame.getScene());
+    }
+
+    public static void displayContinue() {
+        SoundManager.stopMusic();
+        canvas.setTranslateY(32);
+        Scanner sc = null;
+        try {
+            File file = new File("res/data/maxunlocklevel.txt");
+            sc = new Scanner(file);
+            currentLevel = sc.nextInt();
+            sc.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        LevelGame levelGame = new LevelGame(currentLevel);
+
         try {
             File file = new File("res/data/highscore.txt");
             sc = new Scanner(file);
