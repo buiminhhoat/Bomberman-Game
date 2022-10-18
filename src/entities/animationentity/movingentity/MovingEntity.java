@@ -178,7 +178,7 @@ public class MovingEntity extends AnimationEntity {
         if (entity.getDirection() == null) {
             return;
         }
-        if (this.getlives() == 0) {
+        if (this.isDie()) {
             return;
         }
         switch (entity.getDirection()) {
@@ -228,15 +228,13 @@ public class MovingEntity extends AnimationEntity {
     }
 
     public void dead() {
-        if (this.lives == 0) {
+        if (this.lives == 0 || this.isDie) {
             return;
         }
 
         --this.lives;
-        if (this instanceof Bomber) {
-            SoundManager.playChunk(Chunk.BOMBER_DIE);
-        }
         if (this.lives == 0) {
+            this.setDie(true);
             cancelLiveTimer();
             if (getAnimations()) {
                 finishAnimations();

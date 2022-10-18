@@ -23,7 +23,7 @@ public class Balloon extends Enemies {
     @Override
     public void update() {
         if (this.animations) {
-            if (this.getlives() == 0) {
+            if (this.isDie()) {
                 switch (this.currentFrame) {
                     case 0:
                         this.img = Sprite.balloom_dead.getFxImage();

@@ -42,7 +42,7 @@ public class BombermanGame extends Application {
         stage.setTitle(TITLE);
 
         SoundManager.initSound();
-        displayMenu();
+        displayGame();
 
         stage.show();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {

@@ -33,7 +33,7 @@ public class DeeDee extends Chase {
     @Override
     public void update() {
         if (this.animations) {
-            if (this.getlives() == 0) {
+            if (this.isDie()) {
                 switch (this.currentFrame) {
                     case 0:
                         this.img = Sprite.deedee_dead.getFxImage();
@@ -178,7 +178,7 @@ public class DeeDee extends Chase {
     }
 
     public void chooseDirection(GameMap gameMap) {
-        if (animations || getlives() == 0) {
+        if (animations || isDie()) {
             return;
         }
         eatBomb(gameMap);

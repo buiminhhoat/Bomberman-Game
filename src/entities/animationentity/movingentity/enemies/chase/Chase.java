@@ -41,7 +41,7 @@ public class Chase extends Enemies {
 
     @Override
     public void chooseDirection(GameMap gameMap) {
-        if (animations || getlives() == 0) {
+        if (animations || isDie()) {
             return;
         }
 

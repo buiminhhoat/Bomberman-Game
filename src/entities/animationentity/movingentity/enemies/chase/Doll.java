@@ -19,7 +19,7 @@ public class Doll extends Chase{
     @Override
     public void update() {
         if (this.animations) {
-            if (this.getlives() == 0) {
+            if (this.isDie()) {
                 switch (this.currentFrame) {
                     case 0:
                         this.img = Sprite.doll_dead.getFxImage();
@@ -100,7 +100,7 @@ public class Doll extends Chase{
     AstarAlgorithm astarAlgorithm = new AstarAlgorithm();
     @Override
     public void chooseDirection(GameMap gameMap) {
-        if (animations || getlives() == 0) {
+        if (animations || isDie()) {
             return;
         }
 

@@ -1,9 +1,11 @@
 package entities.animationentity.movingentity.bomber;
 
+import control.SoundManager;
 import entities.Entity;
 import entities.animationentity.hiddenitem.HiddenItem;
 import entities.animationentity.hiddenitem.Portal;
 import entities.animationentity.movingentity.MovingEntity;
+import enumeration.Chunk;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
@@ -15,12 +17,14 @@ import javafx.scene.image.Image;
 public class Bomber extends MovingEntity {
     private boolean win = false;
 
+    private boolean immortal = false;
+
     public Bomber() {
 
     }
 
     public Bomber(int x, int y, Image img) {
-        super(x, y, img, 4, 2,
+        super(x, y, img, 8, 2,
             false, 100, Direction.DOWN);
     }
 
@@ -44,7 +48,7 @@ public class Bomber extends MovingEntity {
     @Override
     public void update() {
         if (this.animations) {
-            if (this.getlives() == 0) {
+            if (this.isDie()) {
                 switch (this.currentFrame) {
                     case 0:
                         this.img = Sprite.player_dead1.getFxImage();
@@ -118,11 +122,41 @@ public class Bomber extends MovingEntity {
         }
     }
 
+    @Override
+    public void dead() {
+        if (this.lives == 0 || this.isDie) {
+            return;
+        }
+//        if (this.isImmortal()) {
+//            return;
+//        }
+//        this.setImmortal(true);
+
+        SoundManager.playChunk(Chunk.BOMBER_DIE);
+
+        --this.lives;
+        this.setDie(true);
+
+        cancelLiveTimer();
+        if (getAnimations()) {
+            finishAnimations();
+        }
+        startAnimations();
+    }
+
     public boolean isWin() {
         return win;
     }
 
     public void setWin(boolean win) {
         this.win = win;
+    }
+
+    public boolean isImmortal() {
+        return immortal;
+    }
+
+    public void setImmortal(boolean immortal) {
+        this.immortal = immortal;
     }
 }

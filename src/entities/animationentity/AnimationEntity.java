@@ -1,6 +1,7 @@
 package entities.animationentity;
 
 import entities.Entity;
+import entities.animationentity.bomb.Bomb;
 import entities.animationentity.movingentity.bomber.Bomber;
 import entities.animationentity.movingentity.enemies.chase.DeeDee;
 import entities.animationentity.movingentity.enemies.chase.Oneal;
@@ -25,8 +26,10 @@ public abstract class AnimationEntity extends Entity {
     protected Boolean animations;
 
     protected boolean disappeared = false;
+
+    protected boolean isDie = false;
     protected int lives = 1;
-    protected int levelSpeed; // {16, 8, 4, 2}
+    protected int levelSpeed = 8; // {16, 8, 4, 2}
 
     protected Direction direction;
 
@@ -35,15 +38,18 @@ public abstract class AnimationEntity extends Entity {
     private final int[] frame = {0, 0, 0, 1, 2};
     private int idFrame = 0;
 
+    private boolean liveTimerIsRunning = false;
+    private boolean deathTimerIsRunning = false;
     private Timer liveTimer = new Timer();
     private Timer deathTimer = new Timer();
 
     public AnimationEntity() {
-
+        initTimer();
     }
 
     public AnimationEntity(int x, int y, Image img) {
         super(x, y, img);
+        initTimer();
     }
 
     public AnimationEntity(int x, int y, Image img, int levelSpeed, int maxFrame,
@@ -54,6 +60,7 @@ public abstract class AnimationEntity extends Entity {
         this.animations = animations;
         this.lives = lives;
         this.direction = direction;
+        initTimer();
     }
 
     public int getCurrentFrame() {
@@ -72,10 +79,6 @@ public abstract class AnimationEntity extends Entity {
         this.maxFrame = maxFrame;
     }
 
-    public int getlives() {
-        return lives;
-    }
-
     public void setlives(int lives) {
         this.lives = lives;
     }
@@ -92,53 +95,86 @@ public abstract class AnimationEntity extends Entity {
         this.direction = direction;
     }
 
-    public void startAnimations() {
-        this.animations = true;
-        if (this.getlives() != 0) {
-            int timeToTransitionFrame = 500;
-            if (this instanceof DeeDee) {
-                System.out.println(this.levelSpeed);
-            }
-            switch (this.levelSpeed) {
-                case 16:
-                    timeToTransitionFrame = 400;
-                    break;
-                case 8:
-                    timeToTransitionFrame = 250;
-                    break;
-                case 4:
-                    timeToTransitionFrame = 150;
-                    break;
-            }
-            TimerTask timerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    currentFrame = (currentFrame + 1) % maxFrame;
-                }
-            };
-            liveTimer.schedule(timerTask, 0, timeToTransitionFrame);
-        } else {
-            int timeToTransitionFrame = 200;
+    public void initTimer() {
+        Entity entity = this;
 
-            TimerTask timerTask = new TimerTask() {
-                @Override
-                public void run() {
+        int timeToTransitionFrame = 500;
+        switch (this.levelSpeed) {
+            case 16:
+                timeToTransitionFrame = 30;
+                break;
+            case 8:
+                timeToTransitionFrame = 20;
+                break;
+            case 4:
+                timeToTransitionFrame = 10;
+                break;
+        }
+
+        if (entity instanceof Bomb) {
+            timeToTransitionFrame = 150;
+        }
+
+        TimerTask timerLiveTask = new TimerTask() {
+            @Override
+            public void run() {
+                if (liveTimerIsRunning) {
+                    if (!animations) {
+                        cancelLiveTimer();
+                    }
+                    else {
+                        currentFrame = (currentFrame + 1) % maxFrame;
+                    }
+                }
+            }
+        };
+        liveTimer.schedule(timerLiveTask, 0, timeToTransitionFrame);
+
+
+        timeToTransitionFrame = 150;
+
+        TimerTask timerDeathTask = new TimerTask() {
+            @Override
+            public void run() {
+                if (deathTimerIsRunning) {
                     ++idFrame;
                     if (idFrame == frame.length) {
-                        finishAnimations();
-                        disappeared = true;
-                        deathTimer.cancel();
-                        return;
+                        if (((AnimationEntity) entity).getLives() == 0) {
+                            disappeared = true;
+                        }
+                        if (entity instanceof Bomber) {
+                            ((Bomber) entity).setDie(false);
+                            entity.setXPixel(Entity.START_X_PIXEL);
+                            entity.setYPixel(Entity.START_Y_PIXEL);
+                        }
+                        cancelDeathTimer();
+                    } else {
+                        currentFrame = frame[idFrame];
                     }
-                    currentFrame = frame[idFrame];
                 }
-            };
-            deathTimer.schedule(timerTask, 0, timeToTransitionFrame);
+            }
+        };
+
+        deathTimer.schedule(timerDeathTask, 0, timeToTransitionFrame);
+    }
+
+    public void startAnimations() {
+        this.animations = true;
+        if (!this.isDie()) {
+            liveTimerIsRunning = true;
+        } else {
+            deathTimerIsRunning = true;
         }
     }
 
     public void cancelLiveTimer() {
-          liveTimer.cancel();
+        finishAnimations();
+        liveTimerIsRunning = false;
+    }
+
+    public void cancelDeathTimer() {
+        finishAnimations();
+        deathTimerIsRunning = false;
     }
 
     public void finishAnimations() {
@@ -234,5 +270,13 @@ public abstract class AnimationEntity extends Entity {
 
     public void setDeathTimer(Timer deathTimer) {
         this.deathTimer = deathTimer;
+    }
+
+    public boolean isDie() {
+        return isDie;
+    }
+
+    public void setDie(boolean die) {
+        this.isDie = die;
     }
 }
