@@ -14,6 +14,7 @@ public abstract class SoundManager {
     public static AudioClip chuckLevelComplete;
     public static AudioClip chuckWalkBomber;
     public static AudioClip chuckBomberDie;
+    public static AudioClip lastMusic = null;
 
     public static void initSound() {
         chunkSetBomb = new AudioClip(SoundManager.class.getResource("/sounds/set_bomb.wav")
@@ -90,17 +91,17 @@ public abstract class SoundManager {
         isMuted = !isMuted;
         if (isMuted) {
             if (musicMenu.isPlaying()) {
-                musicMenu.setVolume(0);
+                lastMusic = musicMenu;
+                musicMenu.stop();
+                return;
             }
             if(musicGame.isPlaying()) {
-                musicGame.setVolume(0);
+                lastMusic = musicGame;
+                musicGame.stop();
             }
         } else {
-            if (musicMenu.isPlaying()) {
-                musicMenu.setVolume(1);
-            }
-            if(musicGame.isPlaying()) {
-                musicGame.setVolume(1);
+            if (lastMusic != null) {
+                lastMusic.play();
             }
         }
     }
