@@ -23,6 +23,7 @@ import graphics.Sprite;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,6 +41,8 @@ public class LevelGame {
     private int level;
     private int score;
     private int time;
+
+    private int highScore;
 
     private boolean isPause = false;
     private boolean win = false;
@@ -270,6 +273,16 @@ public class LevelGame {
                     }
                     ((AnimationEntity) entity).die(gameMap, (Bomber) bomberman);
                     score += ((AnimationEntity) entity).getScore();
+                    if (score > highScore) {
+                        highScore = score;
+                        try {
+                            Formatter f = new Formatter("res/data/highscore.txt");
+                            f.format(String.valueOf(highScore));
+                            f.close();
+                        } catch (Exception e) {
+                            System.out.println("Error write file highscore");
+                        }
+                    }
                     movingEntities.remove(i);
                     --i;
                 }
@@ -290,7 +303,10 @@ public class LevelGame {
             move();
         }
         statusBar.updateStatusBar(this);
-        stillObjects.forEach(Entity::update);
+        for (int i = 0; i < stillObjects.size(); ++i) {
+            Entity entity = stillObjects.get(i);
+            entity.update();
+        }
         for (int i = 0; i < movingEntities.size(); ++i) {
             Entity entity = movingEntities.get(i);
             entity.update();
@@ -304,12 +320,19 @@ public class LevelGame {
     public void render() {
         BombermanGame.gc.clearRect(0, 0, BombermanGame.canvas.getWidth(), BombermanGame.canvas.getHeight());
         updateCamera();
-        stillObjects.forEach(g -> g.render(BombermanGame.gc));
+        for (int i = 0; i < stillObjects.size(); ++i) {
+            Entity entity = stillObjects.get(i);
+            entity.render(BombermanGame.gc);
+        }
         for (int i = 0; i < movingEntities.size(); ++i) {
             Entity entity = movingEntities.get(i);
             if (entity instanceof MovingEntity) {
                 List<Bomb> bombList = ((MovingEntity) entity).getBombList();
-                bombList.forEach(g -> g.render(BombermanGame.gc));
+//                bombList.forEach(g -> g.render(BombermanGame.gc));
+                for (int j = 0; j < bombList.size(); ++j) {
+                    Entity entity1 = bombList.get(j);
+                    entity1.render(BombermanGame.gc);
+                }
             }
         }
         for (int i = 0; i < movingEntities.size(); ++i) {
@@ -435,5 +458,33 @@ public class LevelGame {
 
     public Scene getScene() {
         return scene;
+    }
+
+    public Group getRoot() {
+        return root;
+    }
+
+    public void setRoot(Group root) {
+        this.root = root;
+    }
+
+    public StatusBar getStatusBar() {
+        return statusBar;
+    }
+
+    public void setStatusBar(StatusBar statusBar) {
+        this.statusBar = statusBar;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public void setHighScore(int highScore) {
+        this.highScore = highScore;
     }
 }

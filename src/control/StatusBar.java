@@ -100,6 +100,7 @@ public class StatusBar {
         scoreText.setText("Score: " + levelGame.getScore());
         timeText.setText("Time: " + levelGame.getTime());
         livesText.setText("Lives: " + levelGame.getBomberman().getLives());
+        highScoreText.setText("High score: " + levelGame.getHighScore());
         if (levelGame.isPause()) {
             statusGame.setImage(resumeButton);
         } else {

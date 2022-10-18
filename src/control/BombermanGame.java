@@ -1,6 +1,9 @@
 package control;
 
 import graphics.Sprite;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -62,6 +65,17 @@ public class BombermanGame extends Application {
         canvas.setTranslateY(32);
         LevelGame levelGame = new LevelGame();
         stage.setScene(levelGame.getScene());
+        Scanner sc = null;
+        try {
+            File file = new File("res/data/highscore.txt");
+            sc = new Scanner(file);
+            int highscore = sc.nextInt();
+            levelGame.setHighScore(highscore);
+            sc.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
         levelGame.start();
     }
 }
