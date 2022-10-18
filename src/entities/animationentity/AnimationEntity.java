@@ -35,7 +35,7 @@ public abstract class AnimationEntity extends Entity {
 
     protected int score = 100;
 
-    private final int[] frame = {0, 0, 0, 1, 2};
+    private final int[] frame = {0, 0, 0, 1, 2, 3};
     private int idFrame = 0;
 
     private boolean liveTimerIsRunning = false;

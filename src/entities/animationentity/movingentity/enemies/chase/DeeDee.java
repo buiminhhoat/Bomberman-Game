@@ -44,6 +44,9 @@ public class DeeDee extends Chase {
                     case 2:
                         this.img = Sprite.mob_dead_gray2.getFxImage();
                         break;
+                    case 3:
+                        this.img = Sprite.nothing.getFxImage();
+                        break;
                 }
             } else {
                 if (eating) {

@@ -42,7 +42,7 @@ public class BombermanGame extends Application {
         stage.setTitle(TITLE);
 
         SoundManager.initSound();
-        displayGame();
+        displayMenu();
 
         stage.show();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -55,16 +55,26 @@ public class BombermanGame extends Application {
     }
 
     public static void displayMenu() {
+        SoundManager.stopMusic();
         canvas.setTranslateY(0);
         Menu menu = new Menu();
-        stage.setScene(menu.getScene());
         menu.display();
+        stage.setScene(menu.getScene());
+    }
+
+    public static void displayGameOver() {
+        SoundManager.stopMusic();
+        canvas.setTranslateY(0);
+        GameOver gameOver = new GameOver();
+        gameOver.display();
+        stage.setScene(gameOver.getScene());
     }
 
     public static void displayGame() {
+        SoundManager.stopMusic();
         canvas.setTranslateY(32);
         LevelGame levelGame = new LevelGame();
-        stage.setScene(levelGame.getScene());
+
         Scanner sc = null;
         try {
             File file = new File("res/data/highscore.txt");
@@ -75,7 +85,7 @@ public class BombermanGame extends Application {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-
+        stage.setScene(levelGame.getScene());
         levelGame.start();
     }
 }

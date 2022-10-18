@@ -105,7 +105,6 @@ public class Menu {
         if (Util.checkMouseInImageView(playButtonView)) {
             scene.setOnMouseClicked(event -> {
                 timer.stop();
-                SoundManager.stopMusic(Music.MENU);
                 BombermanGame.displayGame();
             });
             playButtonView.setImage(playButton2);

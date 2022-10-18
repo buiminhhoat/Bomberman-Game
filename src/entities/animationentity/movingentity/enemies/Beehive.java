@@ -39,6 +39,9 @@ public class Beehive extends Chase {
                     case 2:
                         this.img = Sprite.mob_dead_beehive2.getFxImage();
                         break;
+                    case 3:
+                        this.img = Sprite.nothing.getFxImage();
+                        break;
                 }
             } else {
                 this.img = Sprite.beehive.getFxImage();

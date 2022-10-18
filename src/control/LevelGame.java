@@ -131,15 +131,27 @@ public class LevelGame {
                 render();
                 update();
                 if (((Bomber) bomberman).isWin()) {
-                    SoundManager.stopMusic(Music.GAME);
+                    SoundManager.stopMusic();
                     SoundManager.playChunk(Chunk.LEVEL_COMPLETE);
                     level++;
+                    time = 0;
                     ((Bomber) bomberman).setWin(false);
                     initGame();
                 }
+
+
+                if (bomberman.isDisappeared()) {
+                    this.stop();
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }
+                    BombermanGame.displayGameOver();
+                }
+
             }
         };
-
         timer.start();
 
         TimerTask timerTask = new TimerTask() {
@@ -269,7 +281,7 @@ public class LevelGame {
             if (entity instanceof AnimationEntity) {
                 if (((AnimationEntity) entity).isDisappeared()) {
                     if (entity instanceof Bomber) {
-                        bomberman = null;
+                        return;
                     }
                     ((AnimationEntity) entity).die(gameMap, (Bomber) bomberman);
                     score += ((AnimationEntity) entity).getScore();
@@ -328,7 +340,6 @@ public class LevelGame {
             Entity entity = movingEntities.get(i);
             if (entity instanceof MovingEntity) {
                 List<Bomb> bombList = ((MovingEntity) entity).getBombList();
-//                bombList.forEach(g -> g.render(BombermanGame.gc));
                 for (int j = 0; j < bombList.size(); ++j) {
                     Entity entity1 = bombList.get(j);
                     entity1.render(BombermanGame.gc);

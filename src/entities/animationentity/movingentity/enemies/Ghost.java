@@ -30,6 +30,9 @@ public class Ghost extends Enemies {
                     case 2:
                         this.img = Sprite.mob_dead_gray2.getFxImage();
                         break;
+                    case 3:
+                        this.img = Sprite.nothing.getFxImage();
+                        break;
                 }
             } else {
                 switch (this.direction) {

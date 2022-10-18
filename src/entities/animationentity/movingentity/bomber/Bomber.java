@@ -25,7 +25,7 @@ public class Bomber extends MovingEntity {
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img, 8, 2,
-            false, 100, Direction.DOWN);
+            false, 1, Direction.DOWN);
     }
 
     public void pickUpItem(GameMap gameMap) {
@@ -58,6 +58,9 @@ public class Bomber extends MovingEntity {
                         break;
                     case 2:
                         this.img = Sprite.player_dead3.getFxImage();
+                        break;
+                    case 3:
+                        this.img = Sprite.nothing.getFxImage();
                         break;
                 }
             } else {

@@ -12,8 +12,8 @@ public abstract class SoundManager {
     public static AudioClip chunkExplodeBomb;
     public static AudioClip chuckPickUpItem;
     public static AudioClip chuckLevelComplete;
-    public static AudioClip chuckWalkBomber;
     public static AudioClip chuckBomberDie;
+    public static AudioClip chuckGameOver;
     public static AudioClip lastMusic = null;
 
     public static void initSound() {
@@ -25,9 +25,9 @@ public abstract class SoundManager {
                 .toExternalForm());
         chuckLevelComplete = new AudioClip(SoundManager.class.getResource("/sounds/level_complete.wav")
                 .toExternalForm());
-        chuckWalkBomber = new AudioClip(SoundManager.class.getResource("/sounds/walk_bomber.mp3")
-                .toExternalForm());
         chuckBomberDie = new AudioClip(SoundManager.class.getResource("/sounds/bomberdie.wav")
+                .toExternalForm());
+        chuckGameOver = new AudioClip(SoundManager.class.getResource("/sounds/game_over.mp3")
                 .toExternalForm());
 
         musicGame = new AudioClip(SoundManager.class.getResource("/sounds/FindTheDoor.mp3")
@@ -40,6 +40,9 @@ public abstract class SoundManager {
     }
 
     public static void playMusic(Music music) {
+        if (isMuted) {
+            return;
+        }
         switch (music) {
             case MENU:
                 musicMenu.play();
@@ -50,14 +53,30 @@ public abstract class SoundManager {
         }
     }
 
-    public static void stopMusic(Music music) {
-        switch (music) {
-            case MENU:
-                musicMenu.stop();
-                break;
-            case GAME:
-                musicGame.stop();
-                break;
+    public static void stopMusic() {
+        if (musicMenu.isPlaying()) {
+            musicMenu.stop();
+        }
+        if (musicGame.isPlaying()){
+            musicGame.stop();
+        }
+        if (chunkSetBomb.isPlaying()){
+            chunkSetBomb.stop();
+        }
+        if (chunkExplodeBomb.isPlaying()){
+            chunkExplodeBomb.stop();
+        }
+        if (chuckPickUpItem.isPlaying()){
+            chuckPickUpItem.stop();
+        }
+        if (chuckLevelComplete.isPlaying()){
+            chuckLevelComplete.stop();
+        }
+        if (chuckBomberDie.isPlaying()){
+            chuckBomberDie.stop();
+        }
+        if (chuckGameOver.isPlaying()){
+            chuckGameOver.stop();
         }
     }
 
@@ -78,11 +97,11 @@ public abstract class SoundManager {
             case LEVEL_COMPLETE:
                 chuckLevelComplete.play();
                 break;
-            case WALK_BOMBER:
-                chuckWalkBomber.play();
-                break;
             case BOMBER_DIE:
                 chuckBomberDie.play();
+                break;
+            case GAME_OVER:
+                chuckGameOver.play();
                 break;
         }
     }
@@ -90,19 +109,9 @@ public abstract class SoundManager {
     public static void changeStatus() {
         isMuted = !isMuted;
         if (isMuted) {
-            if (musicMenu.isPlaying()) {
-                lastMusic = musicMenu;
-                musicMenu.stop();
-                return;
-            }
-            if(musicGame.isPlaying()) {
-                lastMusic = musicGame;
-                musicGame.stop();
-            }
+            stopMusic();
         } else {
-            if (lastMusic != null) {
-                lastMusic.play();
-            }
+            musicGame.play();
         }
     }
 }

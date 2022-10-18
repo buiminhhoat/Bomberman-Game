@@ -42,6 +42,9 @@ public class Creeper extends Enemies {
                     case 2:
                         this.img = Sprite.mob_dead_blue2.getFxImage();
                         break;
+                    case 3:
+                        this.img = Sprite.nothing.getFxImage();
+                        break;
                 }
             } else {
                 switch (this.direction) {

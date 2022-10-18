@@ -16,7 +16,8 @@ public class Sprite {
     public static final int SCALED_SIZE = DEFAULT_SIZE;
     private static final int TRANSPARENT_COLOR = 0xffff00ff;
 
-
+    public static Sprite nothing = new Sprite(DEFAULT_SIZE, 4, 1, SpriteSheet.tiles, DEFAULT_SIZE,
+            DEFAULT_SIZE);
     /*
     |--------------------------------------------------------------------------
     | Forest map
