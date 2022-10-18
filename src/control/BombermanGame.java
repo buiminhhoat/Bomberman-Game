@@ -14,6 +14,9 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class BombermanGame extends Application {
+    public static int score = 0;
+    public static int currentLevel = 0;
+
     public static final int WIDTH = 25;
     public static final int HEIGHT = 20;
 
@@ -51,7 +54,7 @@ public class BombermanGame extends Application {
 
     public static void displayMenu() {
         SoundManager.stopMusic();
-        canvas.setTranslateY(0);
+        canvas.setTranslateY(32);
         Menu menu = new Menu();
         stage.setScene(menu.getScene());
         menu.display();
@@ -59,24 +62,37 @@ public class BombermanGame extends Application {
 
     public static void displayGameOver() {
         SoundManager.stopMusic();
-        canvas.setTranslateY(0);
+        canvas.setTranslateY(32);
         GameOver gameOver = new GameOver();
         gameOver.display();
         stage.setScene(gameOver.getScene());
+        currentLevel = 0;
+        score = 0;
     }
 
     public static void displayGameVictory() {
         SoundManager.stopMusic();
-        canvas.setTranslateY(0);
+        canvas.setTranslateY(32);
         GameVictory gameVictory = new GameVictory();
         gameVictory.display();
         stage.setScene(gameVictory.getScene());
+        currentLevel = 0;
+        score = 0;
+    }
+
+    public static void displayNextLevel() {
+        ++currentLevel;
+        SoundManager.stopMusic();
+        canvas.setTranslateY(32);
+        NextLevel nextLevel = new NextLevel();
+        nextLevel.display();
+        stage.setScene(nextLevel.getScene());
     }
 
     public static void displayGame() {
         SoundManager.stopMusic();
         canvas.setTranslateY(32);
-        LevelGame levelGame = new LevelGame();
+        LevelGame levelGame = new LevelGame(currentLevel);
 
         Scanner sc = null;
         try {

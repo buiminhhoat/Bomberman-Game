@@ -78,8 +78,8 @@ public class StatusBar {
     }
 
     public void updateStatusBar(LevelGame levelGame) {
-        levelText.setText("Level: " + levelGame.getLevel());
-        scoreText.setText("Score: " + levelGame.getScore());
+        levelText.setText("Level: " + BombermanGame.currentLevel);
+        scoreText.setText("Score: " + BombermanGame.score);
         timeText.setText("Time: " + levelGame.getTime());
         livesText.setText("Lives: " + levelGame.getBomberman().getLives());
         highScoreText.setText("High score: " + levelGame.getHighScore());

@@ -45,22 +45,36 @@ public class GameVictory {
 
         backgroundView = new ImageView(background);
         backgroundView.setFitWidth(BombermanGame.WIDTH * Sprite.SCALED_SIZE);
-        backgroundView.setFitHeight(BombermanGame.HEIGHT * Sprite.SCALED_SIZE);
+        backgroundView.setFitHeight(BombermanGame.HEIGHT * Sprite.SCALED_SIZE + 32);
         root.getChildren().add(backgroundView);
 
-        Text totalScore = new Text("Total Score");
-        totalScore.setFont(Font.loadFont(Menu.class.getResourceAsStream(
+        Text TextTotalScore = new Text("Total Score");
+        TextTotalScore.setFont(Font.loadFont(Menu.class.getResourceAsStream(
                 "/fonts/PressStart2P-Regular.ttf"), 40));
-        totalScore.setFill(Color.YELLOW);
-        totalScore.setStroke(Color.ORANGE);
+        TextTotalScore.setFill(Color.YELLOW);
+        TextTotalScore.setStroke(Color.ORANGE);
+        TextTotalScore.setStrokeWidth(3);
+        TextTotalScore.setX(180);
+        TextTotalScore.setY(280);
+        root.getChildren().add(TextTotalScore);
+
+        String tx = "" + BombermanGame.score;
+        while (tx.length() < 5) {
+            tx = "0" + tx;
+        }
+        Text totalScore = new Text(tx);
+        totalScore.setFont(Font.loadFont(Menu.class.getResourceAsStream(
+                "/fonts/PressStart2P-Regular.ttf"), 60));
+        totalScore.setFill(Color.ORANGE);
+        totalScore.setStroke(Color.YELLOW);
         totalScore.setStrokeWidth(3);
-        totalScore.setX(180);
-        totalScore.setY(270);
+        totalScore.setX(255);
+        totalScore.setY(400);
         root.getChildren().add(totalScore);
 
         menuButtonView = new ImageView(menuButton1);
         menuButtonView.setX(310);
-        menuButtonView.setY(500);
+        menuButtonView.setY(510);
         menuButtonView.setFitWidth(180);
         menuButtonView.setFitHeight(75);
         root.getChildren().add(menuButtonView);

@@ -58,7 +58,7 @@ public class Menu {
 
         backgroundView = new ImageView(background);
         backgroundView.setFitWidth(BombermanGame.WIDTH * Sprite.SCALED_SIZE);
-        backgroundView.setFitHeight(BombermanGame.HEIGHT * Sprite.SCALED_SIZE);
+        backgroundView.setFitHeight(BombermanGame.HEIGHT * Sprite.SCALED_SIZE + 32);
         root.getChildren().add(backgroundView);
 
         Text bombermanText = new Text("BOMBERMAN");
@@ -106,7 +106,7 @@ public class Menu {
         if (Util.checkMouseInImageView(playButtonView)) {
             scene.setOnMouseClicked(event -> {
                 timer.stop();
-                BombermanGame.displayGame();
+                BombermanGame.displayNextLevel();
             });
             playButtonView.setImage(playButton2);
         }

@@ -15,6 +15,7 @@ public abstract class SoundManager {
     public static AudioClip chuckBomberDie;
     public static AudioClip chuckGameOver;
     public static AudioClip chunkGameVictory;
+    public static AudioClip chunkNextLevel;
 
     public static void initSound() {
         chunkSetBomb = new AudioClip(SoundManager.class.getResource("/sounds/set_bomb.wav")
@@ -30,6 +31,8 @@ public abstract class SoundManager {
         chuckGameOver = new AudioClip(SoundManager.class.getResource("/sounds/game_over.mp3")
                 .toExternalForm());
         chunkGameVictory = new AudioClip(SoundManager.class.getResource("/sounds/game_victory.mp3")
+                .toExternalForm());
+        chunkNextLevel = new AudioClip(SoundManager.class.getResource("/sounds/next_level.mp3")
                 .toExternalForm());
 
         musicGame = new AudioClip(SoundManager.class.getResource("/sounds/FindTheDoor.mp3")
@@ -59,29 +62,32 @@ public abstract class SoundManager {
         if (musicMenu.isPlaying()) {
             musicMenu.stop();
         }
-        if (musicGame.isPlaying()){
+        if (musicGame.isPlaying()) {
             musicGame.stop();
         }
-        if (chunkSetBomb.isPlaying()){
+        if (chunkSetBomb.isPlaying()) {
             chunkSetBomb.stop();
         }
-        if (chunkExplodeBomb.isPlaying()){
+        if (chunkExplodeBomb.isPlaying()) {
             chunkExplodeBomb.stop();
         }
-        if (chuckPickUpItem.isPlaying()){
+        if (chuckPickUpItem.isPlaying()) {
             chuckPickUpItem.stop();
         }
-        if (chuckLevelComplete.isPlaying()){
+        if (chuckLevelComplete.isPlaying()) {
             chuckLevelComplete.stop();
         }
-        if (chuckBomberDie.isPlaying()){
+        if (chuckBomberDie.isPlaying()) {
             chuckBomberDie.stop();
         }
-        if (chuckGameOver.isPlaying()){
+        if (chuckGameOver.isPlaying()) {
             chuckGameOver.stop();
         }
-        if (chunkGameVictory.isPlaying()){
+        if (chunkGameVictory.isPlaying()) {
             chunkGameVictory.stop();
+        }
+        if (chunkNextLevel.isPlaying()) {
+            chunkNextLevel.stop();
         }
     }
 
@@ -110,6 +116,9 @@ public abstract class SoundManager {
                 break;
             case GAME_VICTORY:
                 chunkGameVictory.play();
+                break;
+            case NEXT_LEVEL:
+                chunkNextLevel.play();
                 break;
         }
     }

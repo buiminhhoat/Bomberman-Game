@@ -30,6 +30,7 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 public class LevelGame {
     public static final int FINAL_LEVEL = 2;
@@ -38,12 +39,10 @@ public class LevelGame {
     private Scene scene;
 
     private int level;
-    private int score;
     private int time;
 
     private int highScore;
 
-    private boolean isPause = false;
     private boolean win = false;
 
     private List<Entity> movingEntities = new ArrayList<>();
@@ -95,7 +94,9 @@ public class LevelGame {
                         break;
                     case SPACE:
                         System.out.println("SPACE");
-                        ((Bomber) bomberman).createBomb(gameMap);
+                        if (!bomberman.isDie()) {
+                            ((Bomber) bomberman).createBomb(gameMap);
+                        }
                         break;
                     case P:
                         System.out.println("P");
@@ -133,8 +134,8 @@ public class LevelGame {
                     ((Bomber) bomberman).setWin(false);
                     SoundManager.stopMusic();
                     SoundManager.playChunk(Chunk.LEVEL_COMPLETE);
-                    level++;
-                    if (level > FINAL_LEVEL) {
+
+                    if (level == FINAL_LEVEL) {
                         this.stop();
                         try {
                             Thread.sleep(3000);
@@ -145,17 +146,15 @@ public class LevelGame {
                         return;
                     }
 
-//                    Image background = new Image("/images/game_over.png");
-//                    BombermanGame.gc.drawImage(background, 0 ,0);
-//                    try {
-//                        Thread.sleep(3000);
-//                    } catch (InterruptedException ex) {
-//                        Thread.currentThread().interrupt();
-//                    }
-                    initGame();
-                    time = 0;
+                    this.stop();
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }
+                    BombermanGame.displayNextLevel();
+                    return;
                 }
-
 
                 if (bomberman.isDisappeared()) {
                     this.stop();
@@ -166,7 +165,6 @@ public class LevelGame {
                     }
                     BombermanGame.displayGameOver();
                 }
-
             }
         };
         timer.start();
@@ -181,6 +179,7 @@ public class LevelGame {
         countTime.schedule(timerTask, 0, 1000);
     }
     private void initGame() {
+
         SoundManager.playMusic(Music.GAME);
         Camera.setX(0);
         Camera.setY(0);
@@ -321,9 +320,9 @@ public class LevelGame {
                         return;
                     }
                     ((AnimationEntity) entity).die(gameMap, (Bomber) bomberman);
-                    score += ((AnimationEntity) entity).getScore();
-                    if (score > highScore) {
-                        highScore = score;
+                    BombermanGame.score += ((AnimationEntity) entity).getScore();
+                    if (BombermanGame.score > highScore) {
+                        highScore = BombermanGame.score;
                         try {
                             Formatter f = new Formatter("res/data/highscore.txt");
                             f.format(String.valueOf(highScore));
@@ -468,14 +467,6 @@ public class LevelGame {
         this.gameMap = gameMap;
     }
 
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
     public boolean isWin() {
         return win;
     }
@@ -490,18 +481,6 @@ public class LevelGame {
 
     public void setTime(int time) {
         this.time = time;
-    }
-
-    public boolean isPause() {
-        return isPause;
-    }
-
-    public void setPause(boolean pause) {
-        isPause = pause;
-    }
-
-    public void changePause() {
-        isPause = !isPause;
     }
 
     public Scene getScene() {

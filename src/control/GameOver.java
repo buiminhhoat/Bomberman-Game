@@ -42,12 +42,12 @@ public class GameOver {
 
         backgroundView = new ImageView(background);
         backgroundView.setFitWidth(BombermanGame.WIDTH * Sprite.SCALED_SIZE);
-        backgroundView.setFitHeight(BombermanGame.HEIGHT * Sprite.SCALED_SIZE);
+        backgroundView.setFitHeight(BombermanGame.HEIGHT * Sprite.SCALED_SIZE + 32);
         root.getChildren().add(backgroundView);
 
         menuButtonView = new ImageView(menuButton1);
         menuButtonView.setX(310);
-        menuButtonView.setY(500);
+        menuButtonView.setY(510);
         menuButtonView.setFitWidth(180);
         menuButtonView.setFitHeight(75);
         root.getChildren().add(menuButtonView);
