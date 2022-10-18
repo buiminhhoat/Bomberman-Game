@@ -27,7 +27,6 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 
 public class LevelGame {
     public static final int FINAL_LEVEL = 2;
@@ -41,7 +40,7 @@ public class LevelGame {
 
     private boolean win = false;
 
-    private List<Entity> movingEntities = new ArrayList<>();
+    private List<Entity> animationEntities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
     private MovingEntity bomberman;
     private GameMap gameMap;
@@ -182,18 +181,18 @@ public class LevelGame {
         gameMap = new GameMap();
         gameMap.initMap(level);
         stillObjects = gameMap.getListStillObjects();
-        movingEntities = gameMap.getListMovingEntity();
+        animationEntities = gameMap.getListAnimationEntity();
 
-        for (int i = 0; i < movingEntities.size(); ++i) {
-            Entity entity = movingEntities.get(i);
+        for (int i = 0; i < animationEntities.size(); ++i) {
+            Entity entity = animationEntities.get(i);
             if (entity instanceof Bomber) {
                 bomberman = (MovingEntity) entity;
                 break;
             }
         }
 
-        for (int i = 0; i < movingEntities.size(); ++i) {
-            Entity entity = movingEntities.get(i);
+        for (int i = 0; i < animationEntities.size(); ++i) {
+            Entity entity = animationEntities.get(i);
             if (entity instanceof Chase) {
                 if (entity instanceof Oneal) {
                     ((Oneal) entity).setTargetEntity(bomberman);
@@ -210,8 +209,8 @@ public class LevelGame {
                         entity.getXPixel() / Sprite.SCALED_SIZE,
                         gameMap);
                     int minDist = BombermanGame.INF;
-                    for (int j = 0; j < movingEntities.size(); ++j) {
-                        Entity targetEntity = movingEntities.get(j);
+                    for (int j = 0; j < animationEntities.size(); ++j) {
+                        Entity targetEntity = animationEntities.get(j);
                         if (targetEntity instanceof Beehive) {
                             int dist = BreadthFirstSearch.minDistance(
                                 targetEntity.getYPixel() / Sprite.SCALED_SIZE,
@@ -231,8 +230,8 @@ public class LevelGame {
         bomberman.move(gameMap);
         ((Bomber) bomberman).pickUpItem(gameMap);
 
-        for (int i = 0; i < movingEntities.size(); ++i) {
-            Entity entity = movingEntities.get(i);
+        for (int i = 0; i < animationEntities.size(); ++i) {
+            Entity entity = animationEntities.get(i);
             if (entity instanceof Bomber) {
                 continue;
             }
@@ -245,8 +244,8 @@ public class LevelGame {
     }
 
     private void checkBomb() {
-        for (int k = 0; k < movingEntities.size(); ++k) {
-            Entity entity = movingEntities.get(k);
+        for (int k = 0; k < animationEntities.size(); ++k) {
+            Entity entity = animationEntities.get(k);
             if (entity instanceof MovingEntity) {
                 List<Bomb> bombList = ((MovingEntity) entity).getBombList();
 
@@ -257,8 +256,8 @@ public class LevelGame {
                     Bomb bomb = bombList.get(i);
                     if (!bomb.getAnimations()) {
 
-                        for (int j = 0; j < movingEntities.size(); ++j) {
-                            Entity deedee = movingEntities.get(j);
+                        for (int j = 0; j < animationEntities.size(); ++j) {
+                            Entity deedee = animationEntities.get(j);
                             if (deedee instanceof DeeDee
                                 && ((DeeDee) deedee).getTargetEntity() == bomb) {
                                 ((DeeDee) deedee).setTargetEntity(null);
@@ -293,8 +292,8 @@ public class LevelGame {
         int w1 = Sprite.SCALED_SIZE;
         int h1 = Sprite.SCALED_SIZE;
 
-        for (int i = 0; i < movingEntities.size(); ++i) {
-            Entity entity = movingEntities.get(i);
+        for (int i = 0; i < animationEntities.size(); ++i) {
+            Entity entity = animationEntities.get(i);
             if (entity instanceof Enemies) {
                 int x2 = entity.getXPixel();
                 int y2 = entity.getYPixel();
@@ -308,8 +307,8 @@ public class LevelGame {
         }
 
 
-        for (int i = 0; i < movingEntities.size(); ++i) {
-            Entity entity = movingEntities.get(i);
+        for (int i = 0; i < animationEntities.size(); ++i) {
+            Entity entity = animationEntities.get(i);
             if (entity instanceof AnimationEntity) {
                 if (((AnimationEntity) entity).isDisappeared()) {
                     if (entity instanceof Bomber) {
@@ -327,7 +326,7 @@ public class LevelGame {
                             System.out.println("Error write file highscore");
                         }
                     }
-                    movingEntities.remove(i);
+                    animationEntities.remove(i);
                     --i;
                 }
             }
@@ -351,8 +350,8 @@ public class LevelGame {
             Entity entity = stillObjects.get(i);
             entity.update();
         }
-        for (int i = 0; i < movingEntities.size(); ++i) {
-            Entity entity = movingEntities.get(i);
+        for (int i = 0; i < animationEntities.size(); ++i) {
+            Entity entity = animationEntities.get(i);
             entity.update();
         }
         checkBomb();
@@ -368,8 +367,8 @@ public class LevelGame {
             Entity entity = stillObjects.get(i);
             entity.render(BombermanGame.gc);
         }
-        for (int i = 0; i < movingEntities.size(); ++i) {
-            Entity entity = movingEntities.get(i);
+        for (int i = 0; i < animationEntities.size(); ++i) {
+            Entity entity = animationEntities.get(i);
             if (entity instanceof MovingEntity) {
                 List<Bomb> bombList = ((MovingEntity) entity).getBombList();
                 for (int j = 0; j < bombList.size(); ++j) {
@@ -382,8 +381,8 @@ public class LevelGame {
             BombermanGame.gc.drawImage(Sprite.shield.getFxImage(),
                     bomberman.getXPixel() - Camera.getX(), bomberman.getYPixel() - Camera.getY());
         }
-        for (int i = 0; i < movingEntities.size(); ++i) {
-            Entity entity = movingEntities.get(i);
+        for (int i = 0; i < animationEntities.size(); ++i) {
+            Entity entity = animationEntities.get(i);
             entity.render(BombermanGame.gc);
         }
     }
@@ -435,12 +434,12 @@ public class LevelGame {
         this.level = level;
     }
 
-    public List<Entity> getMovingEntities() {
-        return movingEntities;
+    public List<Entity> getAnimationEntities() {
+        return animationEntities;
     }
 
-    public void setMovingEntities(List<Entity> movingEntities) {
-        this.movingEntities = movingEntities;
+    public void setAnimationEntities(List<Entity> animationEntities) {
+        this.animationEntities = animationEntities;
     }
 
     public List<Entity> getStillObjects() {

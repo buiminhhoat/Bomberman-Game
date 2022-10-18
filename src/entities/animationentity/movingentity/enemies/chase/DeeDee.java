@@ -192,7 +192,7 @@ public class DeeDee extends Chase {
         }
         if (targetEntity == null || !(targetEntity instanceof Bomb)) {
             int Min = distanceChase;
-            List<Entity> entityList = gameMap.getMovingEntities();
+            List<Entity> entityList = gameMap.getAnimationEntities();
             for (Entity entity: entityList) {
                 if (entity instanceof Bomber) {
                     for (Bomb bomb: ((MovingEntity) entity).getBombList()) {
@@ -331,7 +331,7 @@ public class DeeDee extends Chase {
         if (eating) {
             return;
         }
-        List<Entity> entityList = gameMap.getMovingEntities();
+        List<Entity> entityList = gameMap.getAnimationEntities();
         for (Entity bomber: entityList) {
             if (bomber instanceof MovingEntity) {
                 if (!(bomber instanceof Bomber)) {

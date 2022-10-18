@@ -1,11 +1,9 @@
 package entities.animationentity.movingentity.enemies;
 
 import entities.Entity;
-import entities.animationentity.movingentity.MovingEntity;
 import entities.animationentity.movingentity.bomber.Bomber;
 import entities.animationentity.movingentity.enemies.chase.Bee;
 import entities.animationentity.movingentity.enemies.chase.Chase;
-import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
 import java.util.List;
@@ -61,7 +59,7 @@ public class Beehive extends Chase {
             @Override
             public void run() {
                 int numBee = 3;
-                List<Entity> entityList = gameMap.getMovingEntities();
+                List<Entity> entityList = gameMap.getAnimationEntities();
                 for (int i = 1; i <= numBee; ++i) {
                     Bee bee = new Bee(getXPixel() / Sprite.SCALED_SIZE,
                         getYPixel() / Sprite.SCALED_SIZE, Sprite.bee_left1.getFxImage());

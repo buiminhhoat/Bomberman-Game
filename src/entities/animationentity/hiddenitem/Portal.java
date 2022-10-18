@@ -1,10 +1,8 @@
 package entities.animationentity.hiddenitem;
 
-import control.SoundManager;
 import entities.Entity;
 import entities.animationentity.movingentity.bomber.Bomber;
 import entities.animationentity.movingentity.enemies.Enemies;
-import enumeration.Chunk;
 import gamemap.GameMap;
 import java.util.List;
 import javafx.scene.image.Image;
@@ -20,7 +18,7 @@ public class Portal extends HiddenItem {
     }
 
     public void featureItem(Entity entity, GameMap gameMap) {
-        List<Entity> entityList = gameMap.getMovingEntities();
+        List<Entity> entityList = gameMap.getAnimationEntities();
         int count = 0;
         for (Entity entity1: entityList) {
             if (entity1 instanceof Enemies) {

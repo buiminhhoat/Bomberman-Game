@@ -10,7 +10,6 @@ import entities.animationentity.hiddenitem.Portal;
 import entities.animationentity.hiddenitem.SpeedItem;
 import entities.animationentity.movingentity.MovingEntity;
 import entities.animationentity.movingentity.bomber.Bomber;
-import entities.animationentity.movingentity.enemies.Balloon;
 import entities.animationentity.movingentity.enemies.Creeper;
 import entities.animationentity.movingentity.enemies.Enemies;
 import entities.block.Brick;
@@ -186,7 +185,7 @@ public class Bomb extends AnimationEntity {
         int y = this.getYPixel() / Sprite.SCALED_SIZE;
         int lth = ((AnimationEntity) dynamicEntity).getLengthExplosionOfBomb();
         int id = 0;
-        List <Entity> list = gameMap.getMovingEntities();
+        List <Entity> list = gameMap.getAnimationEntities();
 
         for (int i = y; i >= Math.max(y - lth, 0); --i) {
             if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {

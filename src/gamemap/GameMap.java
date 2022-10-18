@@ -28,7 +28,7 @@ public class GameMap {
     private int row;
     private int col;
     private List<Entity> stillObjects = new ArrayList<>();
-    private List<Entity> movingEntities = new ArrayList<>();
+    private List<Entity> animationEntities = new ArrayList<>();
 
     private BombermanObject[][] map;
 
@@ -289,12 +289,12 @@ public class GameMap {
         this.stillObjects = stillObjects;
     }
 
-    public List<Entity> getMovingEntities() {
-        return movingEntities;
+    public List<Entity> getAnimationEntities() {
+        return animationEntities;
     }
 
-    public void setMovingEntities(List<Entity> movingEntities) {
-        this.movingEntities = movingEntities;
+    public void setAnimationEntities(List<Entity> animationEntities) {
+        this.animationEntities = animationEntities;
     }
 
     public boolean[][] getBombBlocked() {
@@ -396,75 +396,75 @@ public class GameMap {
         return stillObjects;
     }
 
-    public List<Entity> getListMovingEntity() {
+    public List<Entity> getListAnimationEntity() {
         for (int i = 0; i < row; ++i) {
             for (int j = 0; j < col; ++j) {
-                Entity movingEntity = null;
+                Entity entity = null;
                 BombermanObject bombermanObject = map[i][j];
                 switch (bombermanObject) {
                     case BOMBERMAN:
-                        movingEntity = new Bomber(j, i, Sprite.player_up.getFxImage());
+                        entity = new Bomber(j, i, Sprite.player_up.getFxImage());
                         break;
                     case BALLOON:
-                        movingEntity = new Balloon(j, i, Sprite.balloom_left1.getFxImage());
+                        entity = new Balloon(j, i, Sprite.balloom_left1.getFxImage());
                         break;
                     case ONEAL:
-                        movingEntity = new Oneal(j, i, Sprite.oneal_left1.getFxImage());
+                        entity = new Oneal(j, i, Sprite.oneal_left1.getFxImage());
                         break;
                     case GHOST:
-                        movingEntity = new Ghost(j, i, Sprite.ghost_left1.getFxImage());
+                        entity = new Ghost(j, i, Sprite.ghost_left1.getFxImage());
                         break;
                     case CREEPER:
-                        movingEntity = new Creeper(j, i, Sprite.ghost_left1.getFxImage(), this);
+                        entity = new Creeper(j, i, Sprite.ghost_left1.getFxImage(), this);
                         break;
                     case DEEDEE:
-                        movingEntity = new DeeDee(j, i, Sprite.deedee_left.getFxImage());
+                        entity = new DeeDee(j, i, Sprite.deedee_left.getFxImage());
                         break;
                     case MINVO:
-                        movingEntity = new Doll(j, i, Sprite.minvo_left1.getFxImage());
+                        entity = new Doll(j, i, Sprite.minvo_left1.getFxImage());
                         break;
                 }
-                if (movingEntity == null) {
+                if (entity == null) {
                     continue;
                 }
-                isBlocked[i][j] = movingEntity.isBlocked();
-                movingEntities.add(movingEntity);
+                isBlocked[i][j] = entity.isBlocked();
+                animationEntities.add(entity);
             }
         }
 
         for (int i = 0; i < row; ++i) {
             for (int j = 0; j < col; ++j) {
-                Entity movingEntity = null;
+                Entity entity = null;
                 BombermanObject bombermanObject = map[i][j];
                 switch (bombermanObject) {
                     case BEEHIVE:
-                        movingEntity = new Beehive(j, i, Sprite.beehive.getFxImage());
+                        entity = new Beehive(j, i, Sprite.beehive.getFxImage());
                         break;
                 }
-                if (movingEntity == null) {
+                if (entity == null) {
                     continue;
                 }
-                movingEntities.add(movingEntity);
+                animationEntities.add(entity);
             }
         }
 
         for (int i = 0; i < row; ++i) {
             for (int j = 0; j < col; ++j) {
-                Entity movingEntity = null;
+                Entity entity = null;
                 BombermanObject bombermanObject = map[i][j];
                 switch (bombermanObject) {
                     case BEE:
-                        movingEntity = new Bee(j, i, Sprite.bee_left1.getFxImage());
+                        entity = new Bee(j, i, Sprite.bee_left1.getFxImage());
                         break;
                 }
-                if (movingEntity == null) {
+                if (entity == null) {
                     continue;
                 }
-                movingEntities.add(movingEntity);
+                animationEntities.add(entity);
             }
         }
 
-        return movingEntities;
+        return animationEntities;
     }
 
     public int getWidth() {
