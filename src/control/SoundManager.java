@@ -14,7 +14,7 @@ public abstract class SoundManager {
     public static AudioClip chuckLevelComplete;
     public static AudioClip chuckBomberDie;
     public static AudioClip chuckGameOver;
-    public static AudioClip lastMusic = null;
+    public static AudioClip chunkGameVictory;
 
     public static void initSound() {
         chunkSetBomb = new AudioClip(SoundManager.class.getResource("/sounds/set_bomb.wav")
@@ -28,6 +28,8 @@ public abstract class SoundManager {
         chuckBomberDie = new AudioClip(SoundManager.class.getResource("/sounds/bomberdie.wav")
                 .toExternalForm());
         chuckGameOver = new AudioClip(SoundManager.class.getResource("/sounds/game_over.mp3")
+                .toExternalForm());
+        chunkGameVictory = new AudioClip(SoundManager.class.getResource("/sounds/game_victory.mp3")
                 .toExternalForm());
 
         musicGame = new AudioClip(SoundManager.class.getResource("/sounds/FindTheDoor.mp3")
@@ -78,6 +80,9 @@ public abstract class SoundManager {
         if (chuckGameOver.isPlaying()){
             chuckGameOver.stop();
         }
+        if (chunkGameVictory.isPlaying()){
+            chunkGameVictory.stop();
+        }
     }
 
     public static void playChunk(Chunk chunk) {
@@ -102,6 +107,9 @@ public abstract class SoundManager {
                 break;
             case GAME_OVER:
                 chuckGameOver.play();
+                break;
+            case GAME_VICTORY:
+                chunkGameVictory.play();
                 break;
         }
     }

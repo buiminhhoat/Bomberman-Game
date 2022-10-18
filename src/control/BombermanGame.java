@@ -4,19 +4,14 @@ import graphics.Sprite;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import javafx.animation.AnimationTimer;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
-import javafx.scene.image.Image;
 import javafx.stage.WindowEvent;
-
-import java.awt.*;
 
 public class BombermanGame extends Application {
     public static final int WIDTH = 25;
@@ -58,8 +53,8 @@ public class BombermanGame extends Application {
         SoundManager.stopMusic();
         canvas.setTranslateY(0);
         Menu menu = new Menu();
-        menu.display();
         stage.setScene(menu.getScene());
+        menu.display();
     }
 
     public static void displayGameOver() {
@@ -68,6 +63,14 @@ public class BombermanGame extends Application {
         GameOver gameOver = new GameOver();
         gameOver.display();
         stage.setScene(gameOver.getScene());
+    }
+
+    public static void displayGameVictory() {
+        SoundManager.stopMusic();
+        canvas.setTranslateY(0);
+        GameVictory gameVictory = new GameVictory();
+        gameVictory.display();
+        stage.setScene(gameVictory.getScene());
     }
 
     public static void displayGame() {
@@ -85,7 +88,7 @@ public class BombermanGame extends Application {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        stage.setScene(levelGame.getScene());
         levelGame.start();
+        stage.setScene(levelGame.getScene());
     }
 }

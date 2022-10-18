@@ -42,7 +42,7 @@ public class Menu {
     }
 
     private void initImg() {
-        background = new Image("/images/Background.jpg", true);
+        background = new Image("/images/background.png", true);
         playButton1 = new Image("/images/play_button1.png");
         playButton2 = new Image("/images/play_button2.png");
         continueButton1 = new Image("/images/continue_button1.png");
@@ -62,7 +62,8 @@ public class Menu {
         root.getChildren().add(backgroundView);
 
         Text bombermanText = new Text("BOMBERMAN");
-        bombermanText.setFont(Font.loadFont(Menu.class.getResourceAsStream("/fonts/Bomberman.ttf"), 86));
+        bombermanText.setFont(Font.loadFont(Menu.class.getResourceAsStream(
+                "/fonts/Bomberman.ttf"), 86));
         bombermanText.setFill(Color.WHITE);
         bombermanText.setStroke(Color.ORANGE);
         bombermanText.setStrokeWidth(5);

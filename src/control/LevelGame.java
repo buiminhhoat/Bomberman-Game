@@ -1,7 +1,6 @@
 package control;
 
 import algorithm.BreadthFirstSearch;
-import algorithm.Util;
 import entities.Entity;
 import entities.animationentity.AnimationEntity;
 import entities.animationentity.bomb.Bomb;
@@ -21,7 +20,6 @@ import gamemap.GameMap;
 import graphics.Camera;
 import graphics.Sprite;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
@@ -30,10 +28,10 @@ import java.util.TimerTask;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
-import javafx.scene.image.Image;
 import javafx.scene.Scene;
 
 public class LevelGame {
+    public static final int FINAL_LEVEL = 2;
     private Group root;
     private StatusBar statusBar;
     private Scene scene;
@@ -131,12 +129,30 @@ public class LevelGame {
                 render();
                 update();
                 if (((Bomber) bomberman).isWin()) {
+                    ((Bomber) bomberman).setWin(false);
                     SoundManager.stopMusic();
                     SoundManager.playChunk(Chunk.LEVEL_COMPLETE);
                     level++;
-                    time = 0;
-                    ((Bomber) bomberman).setWin(false);
+                    if (level > FINAL_LEVEL) {
+                        this.stop();
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException ex) {
+                            Thread.currentThread().interrupt();
+                        }
+                        BombermanGame.displayGameVictory();
+                        return;
+                    }
+
+//                    Image background = new Image("/images/game_over.png");
+//                    BombermanGame.gc.drawImage(background, 0 ,0);
+//                    try {
+//                        Thread.sleep(3000);
+//                    } catch (InterruptedException ex) {
+//                        Thread.currentThread().interrupt();
+//                    }
                     initGame();
+                    time = 0;
                 }
 
 

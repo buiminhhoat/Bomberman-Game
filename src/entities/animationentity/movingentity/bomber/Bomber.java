@@ -25,7 +25,7 @@ public class Bomber extends MovingEntity {
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img, 8, 2,
-            false, 1, Direction.DOWN);
+            false, 2, Direction.DOWN);
     }
 
     public void pickUpItem(GameMap gameMap) {
@@ -135,6 +135,7 @@ public class Bomber extends MovingEntity {
 //        }
 //        this.setImmortal(true);
 
+        SoundManager.stopMusic();
         SoundManager.playChunk(Chunk.BOMBER_DIE);
 
         --this.lives;

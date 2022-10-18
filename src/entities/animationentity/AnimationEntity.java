@@ -1,11 +1,13 @@
 package entities.animationentity;
 
+import control.SoundManager;
 import entities.Entity;
 import entities.animationentity.bomb.Bomb;
 import entities.animationentity.movingentity.bomber.Bomber;
 import entities.animationentity.movingentity.enemies.chase.DeeDee;
 import entities.animationentity.movingentity.enemies.chase.Oneal;
 import enumeration.Direction;
+import enumeration.Music;
 import gamemap.GameMap;
 import javafx.scene.image.Image;
 
@@ -143,9 +145,17 @@ public abstract class AnimationEntity extends Entity {
                             disappeared = true;
                         }
                         if (entity instanceof Bomber) {
+                            try {
+                                Thread.sleep(3000);
+                            } catch (InterruptedException ex) {
+                                Thread.currentThread().interrupt();
+                            }
                             ((Bomber) entity).setDie(false);
                             entity.setXPixel(Entity.START_X_PIXEL);
                             entity.setYPixel(Entity.START_Y_PIXEL);
+                            if (!disappeared) {
+                                SoundManager.playMusic(Music.GAME);
+                            }
                         }
                         cancelDeathTimer();
                     } else {
