@@ -15,8 +15,8 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class BombermanGame extends Application {
-    public static int score = 0;
-    public static int currentLevel = 0;
+    private int score = 0;
+    private int currentLevel = 0;
 
     public static final int WIDTH = 25;
     public static final int HEIGHT = 20;
@@ -31,6 +31,8 @@ public class BombermanGame extends Application {
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
     }
+
+    public static BombermanGame bombermanGame = new BombermanGame();
 
     public void start(Stage stage) {
         this.stage = stage;
@@ -53,7 +55,7 @@ public class BombermanGame extends Application {
         });
     }
 
-    public static void displayMenu() {
+    public void displayMenu() {
         SoundManager.stopMusic();
         canvas.setTranslateY(32);
         Menu menu = new Menu();
@@ -61,7 +63,7 @@ public class BombermanGame extends Application {
         menu.display();
     }
 
-    public static void displayGameOver() {
+    public void displayGameOver() {
         SoundManager.stopMusic();
         canvas.setTranslateY(32);
         GameOver gameOver = new GameOver();
@@ -71,7 +73,7 @@ public class BombermanGame extends Application {
         score = 0;
     }
 
-    public static void displayGameVictory() {
+    public void displayGameVictory() {
         SoundManager.stopMusic();
         canvas.setTranslateY(32);
         GameVictory gameVictory = new GameVictory();
@@ -81,7 +83,7 @@ public class BombermanGame extends Application {
         score = 0;
     }
 
-    public static void displayNextLevel() {
+    public void displayNextLevel() {
         File file = new File("res/data/maxunlocklevel.txt");
         Scanner sc = null;
         int maxunlocklevel = 0;
@@ -111,7 +113,7 @@ public class BombermanGame extends Application {
         stage.setScene(nextLevel.getScene());
     }
 
-    public static void displayGame() {
+    public void displayGame() {
         SoundManager.stopMusic();
         canvas.setTranslateY(32);
         LevelGame levelGame = new LevelGame(currentLevel);
@@ -130,7 +132,7 @@ public class BombermanGame extends Application {
         stage.setScene(levelGame.getScene());
     }
 
-    public static void displayContinue() {
+    public void displayContinue() {
         SoundManager.stopMusic();
         canvas.setTranslateY(32);
         Scanner sc = null;
@@ -155,5 +157,21 @@ public class BombermanGame extends Application {
         }
         levelGame.start();
         stage.setScene(levelGame.getScene());
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
     }
 }

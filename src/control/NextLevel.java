@@ -33,7 +33,7 @@ public class NextLevel {
         rectangle.setStroke(Color.BLACK);
         root.getChildren().add(rectangle);
 
-        String tx = "Stage " + BombermanGame.currentLevel;
+        String tx = "Stage " + BombermanGame.bombermanGame.getCurrentLevel();
         Text totalScore = new Text(tx);
         totalScore.setFont(Font.loadFont(Menu.class.getResourceAsStream(
                 "/fonts/PressStart2P-Regular.ttf"), 30));
@@ -52,7 +52,7 @@ public class NextLevel {
 
         scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.SPACE) {
-                BombermanGame.displayGame();
+                BombermanGame.bombermanGame.displayGame();
             }
         });
     }

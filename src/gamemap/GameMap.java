@@ -1,5 +1,6 @@
 package gamemap;
 
+import control.BombermanGame;
 import entities.Entity;
 import entities.animationentity.movingentity.bomber.Bomber;
 import entities.animationentity.movingentity.enemies.Balloon;
@@ -135,6 +136,12 @@ public class GameMap {
             this.col = scanner.nextInt();
             this.width = this.col * Sprite.SCALED_SIZE;
 
+            if (this.row < BombermanGame.HEIGHT || this.col < BombermanGame.WIDTH) {
+                System.out.println("File map không hợp lệ. Yêu cầu: "
+                    + "row >= " + BombermanGame.HEIGHT
+                    + " & col >= " + BombermanGame.WIDTH);
+                System.exit(0);
+            }
             map = new BombermanObject[row][col];
             entityMap = new Entity[row][col];
             bombBlocked = new boolean[row][col];

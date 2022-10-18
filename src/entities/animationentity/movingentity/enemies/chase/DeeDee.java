@@ -27,7 +27,7 @@ public class DeeDee extends Chase {
 
     public DeeDee(int x, int y, Image img) {
         super(x, y, img);
-        distanceChase = INF;
+        distanceChase = 10;
     }
 
     @Override

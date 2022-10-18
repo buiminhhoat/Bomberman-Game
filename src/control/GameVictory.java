@@ -58,7 +58,7 @@ public class GameVictory {
         TextTotalScore.setY(280);
         root.getChildren().add(TextTotalScore);
 
-        String tx = "" + BombermanGame.score;
+        String tx = "" + BombermanGame.bombermanGame.getScore();
         while (tx.length() < 5) {
             tx = "0" + tx;
         }
@@ -98,7 +98,7 @@ public class GameVictory {
         scene.setOnMouseClicked(event -> {
             if (Util.checkMouseInImageView(menuButtonView)) {
                 timer.stop();
-                BombermanGame.displayMenu();
+                BombermanGame.bombermanGame.displayMenu();
             }
         });
     }

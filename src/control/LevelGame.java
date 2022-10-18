@@ -29,7 +29,7 @@ import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 
 public class LevelGame {
-    public static final int FINAL_LEVEL = 1;
+    public static final int FINAL_LEVEL = 3;
     private Group root;
     private StatusBar statusBar;
     private Scene scene;
@@ -137,7 +137,7 @@ public class LevelGame {
                         } catch (InterruptedException ex) {
                             Thread.currentThread().interrupt();
                         }
-                        BombermanGame.displayGameVictory();
+                        BombermanGame.bombermanGame.displayGameVictory();
                         return;
                     }
 
@@ -147,7 +147,7 @@ public class LevelGame {
                     } catch (InterruptedException ex) {
                         Thread.currentThread().interrupt();
                     }
-                    BombermanGame.displayNextLevel();
+                    BombermanGame.bombermanGame.displayNextLevel();
                     return;
                 }
 
@@ -158,7 +158,7 @@ public class LevelGame {
                     } catch (InterruptedException ex) {
                         Thread.currentThread().interrupt();
                     }
-                    BombermanGame.displayGameOver();
+                    BombermanGame.bombermanGame.displayGameOver();
                 }
             }
         };
@@ -315,9 +315,11 @@ public class LevelGame {
                         return;
                     }
                     ((AnimationEntity) entity).die(gameMap, (Bomber) bomberman);
-                    BombermanGame.score += ((AnimationEntity) entity).getScore();
-                    if (BombermanGame.score > highScore) {
-                        highScore = BombermanGame.score;
+                    BombermanGame.bombermanGame.setScore(BombermanGame.bombermanGame.getScore()
+                            + ((AnimationEntity) entity).getScore());
+                    System.out.println(time);
+                    if (BombermanGame.bombermanGame.getScore() > highScore) {
+                        highScore = BombermanGame.bombermanGame.getScore();
                         try {
                             Formatter f = new Formatter("res/data/highscore.txt");
                             f.format(String.valueOf(highScore));

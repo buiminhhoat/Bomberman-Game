@@ -106,7 +106,7 @@ public class Menu {
         if (Util.checkMouseInImageView(playButtonView)) {
             scene.setOnMouseClicked(event -> {
                 timer.stop();
-                BombermanGame.displayNextLevel();
+                BombermanGame.bombermanGame.displayNextLevel();
             });
             playButtonView.setImage(playButton2);
         }
@@ -117,7 +117,7 @@ public class Menu {
         if (Util.checkMouseInImageView(continueButtonView)) {
             scene.setOnMouseClicked(event -> {
                 timer.stop();
-                BombermanGame.displayContinue();
+                BombermanGame.bombermanGame.displayContinue();
             });
             continueButtonView.setImage(continueButton2);
         }

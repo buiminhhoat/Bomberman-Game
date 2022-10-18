@@ -16,9 +16,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public abstract class AnimationEntity extends Entity {
-    public static final int DEFAULT_NUMBER_BOMBS = 10;
+    public static final int DEFAULT_NUMBER_BOMBS = 1;
 
-    public static final int DEFAULT_LENGTH_EXPLOSION_OF_BOMB = 2;
+    public static final int DEFAULT_LENGTH_EXPLOSION_OF_BOMB = 1;
 
     protected int numberBombs = DEFAULT_NUMBER_BOMBS;
 

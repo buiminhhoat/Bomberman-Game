@@ -72,7 +72,7 @@ public class GameOver {
         scene.setOnMouseClicked(event -> {
             if (Util.checkMouseInImageView(menuButtonView)) {
                 timer.stop();
-                BombermanGame.displayMenu();
+                BombermanGame.bombermanGame.displayMenu();
             }
         });
     }
