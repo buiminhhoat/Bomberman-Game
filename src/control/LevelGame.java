@@ -1,6 +1,7 @@
 package control;
 
 import algorithm.BreadthFirstSearch;
+import algorithm.Util;
 import entities.Entity;
 import entities.animationentity.AnimationEntity;
 import entities.animationentity.bomb.Bomb;
@@ -292,6 +293,26 @@ public class LevelGame {
     }
 
     private void checkKillEntity() {
+        int x1 = bomberman.getXPixel();
+        int y1 = bomberman.getYPixel();
+        int w1 = Sprite.SCALED_SIZE;
+        int h1 = Sprite.SCALED_SIZE;
+
+        for (int i = 0; i < movingEntities.size(); ++i) {
+            Entity entity = movingEntities.get(i);
+            if (entity instanceof Enemies) {
+                int x2 = entity.getXPixel();
+                int y2 = entity.getYPixel();
+                int w2 = Sprite.SCALED_SIZE;
+                int h2 = Sprite.SCALED_SIZE;
+
+                if (Util.checkRectIntersect(x1, y1, w1, h1, x2, y2, w2, h2)) {
+                    bomberman.dead();
+                }
+            }
+        }
+
+
         for (int i = 0; i < movingEntities.size(); ++i) {
             Entity entity = movingEntities.get(i);
             if (entity instanceof AnimationEntity) {

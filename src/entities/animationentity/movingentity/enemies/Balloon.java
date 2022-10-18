@@ -15,10 +15,10 @@ public class Balloon extends Enemies {
         super(x, y, img);
     }
 
-    @Override
-    public void chooseDirection(GameMap gameMap) {
-
-    }
+//    @Override
+//    public void chooseDirection(GameMap gameMap) {
+//
+//    }
 
     @Override
     public void update() {
