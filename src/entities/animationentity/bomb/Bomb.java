@@ -79,34 +79,38 @@ public class Bomb extends AnimationEntity {
         int y = this.getYPixel() / Sprite.SCALED_SIZE;
         int lth = dynamicEntity.getLengthExplosionOfBomb();
 
-        flame_center = new Flame(x, y);
+        flame_center = new Flame(x, y, !(dynamicEntity instanceof Bomber));
 
         for (int i = y - 1; i >= Math.max(y - lth, 0); --i) {
             if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
                 break;
             }
-            listFlame.add(new Flame(x, i, Direction.UP, (boolean) (i == y - lth)));
+            listFlame.add(new Flame(x, i, Direction.UP, (boolean) (i == y - lth),
+                    !(dynamicEntity instanceof Bomber)));
         }
 
         for (int i = y + 1; i <= y + lth; ++i) {
             if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
                 break;
             }
-            listFlame.add(new Flame(x, i, Direction.DOWN, (boolean) (i == y + lth)));
+            listFlame.add(new Flame(x, i, Direction.DOWN, (boolean) (i == y + lth),
+                    !(dynamicEntity instanceof Bomber)));
         }
 
         for (int i = x - 1; i >= Math.max(x - lth, 0); --i) {
             if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
                 break;
             }
-            listFlame.add(new Flame(i, y, Direction.LEFT, (boolean) (i == x - lth)));
+            listFlame.add(new Flame(i, y, Direction.LEFT, (boolean) (i == x - lth),
+                    !(dynamicEntity instanceof Bomber)));
         }
 
         for (int i = x + 1; i <= x + lth; ++i) {
             if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
                 break;
             }
-            listFlame.add(new Flame(i, y, Direction.RIGHT, (boolean) (i == x + lth)));
+            listFlame.add(new Flame(i, y, Direction.RIGHT, (boolean) (i == x + lth),
+                    !(dynamicEntity instanceof Bomber)));
         }
     }
 

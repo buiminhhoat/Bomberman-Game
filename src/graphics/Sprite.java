@@ -1,17 +1,19 @@
 package graphics;
 
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
 
 /**
  * Lưu trữ thông tin các pixel của 1 sprite (hình ảnh game)
  */
 public class Sprite {
-
     public static final Image mouseImg = new Image("/Images/mouse.png");
+
     public static final int DEFAULT_SIZE = 32;
     public static final int SCALED_SIZE = DEFAULT_SIZE;
     private static final int TRANSPARENT_COLOR = 0xffff00ff;
@@ -193,19 +195,19 @@ public class Sprite {
     public static Sprite kondoria_dead = new Sprite(DEFAULT_SIZE, 10, 8, SpriteSheet.tiles,
         DEFAULT_SIZE, DEFAULT_SIZE);
     //Ghost
-    public static Sprite ghost_left1 = new Sprite(DEFAULT_SIZE, 6, 5, SpriteSheet.tiles,
+    public static Sprite ghost_left1 = new Sprite(DEFAULT_SIZE, 8, 5, SpriteSheet.tiles,
         DEFAULT_SIZE, DEFAULT_SIZE);
-    public static Sprite ghost_left2 = new Sprite(DEFAULT_SIZE, 6, 6, SpriteSheet.tiles,
+    public static Sprite ghost_left2 = new Sprite(DEFAULT_SIZE, 8, 6, SpriteSheet.tiles,
         DEFAULT_SIZE, DEFAULT_SIZE);
-    public static Sprite ghost_left3 = new Sprite(DEFAULT_SIZE, 6, 7, SpriteSheet.tiles,
+    public static Sprite ghost_left3 = new Sprite(DEFAULT_SIZE, 8, 7, SpriteSheet.tiles,
         DEFAULT_SIZE, DEFAULT_SIZE);
-    public static Sprite ghost_right1 = new Sprite(DEFAULT_SIZE, 7, 5, SpriteSheet.tiles,
+    public static Sprite ghost_right1 = new Sprite(DEFAULT_SIZE, 9, 5, SpriteSheet.tiles,
         DEFAULT_SIZE, DEFAULT_SIZE);
-    public static Sprite ghost_right2 = new Sprite(DEFAULT_SIZE, 7, 6, SpriteSheet.tiles,
+    public static Sprite ghost_right2 = new Sprite(DEFAULT_SIZE, 9, 6, SpriteSheet.tiles,
         DEFAULT_SIZE, DEFAULT_SIZE);
-    public static Sprite ghost_right3 = new Sprite(DEFAULT_SIZE, 7, 7, SpriteSheet.tiles,
+    public static Sprite ghost_right3 = new Sprite(DEFAULT_SIZE, 9, 7, SpriteSheet.tiles,
         DEFAULT_SIZE, DEFAULT_SIZE);
-    public static Sprite ghost_dead = new Sprite(DEFAULT_SIZE, 6, 8, SpriteSheet.tiles,
+    public static Sprite ghost_dead = new Sprite(DEFAULT_SIZE, 8, 8, SpriteSheet.tiles,
         DEFAULT_SIZE, DEFAULT_SIZE);
     //Creeper
     public static Sprite creeper_left1 = new Sprite(DEFAULT_SIZE, 8, 9, SpriteSheet.tiles,
@@ -280,13 +282,25 @@ public class Sprite {
             DEFAULT_SIZE, DEFAULT_SIZE);
     public static Sprite mob_dead_gray2 = new Sprite(DEFAULT_SIZE, 2, 15, SpriteSheet.tiles,
             DEFAULT_SIZE, DEFAULT_SIZE);
-    public static Sprite mob_dead_bee1 = new Sprite(DEFAULT_SIZE, 3, 14, SpriteSheet.tiles,
+    public static Sprite mob_dead_darkred1 = new Sprite(DEFAULT_SIZE, 3, 14, SpriteSheet.tiles,
             DEFAULT_SIZE, DEFAULT_SIZE);
-    public static Sprite mob_dead_bee2 = new Sprite(DEFAULT_SIZE, 3, 15, SpriteSheet.tiles,
+    public static Sprite mob_dead_darkred2 = new Sprite(DEFAULT_SIZE, 3, 15, SpriteSheet.tiles,
             DEFAULT_SIZE, DEFAULT_SIZE);
-    public static Sprite mob_dead_beehive1 = new Sprite(DEFAULT_SIZE, 4, 14, SpriteSheet.tiles,
+    public static Sprite mob_dead_bee1 = new Sprite(DEFAULT_SIZE, 4, 14, SpriteSheet.tiles,
             DEFAULT_SIZE, DEFAULT_SIZE);
-    public static Sprite mob_dead_beehive2 = new Sprite(DEFAULT_SIZE, 4, 15, SpriteSheet.tiles,
+    public static Sprite mob_dead_bee2 = new Sprite(DEFAULT_SIZE, 4, 15, SpriteSheet.tiles,
+            DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite mob_dead_beehive1 = new Sprite(DEFAULT_SIZE, 5, 14, SpriteSheet.tiles,
+            DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite mob_dead_beehive2 = new Sprite(DEFAULT_SIZE, 5, 15, SpriteSheet.tiles,
+            DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite mob_dead_creeper1 = new Sprite(DEFAULT_SIZE, 6, 14, SpriteSheet.tiles,
+            DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite mob_dead_creeper2 = new Sprite(DEFAULT_SIZE, 6, 15, SpriteSheet.tiles,
+            DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite mob_dead_deedee1 = new Sprite(DEFAULT_SIZE, 7, 14, SpriteSheet.tiles,
+            DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite mob_dead_deedee2 = new Sprite(DEFAULT_SIZE, 7, 15, SpriteSheet.tiles,
             DEFAULT_SIZE, DEFAULT_SIZE);
     /*
     |--------------------------------------------------------------------------
@@ -305,6 +319,59 @@ public class Sprite {
             DEFAULT_SIZE);
     public static Sprite bomb_enemy_2 = new Sprite(DEFAULT_SIZE, 2, 4, SpriteSheet.tiles, DEFAULT_SIZE,
             DEFAULT_SIZE);
+    /*
+    |--------------------------------------------------------------------------
+    | FlameSegment Enemy Sprites
+    |--------------------------------------------------------------------------
+     */
+    public static Sprite bomb_exploded_enemy = new Sprite(DEFAULT_SIZE, 4, 5, SpriteSheet.tiles,
+            DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite bomb_exploded_enemy1 = new Sprite(DEFAULT_SIZE, 4, 6, SpriteSheet.tiles,
+            DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite bomb_exploded_enemy2 = new Sprite(DEFAULT_SIZE, 4, 7, SpriteSheet.tiles,
+            DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite explosion_vertical_enemy = new Sprite(DEFAULT_SIZE, 5, 6, SpriteSheet.tiles,
+            DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite explosion_vertical_enemy1 = new Sprite(DEFAULT_SIZE, 6, 6, SpriteSheet.tiles,
+            DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite explosion_vertical_enemy2 = new Sprite(DEFAULT_SIZE, 7, 6, SpriteSheet.tiles,
+            DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite explosion_horizontal_enemy = new Sprite(DEFAULT_SIZE, 5, 8, SpriteSheet.tiles,
+            DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite explosion_horizontal_enemy1 = new Sprite(DEFAULT_SIZE, 5, 9, SpriteSheet.tiles,
+            DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite explosion_horizontal_enemy2 = new Sprite(DEFAULT_SIZE, 5, 10, SpriteSheet.tiles,
+            DEFAULT_SIZE,
+            DEFAULT_SIZE);
+    public static Sprite explosion_horizontal_left_last_enemy = new Sprite(DEFAULT_SIZE, 4, 8,
+            SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite explosion_horizontal_left_last_enemy1 = new Sprite(DEFAULT_SIZE, 4, 9,
+            SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite explosion_horizontal_left_last_enemy2 = new Sprite(DEFAULT_SIZE, 4, 10,
+            SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite explosion_horizontal_right_last_enemy = new Sprite(DEFAULT_SIZE, 6, 8,
+            SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite explosion_horizontal_right_last_enemy1 = new Sprite(DEFAULT_SIZE, 6, 9,
+            SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite explosion_horizontal_right_last_enemy2 = new Sprite(DEFAULT_SIZE, 6, 10,
+            SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite explosion_vertical_top_last_enemy = new Sprite(DEFAULT_SIZE, 5, 5,
+            SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite explosion_vertical_top_last_enemy1 = new Sprite(DEFAULT_SIZE, 6, 5,
+            SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite explosion_vertical_top_last_enemy2 = new Sprite(DEFAULT_SIZE, 7, 5,
+            SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite explosion_vertical_down_last_enemy = new Sprite(DEFAULT_SIZE, 5, 7,
+            SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite explosion_vertical_down_last_enemy1 = new Sprite(DEFAULT_SIZE, 6, 7,
+            SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
+    public static Sprite explosion_vertical_down_last_enemy2 = new Sprite(DEFAULT_SIZE, 7, 7,
+            SpriteSheet.tiles, DEFAULT_SIZE, DEFAULT_SIZE);
     /*
     |--------------------------------------------------------------------------
     | FlameSegment Sprites

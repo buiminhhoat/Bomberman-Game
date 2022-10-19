@@ -25,10 +25,10 @@ public class Doll extends Chase{
                         this.img = Sprite.doll_dead.getFxImage();
                         break;
                     case 1:
-                        this.img = Sprite.mob_dead_red1.getFxImage();
+                        this.img = Sprite.mob_dead_darkred1.getFxImage();
                         break;
                     case 2:
-                        this.img = Sprite.mob_dead_red2.getFxImage();
+                        this.img = Sprite.mob_dead_darkred2.getFxImage();
                         break;
                     case 3:
                         this.img = Sprite.nothing.getFxImage();

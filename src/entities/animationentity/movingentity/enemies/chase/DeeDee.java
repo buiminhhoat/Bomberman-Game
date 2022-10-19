@@ -39,10 +39,10 @@ public class DeeDee extends Chase {
                         this.img = Sprite.deedee_dead.getFxImage();
                         break;
                     case 1:
-                        this.img = Sprite.mob_dead_gray1.getFxImage();
+                        this.img = Sprite.mob_dead_deedee1.getFxImage();
                         break;
                     case 2:
-                        this.img = Sprite.mob_dead_gray2.getFxImage();
+                        this.img = Sprite.mob_dead_deedee2.getFxImage();
                         break;
                     case 3:
                         this.img = Sprite.nothing.getFxImage();
