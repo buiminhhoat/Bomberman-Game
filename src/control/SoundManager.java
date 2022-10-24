@@ -52,10 +52,14 @@ public abstract class SoundManager {
         }
         switch (music) {
             case MENU:
-                musicMenu.play();
+                if (!musicMenu.isPlaying()) {
+                    musicMenu.play();
+                }
                 break;
             case GAME:
-                musicGame.play();
+                if (!musicGame.isPlaying()) {
+                    musicGame.play();
+                }
                 break;
         }
     }
