@@ -22,7 +22,8 @@ public class DeeDee extends Chase {
     private static final int DIGESTION_TIME = 15 * ONE_SECOND;
     private static final int DEEDEE_DISTANCE_CHASE = 10;
     private static final int EATING_LEVEL_SPEED_ID = 0;
-    private static final int DEEDEE_LEVEL_SPEED_ID = 2;
+    private static final int DEEDEE_LEVEL_SPEED_NORMAL_ID = 1;
+    private static final int DEEDEE_LEVEL_SPEED_UP_ID = 2;
     protected boolean eating = false;
 
     public DeeDee() {
@@ -195,6 +196,7 @@ public class DeeDee extends Chase {
             return;
         }
         if (targetEntity == null || !(targetEntity instanceof Bomb)) {
+            levelSpeed = LEVEL_SPEED[DEEDEE_LEVEL_SPEED_NORMAL_ID];
             int Min = distanceChase;
             List<Entity> entityList = gameMap.getAnimationEntities();
             for (Entity entity : entityList) {
@@ -254,7 +256,7 @@ public class DeeDee extends Chase {
         }
 
         if (!eating) {
-            levelSpeed = LEVEL_SPEED[DEEDEE_LEVEL_SPEED_ID];
+            levelSpeed = LEVEL_SPEED[DEEDEE_LEVEL_SPEED_UP_ID];
         }
 
         switch (saveDirection) {

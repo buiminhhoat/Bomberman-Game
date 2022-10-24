@@ -5,7 +5,7 @@ import entities.animationentity.AnimationEntity;
 import javafx.scene.image.Image;
 
 public class HiddenItem extends AnimationEntity {
-    private static final int ITEM_SCORE = 100;
+    private static final int ITEM_SCORE = 50;
     protected boolean pickUp;
 
     public HiddenItem() {

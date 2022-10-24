@@ -1,7 +1,9 @@
 package entities.animationentity.movingentity.bomber;
 
+import control.BombermanGame;
 import control.SoundManager;
 import entities.Entity;
+import entities.animationentity.AnimationEntity;
 import entities.animationentity.hiddenitem.HiddenItem;
 import entities.animationentity.hiddenitem.Portal;
 import entities.animationentity.movingentity.MovingEntity;
@@ -47,6 +49,8 @@ public class Bomber extends MovingEntity {
             Entity hiddenItem = gameMap.getStillObjects().get(i);
             if (hiddenItem instanceof HiddenItem) {
                 if (((HiddenItem) hiddenItem).pickUp(this)) {
+                    BombermanGame.bombermanGame.setScore(BombermanGame.bombermanGame.getScore()
+                        + ((HiddenItem) hiddenItem).getScore());
                     if (hiddenItem instanceof Portal) {
                         ((Portal) hiddenItem).featureItem(this, gameMap);
                         continue;

@@ -1,18 +1,16 @@
 package graphics;
 
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
 
 /**
  * Lưu trữ thông tin các pixel của 1 sprite (hình ảnh game)
  */
 public class Sprite {
-    public static final Image mouseImg = new Image("/Images/mouse.png");
+    public static final Image mouseImg = new Image("/images/mouse.png");
 
     public static final int DEFAULT_SIZE = 32;
     public static final int SCALED_SIZE = DEFAULT_SIZE;
