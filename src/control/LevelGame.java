@@ -30,6 +30,9 @@ import javafx.scene.Scene;
 
 public class LevelGame {
     public static final int FINAL_LEVEL = 3;
+    public static final int TIME_FPS = 40; // ms
+    public static final int ONE_SECOND = 1000;
+    public static final int TRANSITION_DISPLAY_TIME_SLEEP = 3 * ONE_SECOND;
     private Group root;
     private StatusBar statusBar;
     private Scene scene;
@@ -38,7 +41,7 @@ public class LevelGame {
 
     private int highScore;
 
-    private boolean win = false;
+    private boolean win;
 
     private List<Entity> animationEntities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
@@ -46,25 +49,27 @@ public class LevelGame {
     private GameMap gameMap;
 
     public LevelGame() {
-        time = 0;
+        this.time = 0;
         this.level = 1;
-        root = new Group();
-        statusBar = new StatusBar();
-        statusBar.createStatusBar(root, this);
-        root.getChildren().add(BombermanGame.canvas);
-        scene = new Scene(root);
-        scene.setCursor(new ImageCursor(Sprite.mouseImg));
+        this.root = new Group();
+        this.win = false;
+        this.statusBar = new StatusBar();
+        this.statusBar.createStatusBar(root, this);
+        this.root.getChildren().add(BombermanGame.canvas);
+        this.scene = new Scene(root);
+        this.scene.setCursor(new ImageCursor(Sprite.mouseImg));
     }
 
     public LevelGame(int level) {
-        time = 0;
+        this.time = 0;
         this.level = level;
-        root = new Group();
-        statusBar = new StatusBar();
-        statusBar.createStatusBar(root, this);
-        root.getChildren().add(BombermanGame.canvas);
-        scene = new Scene(root);
-        scene.setCursor(new ImageCursor(Sprite.mouseImg));
+        this.root = new Group();
+        this.win = false;
+        this.statusBar = new StatusBar();
+        this.statusBar.createStatusBar(root, this);
+        this.root.getChildren().add(BombermanGame.canvas);
+        this.scene = new Scene(root);
+        this.scene.setCursor(new ImageCursor(Sprite.mouseImg));
     }
 
     public void start() {
@@ -133,7 +138,7 @@ public class LevelGame {
                     if (level == FINAL_LEVEL) {
                         this.stop();
                         try {
-                            Thread.sleep(3000);
+                            Thread.sleep(TRANSITION_DISPLAY_TIME_SLEEP);
                         } catch (InterruptedException ex) {
                             Thread.currentThread().interrupt();
                         }
@@ -143,7 +148,7 @@ public class LevelGame {
 
                     this.stop();
                     try {
-                        Thread.sleep(3000);
+                        Thread.sleep(TRANSITION_DISPLAY_TIME_SLEEP);
                     } catch (InterruptedException ex) {
                         Thread.currentThread().interrupt();
                     }
@@ -154,7 +159,7 @@ public class LevelGame {
                 if (bomberman.isDisappeared()) {
                     this.stop();
                     try {
-                        Thread.sleep(3000);
+                        Thread.sleep(TRANSITION_DISPLAY_TIME_SLEEP);
                     } catch (InterruptedException ex) {
                         Thread.currentThread().interrupt();
                     }
@@ -171,8 +176,9 @@ public class LevelGame {
             }
         };
         Timer countTime = new Timer();
-        countTime.schedule(timerTask, 0, 1000);
+        countTime.schedule(timerTask, 0, ONE_SECOND);
     }
+
     private void initGame() {
 
         SoundManager.playMusic(Music.GAME);
@@ -205,16 +211,16 @@ public class LevelGame {
                 if (entity instanceof Bee) {
                     ((Bee) entity).setDistanceChase(gameMap.getCol() * gameMap.getRow());
                     BreadthFirstSearch.CalculatorBreadthFirstSearch(
-                        entity.getYPixel() / Sprite.SCALED_SIZE,
-                        entity.getXPixel() / Sprite.SCALED_SIZE,
-                        gameMap);
+                            entity.getYPixel() / Sprite.SCALED_SIZE,
+                            entity.getXPixel() / Sprite.SCALED_SIZE,
+                            gameMap);
                     int minDist = BombermanGame.INF;
                     for (int j = 0; j < animationEntities.size(); ++j) {
                         Entity targetEntity = animationEntities.get(j);
                         if (targetEntity instanceof Beehive) {
                             int dist = BreadthFirstSearch.minDistance(
-                                targetEntity.getYPixel() / Sprite.SCALED_SIZE,
-                                targetEntity.getXPixel() / Sprite.SCALED_SIZE);
+                                    targetEntity.getYPixel() / Sprite.SCALED_SIZE,
+                                    targetEntity.getXPixel() / Sprite.SCALED_SIZE);
                             if (minDist > dist) {
                                 minDist = dist;
                                 ((Bee) entity).setTargetEntity(targetEntity);
@@ -259,7 +265,7 @@ public class LevelGame {
                         for (int j = 0; j < animationEntities.size(); ++j) {
                             Entity deedee = animationEntities.get(j);
                             if (deedee instanceof DeeDee
-                                && ((DeeDee) deedee).getTargetEntity() == bomb) {
+                                    && ((DeeDee) deedee).getTargetEntity() == bomb) {
                                 ((DeeDee) deedee).setTargetEntity(null);
                             }
                         }
@@ -337,7 +343,7 @@ public class LevelGame {
 
     private void fps() {
         try {
-            Thread.sleep(40);
+            Thread.sleep(TIME_FPS);
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
@@ -399,31 +405,31 @@ public class LevelGame {
         boolean setX = false;
         boolean setY = false;
 
-        if(midX - BombermanGame.WIDTH * Sprite.SCALED_SIZE / 2 < 0) {
+        if (midX - BombermanGame.WIDTH * Sprite.SCALED_SIZE / 2 < 0) {
             Camera.setX(0);
             setX = true;
         }
 
-        if(midX + BombermanGame.WIDTH * Sprite.SCALED_SIZE / 2 > gameMap.getWidth()) {
+        if (midX + BombermanGame.WIDTH * Sprite.SCALED_SIZE / 2 > gameMap.getWidth()) {
             Camera.setX(gameMap.getWidth() - BombermanGame.WIDTH * Sprite.SCALED_SIZE);
             setX = true;
         }
 
-        if(!setX) {
+        if (!setX) {
             Camera.setX(midX - BombermanGame.WIDTH * Sprite.SCALED_SIZE / 2);
         }
 
-        if(midY - BombermanGame.HEIGHT * Sprite.SCALED_SIZE / 2 < 0) {
+        if (midY - BombermanGame.HEIGHT * Sprite.SCALED_SIZE / 2 < 0) {
             Camera.setY(0);
             setY = true;
         }
 
-        if(midY + BombermanGame.HEIGHT * Sprite.SCALED_SIZE / 2 > gameMap.getHeight()) {
+        if (midY + BombermanGame.HEIGHT * Sprite.SCALED_SIZE / 2 > gameMap.getHeight()) {
             Camera.setY(gameMap.getHeight() - BombermanGame.HEIGHT * Sprite.SCALED_SIZE);
             setY = true;
         }
 
-        if(!setY) {
+        if (!setY) {
             Camera.setY(midY - BombermanGame.HEIGHT * Sprite.SCALED_SIZE / 2);
         }
     }

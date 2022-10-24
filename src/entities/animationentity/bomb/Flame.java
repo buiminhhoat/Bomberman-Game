@@ -9,44 +9,56 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Flame extends AnimationEntity {
+    private static final int TIME_TRANSITION_FRAME = 70; // ms
+    private static final int FLAME_LEVEL_SPEED_ID = 1;
+    private static final int MAX_FRAME = 3;
+    private static final int[] FRAME = {0, 1, 2, 2, 1, 0};
 
-    private boolean isEnemyOwner = false;
-    private boolean lastFlame = false;
-    private int idFrame = 0;
+    private int idFrame;
+    private boolean isEnemyOwner;
+    private boolean lastFlame;
     private Axis axisFlame;
-    private final int[] frame = {0, 1, 2, 2, 1, 0};
 
     public Flame() {
+        this.idFrame = 0;
+        this.isEnemyOwner = false;
+        this.lastFlame = false;
     }
 
     public Flame(int x, int y) {
-        super(x, y, Sprite.bomb_exploded.getFxImage(), 8, 3,
-            false, 3, Direction.DOWN);
-        axisFlame = Axis.CENTER;
+        super(x, y, Sprite.bomb_exploded.getFxImage(), LEVEL_SPEED[FLAME_LEVEL_SPEED_ID],
+                MAX_FRAME, false, DEFAULT_LIVES, Direction.DOWN);
+        this.idFrame = 0;
+        this.isEnemyOwner = false;
+        this.lastFlame = false;
+        this.axisFlame = Axis.CENTER;
         startAnimations();
         update();
     }
 
     public Flame(int x, int y, boolean isEnemyOwner) {
-        super(x, y, Sprite.bomb_exploded.getFxImage(), 8, 3,
-                false, 3, Direction.DOWN);
+        super(x, y, Sprite.bomb_exploded.getFxImage(), LEVEL_SPEED[FLAME_LEVEL_SPEED_ID],
+                MAX_FRAME, false, DEFAULT_LIVES, Direction.DOWN);
+        this.idFrame = 0;
         this.isEnemyOwner = isEnemyOwner;
-        axisFlame = Axis.CENTER;
+        this.lastFlame = false;
+        this.axisFlame = Axis.CENTER;
         startAnimations();
         update();
     }
 
     public Flame(int x, int y, Direction direction, boolean lastFlame, boolean isEnemyOwner) {
-        super(x, y, Sprite.explosion_horizontal.getFxImage(), 8, 3,
-            false, 3, direction);
+        super(x, y, Sprite.explosion_horizontal.getFxImage(), LEVEL_SPEED[FLAME_LEVEL_SPEED_ID],
+                MAX_FRAME, false, DEFAULT_LIVES, direction);
+        this.idFrame = 0;
         this.lastFlame = lastFlame;
         this.isEnemyOwner = isEnemyOwner;
         startAnimations();
         if (direction == Direction.UP || direction == Direction.DOWN) {
-            axisFlame = Axis.VERTICAL;
+            this.axisFlame = Axis.VERTICAL;
         }
         if (direction == Direction.LEFT || direction == Direction.RIGHT) {
-            axisFlame = Axis.HORIZONTAL;
+            this.axisFlame = Axis.HORIZONTAL;
         }
         update();
     }
@@ -58,19 +70,19 @@ public class Flame extends AnimationEntity {
     @Override
     public void startAnimations() {
         this.animations = true;
-        int timeToTransitionFrame = 70;
+        int timeToTransitionFrame = TIME_TRANSITION_FRAME;
 
         Timer time = new Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 ++idFrame;
-                if (idFrame == frame.length) {
+                if (idFrame == FRAME.length) {
                     finishAnimations();
                     time.cancel();
                     return;
                 }
-                currentFrame = frame[idFrame];
+                currentFrame = FRAME[idFrame];
             }
         };
         time.schedule(timerTask, 0, timeToTransitionFrame);

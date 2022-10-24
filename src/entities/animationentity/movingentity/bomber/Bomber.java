@@ -9,14 +9,20 @@ import enumeration.Chunk;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
+
 import javafx.scene.image.Image;
 
 public class Bomber extends MovingEntity {
-    public static final long IMMORTAL_TIME = 7000;
+    public static final int ONE_SECOND = 1000;
+    private static final int BOMBER_LIVES = 3;
+    private static final int BOMBER_LEVEL_SPEED_ID = 2;
+    private static final int MAX_FRAME = 2;
+    private static final long IMMORTAL_TIME = 7 * ONE_SECOND;
     private boolean win;
 
     private boolean immortal;
@@ -29,8 +35,8 @@ public class Bomber extends MovingEntity {
     }
 
     public Bomber(int x, int y, Image img) {
-        super(x, y, img, 8 , 2,
-            false, 3, Direction.DOWN);
+        super(x, y, img, LEVEL_SPEED[BOMBER_LEVEL_SPEED_ID], MAX_FRAME,
+                false, BOMBER_LIVES, Direction.DOWN);
         this.win = false;
         this.immortal = false;
         this.lastTimeDeath = 0;
@@ -57,8 +63,7 @@ public class Bomber extends MovingEntity {
     public void update() {
         if (new Date().getTime() - this.lastTimeDeath < IMMORTAL_TIME) {
             this.setImmortal(true);
-        }
-        else  {
+        } else {
             this.setImmortal(false);
         }
         if (this.animations) {

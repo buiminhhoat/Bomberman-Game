@@ -28,7 +28,7 @@ public class NextLevel {
         SoundManager.playChunk(Chunk.NEXT_LEVEL);
 
         Rectangle rectangle = new Rectangle(0, 0, BombermanGame.WIDTH * Sprite.SCALED_SIZE,
-                BombermanGame.HEIGHT * Sprite.SCALED_SIZE + 32);
+                BombermanGame.HEIGHT * Sprite.SCALED_SIZE + BombermanGame.CANVAS_TRANSLATE_Y);
         rectangle.setFill(Color.BLACK);
         rectangle.setStroke(Color.BLACK);
         root.getChildren().add(rectangle);

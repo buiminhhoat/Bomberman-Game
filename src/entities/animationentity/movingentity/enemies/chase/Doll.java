@@ -7,7 +7,7 @@ import gamemap.GameMap;
 import graphics.Sprite;
 import javafx.scene.image.Image;
 
-public class Doll extends Chase{
+public class Doll extends Chase {
     public Doll() {
 
     }
@@ -101,6 +101,7 @@ public class Doll extends Chase{
     }
 
     AstarAlgorithm astarAlgorithm = new AstarAlgorithm();
+
     @Override
     public void chooseDirection(GameMap gameMap) {
         if (animations || isDie()) {
@@ -108,29 +109,29 @@ public class Doll extends Chase{
         }
 
         if (targetEntity == null ||
-            gameMap.checkBlocked(targetEntity.getYPixel() / Sprite.SCALED_SIZE,
-                                targetEntity.getXPixel() / Sprite.SCALED_SIZE)) {
+                gameMap.checkBlocked(targetEntity.getYPixel() / Sprite.SCALED_SIZE,
+                        targetEntity.getXPixel() / Sprite.SCALED_SIZE)) {
             super.chooseDirection(gameMap);
             return;
         }
 
         int saveDirection = -1;
         astarAlgorithm.CalculatorAstarAlgorithm(
-            targetEntity.getYPixel() / Sprite.SCALED_SIZE,
-            targetEntity.getXPixel() / Sprite.SCALED_SIZE,
-            this.getYPixel() / Sprite.SCALED_SIZE,
-            this.getXPixel() / Sprite.SCALED_SIZE,
-            gameMap);
+                targetEntity.getYPixel() / Sprite.SCALED_SIZE,
+                targetEntity.getXPixel() / Sprite.SCALED_SIZE,
+                this.getYPixel() / Sprite.SCALED_SIZE,
+                this.getXPixel() / Sprite.SCALED_SIZE,
+                gameMap);
 
 
         Node nodeNext = astarAlgorithm.getNodeNext(this.getYPixel() / Sprite.SCALED_SIZE,
-            this.getXPixel() / Sprite.SCALED_SIZE);
+                this.getXPixel() / Sprite.SCALED_SIZE);
 
         if (nodeNext != null) {
             saveDirection = nodeNext.getH();
         }
 
-        if (saveDirection == -1) {
+        if (saveDirection == DEFAULT_SAVE_DIRECTION) {
             super.chooseDirection(gameMap);
             return;
         }

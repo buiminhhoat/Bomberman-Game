@@ -61,7 +61,8 @@ public class Menu {
 
         backgroundView = new ImageView(background);
         backgroundView.setFitWidth(BombermanGame.WIDTH * Sprite.SCALED_SIZE);
-        backgroundView.setFitHeight(BombermanGame.HEIGHT * Sprite.SCALED_SIZE + 32);
+        backgroundView.setFitHeight(BombermanGame.HEIGHT * Sprite.SCALED_SIZE
+                + BombermanGame.CANVAS_TRANSLATE_Y);
         root.getChildren().add(backgroundView);
 
         Text bombermanText = new Text("BOMBERMAN");
@@ -112,8 +113,7 @@ public class Menu {
                 BombermanGame.bombermanGame.displayNextLevel();
             });
             playButtonView.setImage(playButton2);
-        }
-        else {
+        } else {
             playButtonView.setImage(playButton1);
         }
 
@@ -123,8 +123,7 @@ public class Menu {
                 BombermanGame.bombermanGame.displayContinue();
             });
             continueButtonView.setImage(continueButton2);
-        }
-        else {
+        } else {
             continueButtonView.setImage(continueButton1);
         }
 
@@ -133,8 +132,7 @@ public class Menu {
                 System.exit(0);
             });
             exitButtonView.setImage(exitButton2);
-        }
-        else {
+        } else {
             exitButtonView.setImage(exitButton1);
         }
     }

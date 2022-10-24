@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 
 public abstract class Entity {
     public static final int START_X_PIXEL = 2 * Sprite.SCALED_SIZE;
-    public static final int START_Y_PIXEL = 1 * Sprite.SCALED_SIZE;
+    public static final int START_Y_PIXEL = Sprite.SCALED_SIZE;
 
     //Tọa độ X tính từ góc trái trên trong Canvas
     protected int xPixel;

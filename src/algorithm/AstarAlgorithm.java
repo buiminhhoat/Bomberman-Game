@@ -1,6 +1,8 @@
 package algorithm;
 
 import gamemap.GameMap;
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -24,8 +26,7 @@ public class AstarAlgorithm {
             this.h = h;
             if (parent == null) {
                 numMoves = 0;
-            }
-            else {
+            } else {
                 numMoves = parent.numMoves + 1;
             }
         }
@@ -83,11 +84,11 @@ public class AstarAlgorithm {
     private static final int dy[] = {0, 1, 0, -1};
     private static final int INF = (int) 1e9 + 7;
 
-    private Node node[][] = new Node[100][100];
+    private Node node[][] = new Node[GameMap.MAX_ROW][GameMap.MAX_COLUMN];
     private PriorityQueue<Node> pq = new PriorityQueue<>();
 
     public void CalculatorAstarAlgorithm(int startX, int startY,
-        int targetX, int targetY, GameMap gameMap) {
+                                         int targetX, int targetY, GameMap gameMap) {
         while (!pq.isEmpty()) {
             Node nodeMin = pq.poll();
         }
@@ -127,7 +128,7 @@ public class AstarAlgorithm {
             }
             int ux = nodeMin.x;
             int uy = nodeMin.y;
-            for (int h = 0; h <= 3; ++h) {
+            for (int h = 0; h < dx.length; ++h) {
                 int kx = ux + dx[h];
                 int ky = uy + dy[h];
                 if (node[kx][ky] == null) {
@@ -135,8 +136,8 @@ public class AstarAlgorithm {
                 }
                 Node neighbor = node[kx][ky];
                 if (kx >= 0 && kx < gameMap.getRow() && ky >= 0 && ky < gameMap.getCol()
-                    && !gameMap.checkBlocked(kx, ky)
-                    && neighbor.numMoves > nodeMin.numMoves + 1) {
+                        && !gameMap.checkBlocked(kx, ky)
+                        && neighbor.numMoves > nodeMin.numMoves + 1) {
                     neighbor.numMoves = nodeMin.numMoves + 1;
                     neighbor.parent = nodeMin;
                     neighbor.h = h;

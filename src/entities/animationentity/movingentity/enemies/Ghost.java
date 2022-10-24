@@ -105,7 +105,7 @@ public class Ghost extends Enemies {
         if (!getAnimations()) {
             setDirection(Direction.UP);
             if (gameMap.getMapObject((this.getYPixel() - Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE,
-                this.getXPixel() / Sprite.SCALED_SIZE) == BombermanObject.WALL) {
+                    this.getXPixel() / Sprite.SCALED_SIZE) == BombermanObject.WALL) {
                 return;
             }
             startAnimations();
@@ -116,7 +116,7 @@ public class Ghost extends Enemies {
         if (!getAnimations()) {
             setDirection(Direction.DOWN);
             if (gameMap.getMapObject((this.getYPixel() + Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE,
-                this.getXPixel() / Sprite.SCALED_SIZE) == BombermanObject.WALL) {
+                    this.getXPixel() / Sprite.SCALED_SIZE) == BombermanObject.WALL) {
                 return;
             }
             startAnimations();
@@ -127,8 +127,8 @@ public class Ghost extends Enemies {
         if (!this.getAnimations()) {
             this.setDirection(Direction.LEFT);
             if (gameMap.getMapObject(this.getYPixel() / Sprite.SCALED_SIZE,
-                (this.getXPixel() - Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE)
-                == BombermanObject.WALL) {
+                    (this.getXPixel() - Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE)
+                    == BombermanObject.WALL) {
                 return;
             }
             startAnimations();
@@ -139,8 +139,8 @@ public class Ghost extends Enemies {
         if (!this.getAnimations()) {
             this.setDirection(Direction.RIGHT);
             if (gameMap.getMapObject(this.getYPixel() / Sprite.SCALED_SIZE,
-                (this.getXPixel() + Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE)
-                == BombermanObject.WALL) {
+                    (this.getXPixel() + Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE)
+                    == BombermanObject.WALL) {
                 return;
             }
             startAnimations();

@@ -4,8 +4,6 @@ import control.SoundManager;
 import entities.Entity;
 import entities.animationentity.bomb.Bomb;
 import entities.animationentity.movingentity.bomber.Bomber;
-import entities.animationentity.movingentity.enemies.chase.DeeDee;
-import entities.animationentity.movingentity.enemies.chase.Oneal;
 import enumeration.Direction;
 import enumeration.Music;
 import gamemap.GameMap;
@@ -16,48 +14,78 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public abstract class AnimationEntity extends Entity {
+    public static final int ONE_SECOND = 1000;
+    public static final int TRANSITION_DISPLAY_TIME_SLEEP = 3 * ONE_SECOND;
+    public static final int DEFAULT_LIVES = 1;
     public static final int DEFAULT_NUMBER_BOMBS = 1;
-
     public static final int DEFAULT_LENGTH_EXPLOSION_OF_BOMB = 1;
+    public static final int DEFAULT_LEVEL_SPEED_ID = 1;
+    public static final int SCORE_REWARD = 100;
+    public static final int[] LEVEL_SPEED = {16, 8, 4, 2};
+    private static final int[] FRAME = {0, 0, 0, 1, 2, 3};
 
-    protected int numberBombs = DEFAULT_NUMBER_BOMBS;
-
-    protected int lengthExplosionOfBomb = DEFAULT_LENGTH_EXPLOSION_OF_BOMB;
-
-    protected int currentFrame = 0;
+    private int idFrame;
+    protected int currentFrame;
     protected int maxFrame;
     protected Boolean animations;
+    protected int numberBombs;
+    protected int lengthExplosionOfBomb;
 
-    protected boolean disappeared = false;
-
-    protected boolean isDie = false;
-    protected int lives = 1;
-    protected int levelSpeed = 8; // {16, 8, 4, 2}
+    protected boolean disappeared;
+    protected boolean isDie;
+    protected int lives;
+    protected int levelSpeed = LEVEL_SPEED[DEFAULT_LEVEL_SPEED_ID];
 
     protected Direction direction;
 
-    protected int score = 100;
+    protected int score;
 
-    private final int[] frame = {0, 0, 0, 1, 2, 3};
-    private int idFrame = 0;
-
-    private boolean liveTimerIsRunning = false;
-    private boolean deathTimerIsRunning = false;
+    private boolean liveTimerIsRunning;
+    private boolean deathTimerIsRunning;
     private Timer liveTimer = new Timer();
     private Timer deathTimer = new Timer();
 
     public AnimationEntity() {
+        this.idFrame = 0;
+        this.currentFrame = 0;
+        this.numberBombs = DEFAULT_NUMBER_BOMBS;
+        this.lengthExplosionOfBomb = DEFAULT_LENGTH_EXPLOSION_OF_BOMB;
+        this.disappeared = false;
+        this.isDie = false;
+        this.lives = DEFAULT_LIVES;
+        this.score = SCORE_REWARD;
+        this.liveTimerIsRunning = false;
+        this.deathTimerIsRunning = false;
         initTimer();
     }
 
     public AnimationEntity(int x, int y, Image img) {
         super(x, y, img);
+        this.idFrame = 0;
+        this.currentFrame = 0;
+        this.numberBombs = DEFAULT_NUMBER_BOMBS;
+        this.lengthExplosionOfBomb = DEFAULT_LENGTH_EXPLOSION_OF_BOMB;
+        this.disappeared = false;
+        this.isDie = false;
+        this.lives = DEFAULT_LIVES;
+        this.score = SCORE_REWARD;
+        this.liveTimerIsRunning = false;
+        this.deathTimerIsRunning = false;
         initTimer();
     }
 
     public AnimationEntity(int x, int y, Image img, int levelSpeed, int maxFrame,
-        Boolean animations, int lives, Direction direction) {
+                           Boolean animations, int lives, Direction direction) {
         super(x, y, img);
+        this.idFrame = 0;
+        this.currentFrame = 0;
+        this.numberBombs = DEFAULT_NUMBER_BOMBS;
+        this.lengthExplosionOfBomb = DEFAULT_LENGTH_EXPLOSION_OF_BOMB;
+        this.disappeared = false;
+        this.isDie = false;
+        this.score = SCORE_REWARD;
+        this.liveTimerIsRunning = false;
+        this.deathTimerIsRunning = false;
         this.levelSpeed = levelSpeed;
         this.maxFrame = maxFrame;
         this.animations = animations;
@@ -124,8 +152,7 @@ public abstract class AnimationEntity extends Entity {
                 if (liveTimerIsRunning) {
                     if (!animations) {
                         cancelLiveTimer();
-                    }
-                    else {
+                    } else {
                         currentFrame = (currentFrame + 1) % maxFrame;
                     }
                 }
@@ -141,13 +168,13 @@ public abstract class AnimationEntity extends Entity {
             public void run() {
                 if (deathTimerIsRunning) {
                     ++idFrame;
-                    if (idFrame == frame.length) {
+                    if (idFrame == FRAME.length) {
                         if (((AnimationEntity) entity).getLives() == 0) {
                             disappeared = true;
                         }
                         if (entity instanceof Bomber) {
                             try {
-                                Thread.sleep(3000);
+                                Thread.sleep(TRANSITION_DISPLAY_TIME_SLEEP);
                             } catch (InterruptedException ex) {
                                 Thread.currentThread().interrupt();
                             }
@@ -161,7 +188,7 @@ public abstract class AnimationEntity extends Entity {
                         }
                         cancelDeathTimer();
                     } else {
-                        currentFrame = frame[idFrame];
+                        currentFrame = FRAME[idFrame];
                     }
                 }
             }
@@ -256,8 +283,8 @@ public abstract class AnimationEntity extends Entity {
         this.score = score;
     }
 
-    public int[] getFrame() {
-        return frame;
+    public int[] getFRAME() {
+        return FRAME;
     }
 
     public int getIdFrame() {

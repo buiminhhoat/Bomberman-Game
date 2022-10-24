@@ -1,6 +1,7 @@
 package control;
 
 import graphics.Sprite;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Formatter;
@@ -15,14 +16,14 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class BombermanGame extends Application {
-    private int score = 0;
-    private int currentLevel = 0;
-
+    public static final String TITLE = "Bomberman Game";
     public static final int WIDTH = 25;
     public static final int HEIGHT = 20;
-
-    public static final String TITLE = "Bomberman Game";
     public static final int INF = (int) 1e9 + 7;
+
+    public static final int CANVAS_TRANSLATE_Y = 32;
+    private int score = 0;
+    private int currentLevel = 0;
 
     public static Stage stage;
     public static GraphicsContext gc;
@@ -39,6 +40,7 @@ public class BombermanGame extends Application {
 
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
+        canvas.setTranslateY(CANVAS_TRANSLATE_Y);
 
         stage.setTitle(TITLE);
 
@@ -57,7 +59,6 @@ public class BombermanGame extends Application {
 
     public void displayMenu() {
         SoundManager.stopMusic();
-        canvas.setTranslateY(32);
         Menu menu = new Menu();
         stage.setScene(menu.getScene());
         menu.display();
@@ -65,7 +66,6 @@ public class BombermanGame extends Application {
 
     public void displayGameOver() {
         SoundManager.stopMusic();
-        canvas.setTranslateY(32);
         GameOver gameOver = new GameOver();
         gameOver.display();
         stage.setScene(gameOver.getScene());
@@ -75,7 +75,6 @@ public class BombermanGame extends Application {
 
     public void displayGameVictory() {
         SoundManager.stopMusic();
-        canvas.setTranslateY(32);
         GameVictory gameVictory = new GameVictory();
         gameVictory.display();
         stage.setScene(gameVictory.getScene());
@@ -107,7 +106,6 @@ public class BombermanGame extends Application {
             }
         }
         SoundManager.stopMusic();
-        canvas.setTranslateY(32);
         NextLevel nextLevel = new NextLevel();
         nextLevel.display();
         stage.setScene(nextLevel.getScene());
@@ -115,7 +113,7 @@ public class BombermanGame extends Application {
 
     public void displayGame() {
         SoundManager.stopMusic();
-        canvas.setTranslateY(32);
+
         LevelGame levelGame = new LevelGame(currentLevel);
 
         Scanner sc = null;
@@ -134,7 +132,6 @@ public class BombermanGame extends Application {
 
     public void displayContinue() {
         SoundManager.stopMusic();
-        canvas.setTranslateY(32);
         Scanner sc = null;
         try {
             File file = new File("res/data/maxunlocklevel.txt");

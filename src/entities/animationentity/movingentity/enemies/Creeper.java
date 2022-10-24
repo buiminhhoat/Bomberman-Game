@@ -14,16 +14,18 @@ import java.util.TimerTask;
 import javafx.scene.image.Image;
 
 public class Creeper extends Enemies {
-    private final int TIME_CREATE_BOMB = 5 * 1000;
+    private static final int TIME_CREATE_BOMB = 5 * ONE_SECOND;
+    private static final int CREEPER_NUMBER_BOMB = 1;
     private long lastTimeCreateBomb;
     GameMap gameMap;
+
     public Creeper() {
         lastTimeCreateBomb = System.currentTimeMillis();
     }
 
     public Creeper(int x, int y, Image img, GameMap gameMap) {
         super(x, y, img);
-        numberBombs = 1;
+        numberBombs = CREEPER_NUMBER_BOMB;
         lastTimeCreateBomb = System.currentTimeMillis();
         this.gameMap = gameMap;
     }
@@ -102,7 +104,7 @@ public class Creeper extends Enemies {
             }
         } else {
             long curTime = System.currentTimeMillis();
-            if (curTime - lastTimeCreateBomb >= 5000) {
+            if (curTime - lastTimeCreateBomb >= TIME_CREATE_BOMB) {
                 createBomb(gameMap);
                 lastTimeCreateBomb = curTime;
             }
@@ -122,8 +124,8 @@ public class Creeper extends Enemies {
         List<Bomb> bombList = ((Creeper) this).getBombList();
         for (int j = 0; j < bombList.size(); ++j) {
             gameMap.setPosIsBombOpened(
-                bombList.get(j).getYPixel() / Sprite.SCALED_SIZE,
-                bombList.get(j).getXPixel() / Sprite.SCALED_SIZE);
+                    bombList.get(j).getYPixel() / Sprite.SCALED_SIZE,
+                    bombList.get(j).getXPixel() / Sprite.SCALED_SIZE);
         }
     }
 }

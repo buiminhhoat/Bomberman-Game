@@ -10,19 +10,21 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Brick extends AnimationEntity {
-
-    private boolean isDestroy = false;
+    private static final int MAX_FRAME = 3;
+    private boolean isDestroy;
 
     private HiddenItem hiddenItem;
 
     public Brick() {
-        isBlocked = true;
+        this.isBlocked = true;
+        this.isDestroy = false;
     }
 
     public Brick(int x, int y, Image img) {
-        super(x, y, img, 4, 3,
-            false, 3, Direction.DOWN);
-        isBlocked = true;
+        super(x, y, img, LEVEL_SPEED[DEFAULT_LEVEL_SPEED_ID], MAX_FRAME,
+                false, DEFAULT_LIVES, Direction.DOWN);
+        this.isBlocked = true;
+        this.isDestroy = false;
     }
 
     public boolean checkDestroy() {

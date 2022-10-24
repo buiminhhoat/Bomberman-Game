@@ -6,14 +6,17 @@ import entities.animationentity.movingentity.enemies.chase.Bee;
 import entities.animationentity.movingentity.enemies.chase.Chase;
 import gamemap.GameMap;
 import graphics.Sprite;
+
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import javafx.scene.image.Image;
 
 public class Beehive extends Chase {
-
-    private static final int WAIT_CREATE_BEE = 1 * 1000;
+    private static final int NUMBER_BEE = 3;
+    private static final int ANGRY_BEE_LEVEL_SPEED_ID = 2;
+    private static final int WAIT_CREATE_BEE = ONE_SECOND;
 
     public Beehive() {
 
@@ -58,14 +61,13 @@ public class Beehive extends Chase {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                int numBee = 3;
                 List<Entity> entityList = gameMap.getAnimationEntities();
-                for (int i = 1; i <= numBee; ++i) {
+                for (int i = 1; i <= NUMBER_BEE; ++i) {
                     Bee bee = new Bee(getXPixel() / Sprite.SCALED_SIZE,
-                        getYPixel() / Sprite.SCALED_SIZE, Sprite.bee_left1.getFxImage());
+                            getYPixel() / Sprite.SCALED_SIZE, Sprite.bee_left1.getFxImage());
                     bee.setTargetEntity(bomberman);
                     bee.setDistanceChase(INF);
-                    bee.setLevelSpeed(4);
+                    bee.setLevelSpeed(LEVEL_SPEED[ANGRY_BEE_LEVEL_SPEED_ID]);
                     entityList.add(bee);
                 }
             }

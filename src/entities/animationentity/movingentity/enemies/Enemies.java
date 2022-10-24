@@ -3,10 +3,14 @@ package entities.animationentity.movingentity.enemies;
 import entities.animationentity.movingentity.MovingEntity;
 import enumeration.Direction;
 import gamemap.GameMap;
+
 import java.util.Random;
+
 import javafx.scene.image.Image;
 
 public abstract class Enemies extends MovingEntity {
+    private static final int ENEMY_LEVEL_SPEED_ID = 8;
+    private static final int MAX_FRAME = 2;
 
     protected Direction faceDirection = Direction.LEFT;
     protected int maxStep;
@@ -18,8 +22,8 @@ public abstract class Enemies extends MovingEntity {
     }
 
     public Enemies(int x, int y, Image img) {
-        super(x, y, img, 8, 2,
-            false, 1, Direction.LEFT);
+        super(x, y, img, ENEMY_LEVEL_SPEED_ID, MAX_FRAME,
+                false, DEFAULT_LIVES, Direction.LEFT);
     }
 
     public Direction getFaceDirection() {
@@ -48,8 +52,8 @@ public abstract class Enemies extends MovingEntity {
         }
         Random generator = new Random();
         if (maxStep == 0) {
-            maxStep = generator.nextInt(4) + 1;
-            int type = generator.nextInt(4);
+            maxStep = generator.nextInt(MAX_DIRECTION) + 1;
+            int type = generator.nextInt(MAX_DIRECTION);
             switch (type) {
                 case 0:
                     this.direction = Direction.UP;

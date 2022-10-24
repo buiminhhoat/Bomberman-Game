@@ -7,28 +7,34 @@ import entities.Entity;
 import entities.animationentity.movingentity.enemies.Enemies;
 import gamemap.GameMap;
 import graphics.Sprite;
+
 import java.util.Random;
+
 import javafx.scene.image.Image;
 
 public class Chase extends Enemies {
 
+    private static final int CHASE_SCORE_REWARD = 200;
+    private static final int RANDOM_RANGE = 20;
+    private static final int RANDOM_THRESHOLD_1 = 16;
+    private static final int RANDOM_THRESHOLD_2 = 5;
     protected static final int dx[] = {-1, 0, 1, 0};
     protected static final int dy[] = {0, 1, 0, -1};
     protected static final int INF = (int) 1e9 + 7;
-
+    protected static final int DEFAULT_SAVE_DIRECTION = -1;
     protected static final int DEFAULT_DISTANCE_CHASE = 7;
 
     protected int distanceChase = DEFAULT_DISTANCE_CHASE;
     Entity targetEntity;
-    protected int[] randomShuffle = new int[4];
+    protected int[] randomShuffle = new int[MAX_DIRECTION];
 
     public Chase() {
-        score = 200;
+        score = CHASE_SCORE_REWARD;
     }
 
     public Chase(int x, int y, Image img) {
         super(x, y, img);
-        score = 200;
+        score = CHASE_SCORE_REWARD;
     }
 
     public Entity getTargetEntity() {
@@ -51,22 +57,22 @@ public class Chase extends Enemies {
         }
 
         BreadthFirstSearch.CalculatorBreadthFirstSearch(
-            targetEntity.getYPixel() / Sprite.SCALED_SIZE,
-            targetEntity.getXPixel() / Sprite.SCALED_SIZE,
-            gameMap);
+                targetEntity.getYPixel() / Sprite.SCALED_SIZE,
+                targetEntity.getXPixel() / Sprite.SCALED_SIZE,
+                gameMap);
 
         int Min = (int) distanceChase;
-        int saveDirection = -1;
+        int saveDirection = DEFAULT_SAVE_DIRECTION;
         Random random = new Random();
-        int type = 0;
-        type = random.nextInt(2);
+//        int type = 0;
+//        type = random.nextInt(2);
 
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < MAX_DIRECTION; ++i) {
             randomShuffle[i] = i;
         }
         shuffleArray(randomShuffle);
 
-        for (int h = 0; h < 4; ++h) {
+        for (int h = 0; h < MAX_DIRECTION; ++h) {
             int kx = this.getYPixel() / Sprite.SCALED_SIZE + dy[randomShuffle[h]];
             int ky = this.getXPixel() / Sprite.SCALED_SIZE + dx[randomShuffle[h]];
             if (Min > BreadthFirstSearch.minDistance(kx, ky)) {
@@ -75,17 +81,19 @@ public class Chase extends Enemies {
             }
         }
 
-        if (saveDirection == -1) {
+        if (saveDirection == DEFAULT_SAVE_DIRECTION) {
             super.chooseDirection(gameMap);
             return;
         }
 
-        if (random.nextInt(20) > 16) {
-            levelSpeed = 4;
-        } else if (random.nextInt(20) > 5) {
-            levelSpeed = 8;
+        if (random.nextInt(RANDOM_RANGE) > RANDOM_THRESHOLD_1) {
+            levelSpeed = LEVEL_SPEED[2];
         } else {
-            levelSpeed = 16;
+            if (random.nextInt(RANDOM_RANGE) > RANDOM_THRESHOLD_2) {
+                levelSpeed = LEVEL_SPEED[1];
+            } else {
+                levelSpeed = LEVEL_SPEED[0];
+            }
         }
 
         switch (saveDirection) {

@@ -5,22 +5,23 @@ import entities.animationentity.AnimationEntity;
 import javafx.scene.image.Image;
 
 public class HiddenItem extends AnimationEntity {
+    private static final int ITEM_SCORE = 100;
     protected boolean pickUp;
 
     public HiddenItem() {
         isBlocked = true;
-        score = 100;
+        score = ITEM_SCORE;
     }
 
     public HiddenItem(int x, int y, Image img) {
         super(x, y, img);
         isBlocked = false;
-        score = 100;
+        score = ITEM_SCORE;
     }
 
     public boolean pickUp(Entity entity) {
         if (entity.getXPixel() == this.getXPixel()
-            && entity.getYPixel() == this.getYPixel()) {
+                && entity.getYPixel() == this.getYPixel()) {
             pickUp = true;
             return true;
         }

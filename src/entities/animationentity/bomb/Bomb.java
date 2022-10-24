@@ -18,6 +18,7 @@ import enumeration.Chunk;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -26,8 +27,8 @@ import java.util.TimerTask;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Bomb extends AnimationEntity {
-
-    private final int DEFAULT_TIME_BOMB = 3 * 1000;
+    public static final int ONE_SECOND = 1000;
+    private static final int DEFAULT_TIME_BOMB = 3 * ONE_SECOND;
 
     private boolean exploded = false;
 
@@ -189,7 +190,7 @@ public class Bomb extends AnimationEntity {
         int y = this.getYPixel() / Sprite.SCALED_SIZE;
         int lth = ((AnimationEntity) dynamicEntity).getLengthExplosionOfBomb();
         int id = 0;
-        List <Entity> list = gameMap.getAnimationEntities();
+        List<Entity> list = gameMap.getAnimationEntities();
 
         for (int i = y; i >= Math.max(y - lth, 0); --i) {
             if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
@@ -341,7 +342,7 @@ public class Bomb extends AnimationEntity {
                 }
             }
         }
-        for (Entity entity: addItemList) {
+        for (Entity entity : addItemList) {
             gameMap.getStillObjects().add(entity);
         }
     }

@@ -6,7 +6,9 @@ import algorithm.BreadthFirstSearch;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
+
 import java.util.Random;
+
 import javafx.scene.image.Image;
 
 public class Bee extends Chase {
@@ -115,22 +117,19 @@ public class Bee extends Chase {
         }
 
         BreadthFirstSearch.CalculatorBreadthFirstSearch(
-            targetEntity.getYPixel() / Sprite.SCALED_SIZE,
-            targetEntity.getXPixel() / Sprite.SCALED_SIZE,
-            gameMap);
+                targetEntity.getYPixel() / Sprite.SCALED_SIZE,
+                targetEntity.getXPixel() / Sprite.SCALED_SIZE,
+                gameMap);
 
         int Min = (int) distanceChase;
-        int saveDirection = -1;
-        Random random = new Random();
-        int type = 0;
-        type = random.nextInt(2);
+        int saveDirection = DEFAULT_SAVE_DIRECTION;
 
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < MAX_DIRECTION; ++i) {
             randomShuffle[i] = i;
         }
         shuffleArray(randomShuffle);
 
-        for (int h = 0; h < 4; ++h) {
+        for (int h = 0; h < MAX_DIRECTION; ++h) {
             int kx = this.getYPixel() / Sprite.SCALED_SIZE + dy[randomShuffle[h]];
             int ky = this.getXPixel() / Sprite.SCALED_SIZE + dx[randomShuffle[h]];
             if (Min > BreadthFirstSearch.minDistance(kx, ky)) {
@@ -139,7 +138,7 @@ public class Bee extends Chase {
             }
         }
 
-        if (saveDirection == -1) {
+        if (saveDirection == DEFAULT_SAVE_DIRECTION) {
             super.chooseDirection(gameMap);
             return;
         }

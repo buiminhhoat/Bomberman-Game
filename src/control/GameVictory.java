@@ -14,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class GameVictory {
+    private static final int NUMBER_OF_SCORE = 5;
     private Group root;
     private Scene scene;
 
@@ -45,7 +46,8 @@ public class GameVictory {
 
         backgroundView = new ImageView(background);
         backgroundView.setFitWidth(BombermanGame.WIDTH * Sprite.SCALED_SIZE);
-        backgroundView.setFitHeight(BombermanGame.HEIGHT * Sprite.SCALED_SIZE + 32);
+        backgroundView.setFitHeight(BombermanGame.HEIGHT * Sprite.SCALED_SIZE
+                + BombermanGame.CANVAS_TRANSLATE_Y);
         root.getChildren().add(backgroundView);
 
         Text TextTotalScore = new Text("Total Score");
@@ -59,7 +61,7 @@ public class GameVictory {
         root.getChildren().add(TextTotalScore);
 
         String tx = "" + BombermanGame.bombermanGame.getScore();
-        while (tx.length() < 5) {
+        while (tx.length() < NUMBER_OF_SCORE) {
             tx = "0" + tx;
         }
         Text totalScore = new Text(tx);
@@ -91,8 +93,7 @@ public class GameVictory {
     public void update() {
         if (Util.checkMouseInImageView(menuButtonView)) {
             menuButtonView.setImage(menuButton2);
-        }
-        else {
+        } else {
             menuButtonView.setImage(menuButton1);
         }
         scene.setOnMouseClicked(event -> {

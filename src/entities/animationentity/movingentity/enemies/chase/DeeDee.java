@@ -10,6 +10,7 @@ import entities.animationentity.movingentity.bomber.Bomber;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
+
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
@@ -18,16 +19,19 @@ import java.util.TimerTask;
 import javafx.scene.image.Image;
 
 public class DeeDee extends Chase {
+    private static final int DIGESTION_TIME = 15 * ONE_SECOND;
+    private static final int DEEDEE_DISTANCE_CHASE = 10;
+    private static final int EATING_LEVEL_SPEED_ID = 0;
+    private static final int DEEDEE_LEVEL_SPEED_ID = 2;
     protected boolean eating = false;
 
-    private int DIGESTION_TIME = 15 * 1000; // 1s = 1000ms
     public DeeDee() {
-        distanceChase = 10;
+        distanceChase = DEEDEE_DISTANCE_CHASE;
     }
 
     public DeeDee(int x, int y, Image img) {
         super(x, y, img);
-        distanceChase = 10;
+        distanceChase = DEEDEE_DISTANCE_CHASE;
     }
 
     @Override
@@ -186,29 +190,29 @@ public class DeeDee extends Chase {
         }
         eatBomb(gameMap);
         if (eating) {
-            levelSpeed = 16;
+            levelSpeed = LEVEL_SPEED[EATING_LEVEL_SPEED_ID];
             super.chooseDirection(gameMap);
             return;
         }
         if (targetEntity == null || !(targetEntity instanceof Bomb)) {
             int Min = distanceChase;
             List<Entity> entityList = gameMap.getAnimationEntities();
-            for (Entity entity: entityList) {
+            for (Entity entity : entityList) {
                 if (entity instanceof Bomber) {
-                    for (Bomb bomb: ((MovingEntity) entity).getBombList()) {
+                    for (Bomb bomb : ((MovingEntity) entity).getBombList()) {
                         if (bomb == null) {
                             continue;
                         }
                         BreadthFirstSearch.CalculatorBreadthFirstSearch(
-                            bomb.getYPixel() / Sprite.SCALED_SIZE,
-                            bomb.getXPixel() / Sprite.SCALED_SIZE,
-                            gameMap);
+                                bomb.getYPixel() / Sprite.SCALED_SIZE,
+                                bomb.getXPixel() / Sprite.SCALED_SIZE,
+                                gameMap);
                         if (Min > BreadthFirstSearch.minDistance(
-                            this.getYPixel() / Sprite.SCALED_SIZE,
-                            this.getXPixel() / Sprite.SCALED_SIZE)) {
-                            Min = BreadthFirstSearch.minDistance(
                                 this.getYPixel() / Sprite.SCALED_SIZE,
-                                this.getXPixel() / Sprite.SCALED_SIZE);
+                                this.getXPixel() / Sprite.SCALED_SIZE)) {
+                            Min = BreadthFirstSearch.minDistance(
+                                    this.getYPixel() / Sprite.SCALED_SIZE,
+                                    this.getXPixel() / Sprite.SCALED_SIZE);
                             targetEntity = bomb;
                         }
                     }
@@ -222,22 +226,20 @@ public class DeeDee extends Chase {
         }
 
         BreadthFirstSearch.CalculatorBreadthFirstSearch(
-            targetEntity.getYPixel() / Sprite.SCALED_SIZE,
-            targetEntity.getXPixel() / Sprite.SCALED_SIZE,
-            gameMap);
+                targetEntity.getYPixel() / Sprite.SCALED_SIZE,
+                targetEntity.getXPixel() / Sprite.SCALED_SIZE,
+                gameMap);
 
         int Min = (int) distanceChase;
-        int saveDirection = -1;
+        int saveDirection = DEFAULT_SAVE_DIRECTION;
         Random random = new Random();
-        int type = 0;
-        type = random.nextInt(2);
 
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < MAX_DIRECTION; ++i) {
             randomShuffle[i] = i;
         }
         shuffleArray(randomShuffle);
 
-        for (int h = 0; h < 4; ++h) {
+        for (int h = 0; h < MAX_DIRECTION; ++h) {
             int kx = this.getYPixel() / Sprite.SCALED_SIZE + dy[randomShuffle[h]];
             int ky = this.getXPixel() / Sprite.SCALED_SIZE + dx[randomShuffle[h]];
             if (Min > BreadthFirstSearch.minDistance(kx, ky)) {
@@ -246,13 +248,13 @@ public class DeeDee extends Chase {
             }
         }
 
-        if (saveDirection == -1) {
+        if (saveDirection == DEFAULT_SAVE_DIRECTION) {
             super.chooseDirection(gameMap);
             return;
         }
 
         if (!eating) {
-            levelSpeed = 4;
+            levelSpeed = LEVEL_SPEED[DEEDEE_LEVEL_SPEED_ID];
         }
 
         switch (saveDirection) {
@@ -284,7 +286,7 @@ public class DeeDee extends Chase {
         if (!getAnimations()) {
             setDirection(Direction.UP);
             if (gameMap.checkBlockedPixelByBlock(this.getXPixel(),
-                this.getYPixel() - Sprite.SCALED_SIZE)) {
+                    this.getYPixel() - Sprite.SCALED_SIZE)) {
                 return;
             }
             startAnimations();
@@ -296,7 +298,7 @@ public class DeeDee extends Chase {
         if (!getAnimations()) {
             setDirection(Direction.DOWN);
             if (gameMap.checkBlockedPixelByBlock(this.getXPixel(),
-                this.getYPixel() + Sprite.SCALED_SIZE)) {
+                    this.getYPixel() + Sprite.SCALED_SIZE)) {
                 return;
             }
             startAnimations();
@@ -308,7 +310,7 @@ public class DeeDee extends Chase {
         if (!this.getAnimations()) {
             this.setDirection(Direction.LEFT);
             if (gameMap.checkBlockedPixelByBlock(this.getXPixel() - Sprite.SCALED_SIZE,
-                this.getYPixel())) {
+                    this.getYPixel())) {
                 return;
             }
             startAnimations();
@@ -320,7 +322,7 @@ public class DeeDee extends Chase {
         if (!this.getAnimations()) {
             this.setDirection(Direction.RIGHT);
             if (gameMap.checkBlockedPixelByBlock(this.getXPixel() + Sprite.SCALED_SIZE,
-                this.getYPixel())) {
+                    this.getYPixel())) {
                 return;
             }
             startAnimations();
@@ -332,7 +334,7 @@ public class DeeDee extends Chase {
             return;
         }
         List<Entity> entityList = gameMap.getAnimationEntities();
-        for (Entity bomber: entityList) {
+        for (Entity bomber : entityList) {
             if (bomber instanceof MovingEntity) {
                 if (!(bomber instanceof Bomber)) {
                     continue;
@@ -341,12 +343,12 @@ public class DeeDee extends Chase {
                 for (int i = 0; i < bombList.size(); ++i) {
                     Bomb bomb = bombList.get(i);
                     if (this.getXPixel() == bomb.getXPixel()
-                        && this.getYPixel() == bomb.getYPixel()) {
+                            && this.getYPixel() == bomb.getYPixel()) {
                         gameMap.setPosIsBombOpened(
-                            bomb.getYPixel() / Sprite.SCALED_SIZE,
-                            bomb.getXPixel() / Sprite.SCALED_SIZE);
+                                bomb.getYPixel() / Sprite.SCALED_SIZE,
+                                bomb.getXPixel() / Sprite.SCALED_SIZE);
                         ((Bomber) bomber).setNumberBombs(((Bomber) bomber).getNumberBombs() + 1);
-                        for (Entity deedee: entityList) {
+                        for (Entity deedee : entityList) {
                             if (deedee instanceof DeeDee) {
                                 if (((DeeDee) deedee).getTargetEntity() == bomb) {
                                     ((DeeDee) deedee).setTargetEntity(null);

@@ -8,6 +8,8 @@ import enumeration.Chunk;
 import javafx.scene.image.Image;
 
 public class SpeedItem extends HiddenItem {
+    private static final int LEVEL_SPEED_UP_ID = 2;
+
     public SpeedItem() {
         isBlocked = false;
     }
@@ -21,7 +23,7 @@ public class SpeedItem extends HiddenItem {
     public void featureItem(Entity entity) {
         if (entity instanceof Bomber) {
             SoundManager.playChunk(Chunk.PICKUP_ITEM);
-            ((MovingEntity) entity).setLevelSpeed(4);
+            ((MovingEntity) entity).setLevelSpeed(LEVEL_SPEED[LEVEL_SPEED_UP_ID]);
         }
     }
 }

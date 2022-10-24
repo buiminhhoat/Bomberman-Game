@@ -16,6 +16,7 @@ import entities.block.Grass;
 import entities.block.Wall;
 import enumeration.BombermanObject;
 import graphics.Sprite;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -24,6 +25,9 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GameMap {
+    private static final int THRESHOLD_RANDOM_FLOWER_BLOCK = 15;
+    public static final int MAX_ROW = 100;
+    public static final int MAX_COLUMN = 100;
 
     private int level;
     private int row;
@@ -138,8 +142,8 @@ public class GameMap {
 
             if (this.row < BombermanGame.HEIGHT || this.col < BombermanGame.WIDTH) {
                 System.out.println("File map không hợp lệ. Yêu cầu: "
-                    + "row >= " + BombermanGame.HEIGHT
-                    + " & col >= " + BombermanGame.WIDTH);
+                        + "row >= " + BombermanGame.HEIGHT
+                        + " & col >= " + BombermanGame.WIDTH);
                 System.exit(0);
             }
             map = new BombermanObject[row][col];
@@ -317,7 +321,7 @@ public class GameMap {
             for (int j = 0; j < col; ++j) {
                 Entity object;
 
-                if (new Random().nextInt(15) == 0) {
+                if (new Random().nextInt(THRESHOLD_RANDOM_FLOWER_BLOCK) == 0) {
                     object = new Grass(j, i, Sprite.grass_flower.getFxImage());
                 } else {
                     object = new Grass(j, i, Sprite.grass.getFxImage());
@@ -359,21 +363,21 @@ public class GameMap {
                 if (j == col - 1) {
                     if (i % 2 == 0) {
                         object = new Wall(j, i, Sprite.forest_map3.getFxImage());
-                    }  else {
+                    } else {
                         object = new Wall(j, i, Sprite.forest_map4.getFxImage());
                     }
                 }
                 if (j == 1) {
                     if (i % 2 == 0) {
                         object = new Wall(j, i, Sprite.forest_map5.getFxImage());
-                    }  else {
+                    } else {
                         object = new Wall(j, i, Sprite.forest_map6.getFxImage());
                     }
                 }
                 if (j == col - 2) {
                     if (i % 2 == 0) {
                         object = new Wall(j, i, Sprite.forest_map7.getFxImage());
-                    }  else {
+                    } else {
                         object = new Wall(j, i, Sprite.forest_map8.getFxImage());
                     }
                 }
@@ -384,7 +388,7 @@ public class GameMap {
                 if (i == row - 1 && j > 0 && j < col - 1) {
                     if (j % 2 == 0) {
                         object = new Wall(j, i, Sprite.forest_map10.getFxImage());
-                    }  else {
+                    } else {
                         object = new Wall(j, i, Sprite.forest_map11.getFxImage());
                     }
                 }

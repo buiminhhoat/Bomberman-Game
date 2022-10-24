@@ -42,7 +42,8 @@ public class GameOver {
 
         backgroundView = new ImageView(background);
         backgroundView.setFitWidth(BombermanGame.WIDTH * Sprite.SCALED_SIZE);
-        backgroundView.setFitHeight(BombermanGame.HEIGHT * Sprite.SCALED_SIZE + 32);
+        backgroundView.setFitHeight(BombermanGame.HEIGHT * Sprite.SCALED_SIZE
+                + BombermanGame.CANVAS_TRANSLATE_Y);
         root.getChildren().add(backgroundView);
 
         menuButtonView = new ImageView(menuButton1);
@@ -65,8 +66,7 @@ public class GameOver {
     public void update() {
         if (Util.checkMouseInImageView(menuButtonView)) {
             menuButtonView.setImage(menuButton2);
-        }
-        else {
+        } else {
             menuButtonView.setImage(menuButton1);
         }
         scene.setOnMouseClicked(event -> {
