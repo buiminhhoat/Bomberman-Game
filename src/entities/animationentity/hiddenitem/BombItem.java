@@ -8,6 +8,7 @@ import enumeration.Chunk;
 import javafx.scene.image.Image;
 
 public class BombItem extends HiddenItem {
+
     public BombItem() {
         isBlocked = false;
     }

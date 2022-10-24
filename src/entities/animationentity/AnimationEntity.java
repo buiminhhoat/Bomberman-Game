@@ -7,13 +7,13 @@ import entities.animationentity.movingentity.bomber.Bomber;
 import enumeration.Direction;
 import enumeration.Music;
 import gamemap.GameMap;
-import javafx.scene.image.Image;
-
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.scene.image.Image;
 
 public abstract class AnimationEntity extends Entity {
+
     public static final int ONE_SECOND = 1000;
     public static final int TRANSITION_DISPLAY_TIME_SLEEP = 3 * ONE_SECOND;
     public static final int DEFAULT_LIVES = 1;
@@ -23,23 +23,18 @@ public abstract class AnimationEntity extends Entity {
     public static final int SCORE_REWARD = 100;
     public static final int[] LEVEL_SPEED = {16, 8, 4, 2};
     private static final int[] FRAME = {0, 0, 0, 1, 2, 3};
-
-    private int idFrame;
     protected int currentFrame;
     protected int maxFrame;
     protected Boolean animations;
     protected int numberBombs;
     protected int lengthExplosionOfBomb;
-
     protected boolean disappeared;
     protected boolean isDie;
     protected int lives;
     protected int levelSpeed = LEVEL_SPEED[DEFAULT_LEVEL_SPEED_ID];
-
     protected Direction direction;
-
     protected int score;
-
+    private int idFrame;
     private boolean liveTimerIsRunning;
     private boolean deathTimerIsRunning;
     private Timer liveTimer = new Timer();
@@ -75,7 +70,7 @@ public abstract class AnimationEntity extends Entity {
     }
 
     public AnimationEntity(int x, int y, Image img, int levelSpeed, int maxFrame,
-                           Boolean animations, int lives, Direction direction) {
+        Boolean animations, int lives, Direction direction) {
         super(x, y, img);
         this.idFrame = 0;
         this.currentFrame = 0;
@@ -116,6 +111,10 @@ public abstract class AnimationEntity extends Entity {
 
     public Boolean getAnimations() {
         return animations;
+    }
+
+    public void setAnimations(Boolean animations) {
+        this.animations = animations;
     }
 
     public Direction getDirection() {
@@ -159,7 +158,6 @@ public abstract class AnimationEntity extends Entity {
             }
         };
         liveTimer.schedule(timerLiveTask, 0, timeToTransitionFrame);
-
 
         timeToTransitionFrame = 150;
 
@@ -231,6 +229,10 @@ public abstract class AnimationEntity extends Entity {
         return disappeared;
     }
 
+    public void setDisappeared(boolean disappeared) {
+        this.disappeared = disappeared;
+    }
+
     public int getNumberBombs() {
         return numberBombs;
     }
@@ -249,14 +251,6 @@ public abstract class AnimationEntity extends Entity {
 
     public void die(GameMap gameMap, Bomber bomberman) {
 
-    }
-
-    public void setAnimations(Boolean animations) {
-        this.animations = animations;
-    }
-
-    public void setDisappeared(boolean disappeared) {
-        this.disappeared = disappeared;
     }
 
     public int getLives() {

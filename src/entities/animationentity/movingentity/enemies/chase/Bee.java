@@ -6,9 +6,6 @@ import algorithm.BreadthFirstSearch;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
-
-import java.util.Random;
-
 import javafx.scene.image.Image;
 
 public class Bee extends Chase {
@@ -117,9 +114,9 @@ public class Bee extends Chase {
         }
 
         BreadthFirstSearch.CalculatorBreadthFirstSearch(
-                targetEntity.getYPixel() / Sprite.SCALED_SIZE,
-                targetEntity.getXPixel() / Sprite.SCALED_SIZE,
-                gameMap);
+            targetEntity.getYPixel() / Sprite.SCALED_SIZE,
+            targetEntity.getXPixel() / Sprite.SCALED_SIZE,
+            gameMap);
 
         int Min = (int) distanceChase;
         int saveDirection = DEFAULT_SAVE_DIRECTION;

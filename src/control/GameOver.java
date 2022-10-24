@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class GameOver {
+
     private Group root;
     private Scene scene;
 
@@ -43,7 +44,7 @@ public class GameOver {
         backgroundView = new ImageView(background);
         backgroundView.setFitWidth(BombermanGame.WIDTH * Sprite.SCALED_SIZE);
         backgroundView.setFitHeight(BombermanGame.HEIGHT * Sprite.SCALED_SIZE
-                + BombermanGame.CANVAS_TRANSLATE_Y);
+            + BombermanGame.CANVAS_TRANSLATE_Y);
         root.getChildren().add(backgroundView);
 
         menuButtonView = new ImageView(menuButton1);

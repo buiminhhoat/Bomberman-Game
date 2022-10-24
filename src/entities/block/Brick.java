@@ -4,12 +4,12 @@ import entities.animationentity.AnimationEntity;
 import entities.animationentity.hiddenitem.HiddenItem;
 import enumeration.Direction;
 import graphics.Sprite;
-import javafx.scene.image.Image;
-
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.scene.image.Image;
 
 public class Brick extends AnimationEntity {
+
     private static final int MAX_FRAME = 3;
     private boolean isDestroy;
 
@@ -22,7 +22,7 @@ public class Brick extends AnimationEntity {
 
     public Brick(int x, int y, Image img) {
         super(x, y, img, LEVEL_SPEED[DEFAULT_LEVEL_SPEED_ID], MAX_FRAME,
-                false, DEFAULT_LIVES, Direction.DOWN);
+            false, DEFAULT_LIVES, Direction.DOWN);
         this.isBlocked = true;
         this.isDestroy = false;
     }

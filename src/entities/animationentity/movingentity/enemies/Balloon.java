@@ -1,8 +1,6 @@
 package entities.animationentity.movingentity.enemies;
 
-import entities.animationentity.movingentity.enemies.chase.Chase;
 import enumeration.Direction;
-import gamemap.GameMap;
 import graphics.Sprite;
 import javafx.scene.image.Image;
 

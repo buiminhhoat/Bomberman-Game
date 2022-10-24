@@ -8,6 +8,7 @@ import enumeration.Chunk;
 import javafx.scene.image.Image;
 
 public class SpeedItem extends HiddenItem {
+
     private static final int LEVEL_SPEED_UP_ID = 2;
 
     public SpeedItem() {

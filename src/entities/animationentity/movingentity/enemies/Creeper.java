@@ -5,19 +5,15 @@ import entities.animationentity.movingentity.bomber.Bomber;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
-
-import java.sql.Time;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import javafx.scene.image.Image;
 
 public class Creeper extends Enemies {
+
     private static final int TIME_CREATE_BOMB = 5 * ONE_SECOND;
     private static final int CREEPER_NUMBER_BOMB = 1;
-    private long lastTimeCreateBomb;
     GameMap gameMap;
+    private long lastTimeCreateBomb;
 
     public Creeper() {
         lastTimeCreateBomb = System.currentTimeMillis();
@@ -124,8 +120,8 @@ public class Creeper extends Enemies {
         List<Bomb> bombList = ((Creeper) this).getBombList();
         for (int j = 0; j < bombList.size(); ++j) {
             gameMap.setPosIsBombOpened(
-                    bombList.get(j).getYPixel() / Sprite.SCALED_SIZE,
-                    bombList.get(j).getXPixel() / Sprite.SCALED_SIZE);
+                bombList.get(j).getYPixel() / Sprite.SCALED_SIZE,
+                bombList.get(j).getXPixel() / Sprite.SCALED_SIZE);
         }
     }
 }

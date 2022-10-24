@@ -1,9 +1,9 @@
 package entities.animationentity.movingentity.bomber;
 
 import control.BombermanGame;
+import control.LevelGame;
 import control.SoundManager;
 import entities.Entity;
-import entities.animationentity.AnimationEntity;
 import entities.animationentity.hiddenitem.HiddenItem;
 import entities.animationentity.hiddenitem.Portal;
 import entities.animationentity.movingentity.MovingEntity;
@@ -11,18 +11,15 @@ import enumeration.Chunk;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-
+import java.util.Formatter;
 import javafx.scene.image.Image;
 
 public class Bomber extends MovingEntity {
+
     public static final int ONE_SECOND = 1000;
-    private static final int BOMBER_LIVES = 3;
-    private static final int BOMBER_LEVEL_SPEED_ID = 2;
+    private static final int BOMBER_LIVES = 5;
+    private static final int BOMBER_LEVEL_SPEED_ID = 1;
     private static final int MAX_FRAME = 2;
     private static final long IMMORTAL_TIME = 7 * ONE_SECOND;
     private boolean win;
@@ -38,19 +35,29 @@ public class Bomber extends MovingEntity {
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img, LEVEL_SPEED[BOMBER_LEVEL_SPEED_ID], MAX_FRAME,
-                false, BOMBER_LIVES, Direction.DOWN);
+            false, BOMBER_LIVES, Direction.DOWN);
         this.win = false;
         this.immortal = false;
         this.lastTimeDeath = 0;
     }
 
-    public void pickUpItem(GameMap gameMap) {
+    public void pickUpItem(GameMap gameMap, LevelGame levelGame) {
         for (int i = 0; i < gameMap.getStillObjects().size(); ++i) {
             Entity hiddenItem = gameMap.getStillObjects().get(i);
             if (hiddenItem instanceof HiddenItem) {
                 if (((HiddenItem) hiddenItem).pickUp(this)) {
                     BombermanGame.bombermanGame.setScore(BombermanGame.bombermanGame.getScore()
                         + ((HiddenItem) hiddenItem).getScore());
+                    if (BombermanGame.bombermanGame.getScore() > levelGame.getHighScore()) {
+                        levelGame.setHighScore(BombermanGame.bombermanGame.getScore());
+                        try {
+                            Formatter f = new Formatter("res/data/highscore.txt");
+                            f.format(String.valueOf(levelGame.getHighScore()));
+                            f.close();
+                        } catch (Exception e) {
+                            System.out.println("Error write file highscore.txt");
+                        }
+                    }
                     if (hiddenItem instanceof Portal) {
                         ((Portal) hiddenItem).featureItem(this, gameMap);
                         continue;

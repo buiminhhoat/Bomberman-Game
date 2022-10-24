@@ -8,6 +8,7 @@ import enumeration.Chunk;
 import javafx.scene.image.Image;
 
 public class FlameItem extends HiddenItem {
+
     public FlameItem() {
         isBlocked = false;
     }
@@ -22,7 +23,7 @@ public class FlameItem extends HiddenItem {
         if (entity instanceof Bomber) {
             SoundManager.playChunk(Chunk.PICKUP_ITEM);
             ((MovingEntity) entity).setLengthExplosionOfBomb(
-                    ((MovingEntity) entity).getLengthExplosionOfBomb() + 1);
+                ((MovingEntity) entity).getLengthExplosionOfBomb() + 1);
         }
     }
 }

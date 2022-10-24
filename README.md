@@ -1,3 +1,18 @@
+# Introduction
+**Team member**
+- **Member 1:**
+    - **Full name:** Bùi Minh Hoạt
+    - **Student ID:** 21020326
+    - **University:** VNU Hanoi-University of Engineering and Technology
+    - **Mail for work:** official.buiminhhoat@gmail.com
+- **Member 2:**
+    - **Full name:** Nguyễn Châu Khanh
+    - **Student ID:** 21020019
+    - **University:** VNU Hanoi-University of Engineering and Technology
+    - **Mail for work:** official.nguyenchaukhanh@gmail.com
+
+**Video demo:** https://youtu.be/WdgbZXkrg6s
+
 # Bài tập lớn OOP - Bomberman Game
 
 Trong bài tập lớn này, nhiệm vụ của bạn là viết một phiên bản Java mô phỏng lại trò
@@ -19,7 +34,8 @@ dụng code, dễ dàng maintain.*
 - ![](res/sprites/player_down.png) *Bomber* là nhân vật chính của trò chơi. Bomber có thể di chuyển
   theo 4 hướng trái/phải/lên/xuống theo sự điều khiển của người chơi.
 - ![](res/sprites/balloom_left1.png) *Enemy* là các đối tượng mà Bomber phải tiêu diệt hết để có thể
-  qua control.LevelGame. Enemy có thể di chuyển ngẫu nhiên hoặc tự đuổi theo Bomber tùy theo loại Enemy. Các
+  qua control.LevelGame. Enemy có thể di chuyển ngẫu nhiên hoặc tự đuổi theo Bomber tùy theo loại
+  Enemy. Các
   loại Enemy sẽ được mô tả cụ thể ở phần dưới.
 - ![](res/sprites/bomb.png) *Bomb* là đối tượng mà Bomber sẽ đặt và kích hoạt tại các ô Grass. Khi
   đã được kích hoạt, Bomber và Enemy không thể di chuyển vào vị trí Bomb. Tuy nhiên ngay khi Bomber

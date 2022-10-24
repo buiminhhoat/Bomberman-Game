@@ -1,23 +1,19 @@
 package entities.animationentity.movingentity;
 
 import control.SoundManager;
-import entities.animationentity.movingentity.bomber.Bomber;
-import enumeration.Chunk;
-import control.LevelGame;
 import entities.animationentity.AnimationEntity;
 import entities.animationentity.bomb.Bomb;
+import entities.animationentity.movingentity.bomber.Bomber;
 import enumeration.Chunk;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import javafx.animation.Animation;
 import javafx.scene.image.Image;
 
 public class MovingEntity extends AnimationEntity {
+
     protected static final int MAX_DIRECTION = 4;
 
     protected List<Bomb> bombList = new ArrayList<>();
@@ -36,7 +32,7 @@ public class MovingEntity extends AnimationEntity {
     }
 
     public MovingEntity(int levelSpeed, int maxFrame, Boolean animations, int lives,
-                        Direction direction) {
+        Direction direction) {
         this.levelSpeed = levelSpeed;
         this.maxFrame = maxFrame;
         this.animations = animations;
@@ -45,7 +41,7 @@ public class MovingEntity extends AnimationEntity {
     }
 
     public MovingEntity(int x, int y, Image img, int levelSpeed, int maxFrame,
-                        Boolean animations, int lives, Direction direction) {
+        Boolean animations, int lives, Direction direction) {
         super(x, y, img);
         this.levelSpeed = levelSpeed;
         this.maxFrame = maxFrame;
@@ -124,7 +120,7 @@ public class MovingEntity extends AnimationEntity {
         if (!getAnimations()) {
             setDirection(Direction.UP);
             if (gameMap.checkBlockedPixel(this.getXPixel(),
-                    this.getYPixel() - Sprite.SCALED_SIZE)) {
+                this.getYPixel() - Sprite.SCALED_SIZE)) {
                 return;
             }
             startAnimations();
@@ -135,7 +131,7 @@ public class MovingEntity extends AnimationEntity {
         if (!getAnimations()) {
             setDirection(Direction.DOWN);
             if (gameMap.checkBlockedPixel(this.getXPixel(),
-                    this.getYPixel() + Sprite.SCALED_SIZE)) {
+                this.getYPixel() + Sprite.SCALED_SIZE)) {
                 return;
             }
             startAnimations();
@@ -146,7 +142,7 @@ public class MovingEntity extends AnimationEntity {
         if (!this.getAnimations()) {
             this.setDirection(Direction.LEFT);
             if (gameMap.checkBlockedPixel(this.getXPixel() - Sprite.SCALED_SIZE,
-                    this.getYPixel())) {
+                this.getYPixel())) {
                 return;
             }
             startAnimations();
@@ -157,7 +153,7 @@ public class MovingEntity extends AnimationEntity {
         if (!this.getAnimations()) {
             this.setDirection(Direction.RIGHT);
             if (gameMap.checkBlockedPixel(this.getXPixel() + Sprite.SCALED_SIZE,
-                    this.getYPixel())) {
+                this.getYPixel())) {
                 return;
             }
             startAnimations();
@@ -194,7 +190,7 @@ public class MovingEntity extends AnimationEntity {
         }
 
         if (entity.getXPixel() % Sprite.SCALED_SIZE == 0
-                && entity.getYPixel() % Sprite.SCALED_SIZE == 0) {
+            && entity.getYPixel() % Sprite.SCALED_SIZE == 0) {
             entity.finishAnimations();
         }
     }
@@ -212,7 +208,7 @@ public class MovingEntity extends AnimationEntity {
         Bomb bomb = new Bomb(this, gameMap);
         bombList.add(bomb);
         gameMap.setPosIsBombBlocked(this.getYPixel() / Sprite.SCALED_SIZE,
-                this.getXPixel() / Sprite.SCALED_SIZE);
+            this.getXPixel() / Sprite.SCALED_SIZE);
     }
 
     public void explodedBomb(Bomb bomb, GameMap gameMap) {
@@ -220,7 +216,7 @@ public class MovingEntity extends AnimationEntity {
             int numBomb = getNumberBombs();
             setNumberBombs(numBomb + 1);
             gameMap.setPosIsBombOpened(bomb.getYPixel() / Sprite.SCALED_SIZE,
-                    bomb.getXPixel() / Sprite.SCALED_SIZE);
+                bomb.getXPixel() / Sprite.SCALED_SIZE);
         }
     }
 

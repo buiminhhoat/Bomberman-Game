@@ -16,7 +16,6 @@ import entities.block.Grass;
 import entities.block.Wall;
 import enumeration.BombermanObject;
 import graphics.Sprite;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -25,10 +24,10 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GameMap {
-    private static final int THRESHOLD_RANDOM_FLOWER_BLOCK = 15;
+
     public static final int MAX_ROW = 100;
     public static final int MAX_COLUMN = 100;
-
+    private static final int THRESHOLD_RANDOM_FLOWER_BLOCK = 15;
     private int level;
     private int row;
     private int col;
@@ -142,8 +141,8 @@ public class GameMap {
 
             if (this.row < BombermanGame.HEIGHT || this.col < BombermanGame.WIDTH) {
                 System.out.println("File map không hợp lệ. Yêu cầu: "
-                        + "row >= " + BombermanGame.HEIGHT
-                        + " & col >= " + BombermanGame.WIDTH);
+                    + "row >= " + BombermanGame.HEIGHT
+                    + " & col >= " + BombermanGame.WIDTH);
                 System.exit(0);
             }
             map = new BombermanObject[row][col];

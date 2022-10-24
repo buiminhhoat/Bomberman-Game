@@ -4,11 +4,11 @@ import entities.animationentity.AnimationEntity;
 import enumeration.Axis;
 import enumeration.Direction;
 import graphics.Sprite;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Flame extends AnimationEntity {
+
     private static final int TIME_TRANSITION_FRAME = 70; // ms
     private static final int FLAME_LEVEL_SPEED_ID = 1;
     private static final int MAX_FRAME = 3;
@@ -27,7 +27,7 @@ public class Flame extends AnimationEntity {
 
     public Flame(int x, int y) {
         super(x, y, Sprite.bomb_exploded.getFxImage(), LEVEL_SPEED[FLAME_LEVEL_SPEED_ID],
-                MAX_FRAME, false, DEFAULT_LIVES, Direction.DOWN);
+            MAX_FRAME, false, DEFAULT_LIVES, Direction.DOWN);
         this.idFrame = 0;
         this.isEnemyOwner = false;
         this.lastFlame = false;
@@ -38,7 +38,7 @@ public class Flame extends AnimationEntity {
 
     public Flame(int x, int y, boolean isEnemyOwner) {
         super(x, y, Sprite.bomb_exploded.getFxImage(), LEVEL_SPEED[FLAME_LEVEL_SPEED_ID],
-                MAX_FRAME, false, DEFAULT_LIVES, Direction.DOWN);
+            MAX_FRAME, false, DEFAULT_LIVES, Direction.DOWN);
         this.idFrame = 0;
         this.isEnemyOwner = isEnemyOwner;
         this.lastFlame = false;
@@ -49,7 +49,7 @@ public class Flame extends AnimationEntity {
 
     public Flame(int x, int y, Direction direction, boolean lastFlame, boolean isEnemyOwner) {
         super(x, y, Sprite.explosion_horizontal.getFxImage(), LEVEL_SPEED[FLAME_LEVEL_SPEED_ID],
-                MAX_FRAME, false, DEFAULT_LIVES, direction);
+            MAX_FRAME, false, DEFAULT_LIVES, direction);
         this.idFrame = 0;
         this.lastFlame = lastFlame;
         this.isEnemyOwner = isEnemyOwner;

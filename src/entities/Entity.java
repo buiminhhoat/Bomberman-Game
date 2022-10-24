@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public abstract class Entity {
+
     public static final int START_X_PIXEL = 2 * Sprite.SCALED_SIZE;
     public static final int START_Y_PIXEL = Sprite.SCALED_SIZE;
 

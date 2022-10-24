@@ -1,6 +1,7 @@
 package graphics;
 
 public abstract class Camera {
+
     public static int x;
     public static int y;
 

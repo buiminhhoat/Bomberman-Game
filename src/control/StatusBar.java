@@ -10,6 +10,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class StatusBar {
+
     private ImageView statusSound;
     private Text levelText;
     private Text timeText;
@@ -64,7 +65,7 @@ public class StatusBar {
 
         Pane pane = new Pane();
         pane.getChildren().addAll(statusSound, levelText,
-                livesText, timeText, scoreText, highScoreText);
+            livesText, timeText, scoreText, highScoreText);
         pane.setMinSize(800, 32);
         pane.setMaxSize(800, 480);
         pane.setStyle("-fx-background-color: #353535");

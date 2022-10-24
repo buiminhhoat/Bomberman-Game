@@ -1,24 +1,20 @@
 package control;
 
 import algorithm.Util;
-import entities.animationentity.movingentity.bomber.Bomber;
 import enumeration.Music;
 import graphics.Sprite;
-
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Menu {
+
     private Group root;
     private Scene scene;
 
@@ -62,12 +58,12 @@ public class Menu {
         backgroundView = new ImageView(background);
         backgroundView.setFitWidth(BombermanGame.WIDTH * Sprite.SCALED_SIZE);
         backgroundView.setFitHeight(BombermanGame.HEIGHT * Sprite.SCALED_SIZE
-                + BombermanGame.CANVAS_TRANSLATE_Y);
+            + BombermanGame.CANVAS_TRANSLATE_Y);
         root.getChildren().add(backgroundView);
 
         Text bombermanText = new Text("BOMBERMAN");
         bombermanText.setFont(Font.loadFont(Menu.class.getResourceAsStream(
-                "/fonts/Bomberman.ttf"), 86));
+            "/fonts/Bomberman.ttf"), 86));
         bombermanText.setFill(Color.WHITE);
         bombermanText.setStroke(Color.ORANGE);
         bombermanText.setStrokeWidth(5);
@@ -132,7 +128,6 @@ public class Menu {
         } else {
             continueButtonView.setImage(continueButton1);
         }
-
 
         if (Util.checkMouseInImageView(exitButtonView)) {
             exitButtonView.setImage(exitButton2);

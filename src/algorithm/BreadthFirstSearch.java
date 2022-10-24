@@ -1,10 +1,10 @@
 package algorithm;
 
 import gamemap.GameMap;
-
 import java.util.LinkedList;
 
 public abstract class BreadthFirstSearch {
+
     private static final int dx[] = {-1, 0, 1, 0};
     private static final int dy[] = {0, 1, 0, -1};
     private static final int INF = (int) 1e9 + 7;
@@ -31,7 +31,7 @@ public abstract class BreadthFirstSearch {
                 int kx = ux + dx[h];
                 int ky = uy + dy[h];
                 if (kx >= 0 && kx < gameMap.getRow() && ky >= 0 && ky < gameMap.getCol()
-                        && dist[kx][ky] > dist[ux][uy] + 1 && !gameMap.checkBlocked(kx, ky)) {
+                    && dist[kx][ky] > dist[ux][uy] + 1 && !gameMap.checkBlocked(kx, ky)) {
                     dist[kx][ky] = dist[ux][uy] + 1;
                     queue.add(gameMap.getIdPos(kx, ky));
                 }

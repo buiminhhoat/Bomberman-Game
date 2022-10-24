@@ -1,12 +1,10 @@
 package control;
 
 import graphics.Sprite;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Formatter;
 import java.util.Scanner;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -17,24 +15,23 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class BombermanGame extends Application {
+
     public static final String TITLE = "Bomberman Game";
     public static final int WIDTH = 25;
     public static final int HEIGHT = 20;
     public static final int INF = (int) 1e9 + 7;
 
     public static final int CANVAS_TRANSLATE_Y = 32;
-    private int score = 0;
-    private int currentLevel = 0;
-
     public static Stage stage;
     public static GraphicsContext gc;
     public static Canvas canvas;
+    public static BombermanGame bombermanGame = new BombermanGame();
+    private int score = 0;
+    private int currentLevel = 0;
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
     }
-
-    public static BombermanGame bombermanGame = new BombermanGame();
 
     public void start(Stage stage) {
         this.stage = stage;

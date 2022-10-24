@@ -5,6 +5,7 @@ import enumeration.Music;
 import javafx.scene.media.AudioClip;
 
 public abstract class SoundManager {
+
     public static boolean isMuted = false;
     public static AudioClip musicGame;
     public static AudioClip musicMenu;
@@ -19,26 +20,27 @@ public abstract class SoundManager {
 
     public static void initSound() {
         chunkSetBomb = new AudioClip(SoundManager.class.getResource("/sounds/set_bomb.wav")
-                .toExternalForm());
+            .toExternalForm());
         chunkExplodeBomb = new AudioClip(SoundManager.class.getResource("/sounds/explode_bomb.wav")
-                .toExternalForm());
+            .toExternalForm());
         chuckPickUpItem = new AudioClip(SoundManager.class.getResource("/sounds/pickUpItem.wav")
-                .toExternalForm());
-        chuckLevelComplete = new AudioClip(SoundManager.class.getResource("/sounds/level_complete.wav")
+            .toExternalForm());
+        chuckLevelComplete = new AudioClip(
+            SoundManager.class.getResource("/sounds/level_complete.wav")
                 .toExternalForm());
         chuckBomberDie = new AudioClip(SoundManager.class.getResource("/sounds/bomberdie.wav")
-                .toExternalForm());
+            .toExternalForm());
         chuckGameOver = new AudioClip(SoundManager.class.getResource("/sounds/game_over.mp3")
-                .toExternalForm());
+            .toExternalForm());
         chunkGameVictory = new AudioClip(SoundManager.class.getResource("/sounds/game_victory.mp3")
-                .toExternalForm());
+            .toExternalForm());
         chunkNextLevel = new AudioClip(SoundManager.class.getResource("/sounds/next_level.mp3")
-                .toExternalForm());
+            .toExternalForm());
 
         musicGame = new AudioClip(SoundManager.class.getResource("/sounds/FindTheDoor.mp3")
-                .toExternalForm());
+            .toExternalForm());
         musicMenu = new AudioClip(SoundManager.class.getResource("/sounds/menu_screen.mp3")
-                .toExternalForm());
+            .toExternalForm());
 
         musicGame.setCycleCount(AudioClip.INDEFINITE);
         musicMenu.setCycleCount(AudioClip.INDEFINITE);

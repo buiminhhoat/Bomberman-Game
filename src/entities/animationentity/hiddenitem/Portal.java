@@ -4,12 +4,11 @@ import entities.Entity;
 import entities.animationentity.movingentity.bomber.Bomber;
 import entities.animationentity.movingentity.enemies.Enemies;
 import gamemap.GameMap;
-
 import java.util.List;
-
 import javafx.scene.image.Image;
 
 public class Portal extends HiddenItem {
+
     public Portal() {
         isBlocked = false;
     }

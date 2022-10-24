@@ -3,12 +3,11 @@ package entities.animationentity.movingentity.enemies;
 import entities.animationentity.movingentity.MovingEntity;
 import enumeration.Direction;
 import gamemap.GameMap;
-
 import java.util.Random;
-
 import javafx.scene.image.Image;
 
 public abstract class Enemies extends MovingEntity {
+
     private static final int ENEMY_LEVEL_SPEED_ID = 8;
     private static final int MAX_FRAME = 2;
 
@@ -23,7 +22,7 @@ public abstract class Enemies extends MovingEntity {
 
     public Enemies(int x, int y, Image img) {
         super(x, y, img, ENEMY_LEVEL_SPEED_ID, MAX_FRAME,
-                false, DEFAULT_LIVES, Direction.LEFT);
+            false, DEFAULT_LIVES, Direction.LEFT);
     }
 
     public Direction getFaceDirection() {

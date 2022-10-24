@@ -7,26 +7,23 @@ import entities.Entity;
 import entities.animationentity.movingentity.enemies.Enemies;
 import gamemap.GameMap;
 import graphics.Sprite;
-
 import java.util.Random;
-
 import javafx.scene.image.Image;
 
 public class Chase extends Enemies {
 
-    private static final int CHASE_SCORE_REWARD = 200;
-    private static final int RANDOM_RANGE = 20;
-    private static final int RANDOM_THRESHOLD_1 = 16;
-    private static final int RANDOM_THRESHOLD_2 = 5;
     protected static final int dx[] = {-1, 0, 1, 0};
     protected static final int dy[] = {0, 1, 0, -1};
     protected static final int INF = (int) 1e9 + 7;
     protected static final int DEFAULT_SAVE_DIRECTION = -1;
     protected static final int DEFAULT_DISTANCE_CHASE = 7;
-
+    private static final int CHASE_SCORE_REWARD = 200;
+    private static final int RANDOM_RANGE = 20;
+    private static final int RANDOM_THRESHOLD_1 = 16;
+    private static final int RANDOM_THRESHOLD_2 = 5;
     protected int distanceChase = DEFAULT_DISTANCE_CHASE;
-    Entity targetEntity;
     protected int[] randomShuffle = new int[MAX_DIRECTION];
+    Entity targetEntity;
 
     public Chase() {
         score = CHASE_SCORE_REWARD;
@@ -57,9 +54,9 @@ public class Chase extends Enemies {
         }
 
         BreadthFirstSearch.CalculatorBreadthFirstSearch(
-                targetEntity.getYPixel() / Sprite.SCALED_SIZE,
-                targetEntity.getXPixel() / Sprite.SCALED_SIZE,
-                gameMap);
+            targetEntity.getYPixel() / Sprite.SCALED_SIZE,
+            targetEntity.getXPixel() / Sprite.SCALED_SIZE,
+            gameMap);
 
         int Min = (int) distanceChase;
         int saveDirection = DEFAULT_SAVE_DIRECTION;

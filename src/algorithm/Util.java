@@ -1,17 +1,16 @@
 package algorithm;
 
 import control.BombermanGame;
+import java.awt.MouseInfo;
 import javafx.scene.image.ImageView;
 
-import java.awt.*;
-import java.awt.event.MouseEvent;
-
 public abstract class Util {
+
     public static final int FIX_TITLE_X = 8;
     public static final int FIX_TITLE_Y = 30;
 
     public static boolean checkRectIntersect(int x1, int y1, int w1, int h1,
-                                             int x2, int y2, int w2, int h2) {
+        int x2, int y2, int w2, int h2) {
         if (w1 <= 0 || h1 <= 0 || w2 <= 0 || h2 <= 0) {
             return false;
         }
@@ -34,7 +33,7 @@ public abstract class Util {
 
     public static boolean checkMouseInImageView(ImageView imageView) {
         return checkMouseInRect(imageView.getX(), imageView.getY(),
-                imageView.getFitWidth(), imageView.getFitHeight());
+            imageView.getFitWidth(), imageView.getFitHeight());
     }
 
     public static double getMouseX() {

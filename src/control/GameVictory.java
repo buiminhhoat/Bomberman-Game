@@ -14,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class GameVictory {
+
     private static final int NUMBER_OF_SCORE = 5;
     private Group root;
     private Scene scene;
@@ -47,12 +48,12 @@ public class GameVictory {
         backgroundView = new ImageView(background);
         backgroundView.setFitWidth(BombermanGame.WIDTH * Sprite.SCALED_SIZE);
         backgroundView.setFitHeight(BombermanGame.HEIGHT * Sprite.SCALED_SIZE
-                + BombermanGame.CANVAS_TRANSLATE_Y);
+            + BombermanGame.CANVAS_TRANSLATE_Y);
         root.getChildren().add(backgroundView);
 
         Text TextTotalScore = new Text("Total Score");
         TextTotalScore.setFont(Font.loadFont(Menu.class.getResourceAsStream(
-                "/fonts/PressStart2P-Regular.ttf"), 40));
+            "/fonts/PressStart2P-Regular.ttf"), 40));
         TextTotalScore.setFill(Color.YELLOW);
         TextTotalScore.setStroke(Color.ORANGE);
         TextTotalScore.setStrokeWidth(3);
@@ -66,7 +67,7 @@ public class GameVictory {
         }
         Text totalScore = new Text(tx);
         totalScore.setFont(Font.loadFont(Menu.class.getResourceAsStream(
-                "/fonts/PressStart2P-Regular.ttf"), 60));
+            "/fonts/PressStart2P-Regular.ttf"), 60));
         totalScore.setFill(Color.ORANGE);
         totalScore.setStroke(Color.YELLOW);
         totalScore.setStrokeWidth(3);

@@ -18,15 +18,14 @@ import enumeration.Chunk;
 import enumeration.Direction;
 import gamemap.GameMap;
 import graphics.Sprite;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javafx.scene.canvas.GraphicsContext;
 
 public class Bomb extends AnimationEntity {
+
     public static final int ONE_SECOND = 1000;
     private static final int DEFAULT_TIME_BOMB = 3 * ONE_SECOND;
 
@@ -47,8 +46,8 @@ public class Bomb extends AnimationEntity {
 
     public Bomb(AnimationEntity dynamicEntity, GameMap gameMap) {
         super(dynamicEntity.getXPixel() / Sprite.SCALED_SIZE,
-                dynamicEntity.getYPixel() / Sprite.SCALED_SIZE,
-                Sprite.bomb.getFxImage(), 4, 3, false, 3, Direction.DOWN);
+            dynamicEntity.getYPixel() / Sprite.SCALED_SIZE,
+            Sprite.bomb.getFxImage(), 4, 3, false, 3, Direction.DOWN);
 
         this.gameMap = gameMap;
         isBlocked = true;
@@ -67,7 +66,9 @@ public class Bomb extends AnimationEntity {
     }
 
     private void explode() {
-        if (exploded) return;
+        if (exploded) {
+            return;
+        }
         exploded = true;
         SoundManager.playChunk(Chunk.EXPLODE_BOMB);
         createFlame();
@@ -87,7 +88,7 @@ public class Bomb extends AnimationEntity {
                 break;
             }
             listFlame.add(new Flame(x, i, Direction.UP, (boolean) (i == y - lth),
-                    !(dynamicEntity instanceof Bomber)));
+                !(dynamicEntity instanceof Bomber)));
         }
 
         for (int i = y + 1; i <= y + lth; ++i) {
@@ -95,7 +96,7 @@ public class Bomb extends AnimationEntity {
                 break;
             }
             listFlame.add(new Flame(x, i, Direction.DOWN, (boolean) (i == y + lth),
-                    !(dynamicEntity instanceof Bomber)));
+                !(dynamicEntity instanceof Bomber)));
         }
 
         for (int i = x - 1; i >= Math.max(x - lth, 0); --i) {
@@ -103,7 +104,7 @@ public class Bomb extends AnimationEntity {
                 break;
             }
             listFlame.add(new Flame(i, y, Direction.LEFT, (boolean) (i == x - lth),
-                    !(dynamicEntity instanceof Bomber)));
+                !(dynamicEntity instanceof Bomber)));
         }
 
         for (int i = x + 1; i <= x + lth; ++i) {
@@ -111,7 +112,7 @@ public class Bomb extends AnimationEntity {
                 break;
             }
             listFlame.add(new Flame(i, y, Direction.RIGHT, (boolean) (i == x + lth),
-                    !(dynamicEntity instanceof Bomber)));
+                !(dynamicEntity instanceof Bomber)));
         }
     }
 
@@ -155,7 +156,7 @@ public class Bomb extends AnimationEntity {
     }
 
     private void killEntity(int startXPixel, int endXPixel, int startYPixel, int endYPixel,
-                            List<Entity> movingEntities) {
+        List<Entity> movingEntities) {
         for (int i = 0; i < movingEntities.size(); ++i) {
             Entity entity = movingEntities.get(i);
             if (listKill.contains(entity)) {
@@ -199,7 +200,7 @@ public class Bomb extends AnimationEntity {
             id = i;
         }
         killEntity(x * Sprite.SCALED_SIZE, (x + 1) * Sprite.SCALED_SIZE - 1,
-                id * Sprite.SCALED_SIZE, (y + 1) * Sprite.SCALED_SIZE - 1, list);
+            id * Sprite.SCALED_SIZE, (y + 1) * Sprite.SCALED_SIZE - 1, list);
 
         for (int i = y; i <= y + lth; ++i) {
             if (gameMap.checkBlockedPixelByBlock(x * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
@@ -208,7 +209,7 @@ public class Bomb extends AnimationEntity {
             id = i;
         }
         killEntity(x * Sprite.SCALED_SIZE, (x + 1) * Sprite.SCALED_SIZE - 1,
-                y * Sprite.SCALED_SIZE, (id + 1) * Sprite.SCALED_SIZE - 1, list);
+            y * Sprite.SCALED_SIZE, (id + 1) * Sprite.SCALED_SIZE - 1, list);
 
         for (int i = x; i >= Math.max(x - lth, 0); --i) {
             if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
@@ -217,7 +218,7 @@ public class Bomb extends AnimationEntity {
             id = i;
         }
         killEntity(id * Sprite.SCALED_SIZE, (x + 1) * Sprite.SCALED_SIZE - 1,
-                y * Sprite.SCALED_SIZE, (y + 1) * Sprite.SCALED_SIZE - 1, list);
+            y * Sprite.SCALED_SIZE, (y + 1) * Sprite.SCALED_SIZE - 1, list);
 
         for (int i = x + 1; i <= x + lth; ++i) {
             if (gameMap.checkBlockedPixelByBlock(i * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE)) {
@@ -226,7 +227,7 @@ public class Bomb extends AnimationEntity {
             id = i;
         }
         killEntity(x * Sprite.SCALED_SIZE, (id + 1) * Sprite.SCALED_SIZE - 1,
-                y * Sprite.SCALED_SIZE, (y + 1) * Sprite.SCALED_SIZE - 1, list);
+            y * Sprite.SCALED_SIZE, (y + 1) * Sprite.SCALED_SIZE - 1, list);
     }
 
     @Override
@@ -315,7 +316,7 @@ public class Bomb extends AnimationEntity {
         for (Entity brick : gameMap.getStillObjects()) {
             if (brick instanceof Brick) {
                 if (brick.getXPixel() / Sprite.SCALED_SIZE == y
-                        && brick.getYPixel() / Sprite.SCALED_SIZE == x) {
+                    && brick.getYPixel() / Sprite.SCALED_SIZE == x) {
 
                     ((Brick) brick).startAnimations();
 
@@ -336,7 +337,9 @@ public class Bomb extends AnimationEntity {
                             item = new Portal(y, x, Sprite.portal.getFxImage());
                             break;
                     }
-                    if (item == null) continue;
+                    if (item == null) {
+                        continue;
+                    }
                     addItemList.add(item);
                     break;
                 }
