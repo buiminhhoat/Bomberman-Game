@@ -81,6 +81,13 @@ public class GameVictory {
         menuButtonView.setFitHeight(75);
         root.getChildren().add(menuButtonView);
 
+        scene.setOnMouseClicked(event -> {
+            if (Util.checkMouseInImageView(menuButtonView)) {
+                timer.stop();
+                BombermanGame.bombermanGame.displayMenu();
+            }
+        });
+
         timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -96,12 +103,6 @@ public class GameVictory {
         } else {
             menuButtonView.setImage(menuButton1);
         }
-        scene.setOnMouseClicked(event -> {
-            if (Util.checkMouseInImageView(menuButtonView)) {
-                timer.stop();
-                BombermanGame.bombermanGame.displayMenu();
-            }
-        });
     }
 
     public Scene getScene() {

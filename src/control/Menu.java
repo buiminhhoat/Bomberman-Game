@@ -96,6 +96,20 @@ public class Menu {
         exitButtonView.setFitHeight(70);
         root.getChildren().add(exitButtonView);
 
+        scene.setOnMouseClicked(event -> {
+            if (Util.checkMouseInImageView(playButtonView)) {
+                timer.stop();
+                BombermanGame.bombermanGame.displayNextLevel();
+            }
+            if (Util.checkMouseInImageView(continueButtonView)) {
+                timer.stop();
+                BombermanGame.bombermanGame.displayContinue();
+            }
+            if (Util.checkMouseInImageView(exitButtonView)) {
+                System.exit(0);
+            }
+        });
+
         timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -108,29 +122,19 @@ public class Menu {
 
     public void update() {
         if (Util.checkMouseInImageView(playButtonView)) {
-            scene.setOnMouseClicked(event -> {
-                timer.stop();
-                BombermanGame.bombermanGame.displayNextLevel();
-            });
             playButtonView.setImage(playButton2);
         } else {
             playButtonView.setImage(playButton1);
         }
 
         if (Util.checkMouseInImageView(continueButtonView)) {
-            scene.setOnMouseClicked(event -> {
-                timer.stop();
-                BombermanGame.bombermanGame.displayContinue();
-            });
             continueButtonView.setImage(continueButton2);
         } else {
             continueButtonView.setImage(continueButton1);
         }
 
+
         if (Util.checkMouseInImageView(exitButtonView)) {
-            scene.setOnMouseClicked(event -> {
-                System.exit(0);
-            });
             exitButtonView.setImage(exitButton2);
         } else {
             exitButtonView.setImage(exitButton1);

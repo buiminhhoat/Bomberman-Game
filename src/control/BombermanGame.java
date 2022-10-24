@@ -12,6 +12,7 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -41,7 +42,7 @@ public class BombermanGame extends Application {
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
         canvas.setTranslateY(CANVAS_TRANSLATE_Y);
-
+        stage.getIcons().add(new Image("/images/icon.png"));
         stage.setTitle(TITLE);
 
         SoundManager.initSound();

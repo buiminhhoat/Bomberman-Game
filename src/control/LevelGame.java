@@ -180,7 +180,6 @@ public class LevelGame {
     }
 
     private void initGame() {
-
         SoundManager.playMusic(Music.GAME);
         Camera.setX(0);
         Camera.setY(0);
