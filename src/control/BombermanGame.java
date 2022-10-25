@@ -81,7 +81,7 @@ public class BombermanGame extends Application {
     }
 
     public void displayNextLevel() {
-        File file = new File("res/data/maxunlocklevel.txt");
+        File file = new File("data/maxunlocklevel.txt");
         Scanner sc = null;
         int maxunlocklevel = 0;
         try {
@@ -96,7 +96,7 @@ public class BombermanGame extends Application {
         if (currentLevel > maxunlocklevel) {
             maxunlocklevel = currentLevel;
             try {
-                Formatter f = new Formatter("res/data/maxunlocklevel.txt");
+                Formatter f = new Formatter("data/maxunlocklevel.txt");
                 f.format(String.valueOf(maxunlocklevel));
                 f.close();
             } catch (Exception e) {
@@ -116,7 +116,7 @@ public class BombermanGame extends Application {
 
         Scanner sc = null;
         try {
-            File file = new File("res/data/highscore.txt");
+            File file = new File("data/highscore.txt");
             sc = new Scanner(file);
             int highscore = sc.nextInt();
             levelGame.setHighScore(highscore);
@@ -132,7 +132,7 @@ public class BombermanGame extends Application {
         SoundManager.stopMusic();
         Scanner sc = null;
         try {
-            File file = new File("res/data/maxunlocklevel.txt");
+            File file = new File("data/maxunlocklevel.txt");
             sc = new Scanner(file);
             currentLevel = sc.nextInt();
             sc.close();
@@ -142,7 +142,7 @@ public class BombermanGame extends Application {
         LevelGame levelGame = new LevelGame(currentLevel);
 
         try {
-            File file = new File("res/data/highscore.txt");
+            File file = new File("data/highscore.txt");
             sc = new Scanner(file);
             int highscore = sc.nextInt();
             levelGame.setHighScore(highscore);

@@ -51,7 +51,7 @@ public class Bomber extends MovingEntity {
                     if (BombermanGame.bombermanGame.getScore() > levelGame.getHighScore()) {
                         levelGame.setHighScore(BombermanGame.bombermanGame.getScore());
                         try {
-                            Formatter f = new Formatter("res/data/highscore.txt");
+                            Formatter f = new Formatter("data/highscore.txt");
                             f.format(String.valueOf(levelGame.getHighScore()));
                             f.close();
                         } catch (Exception e) {

@@ -327,7 +327,7 @@ public class LevelGame {
                     if (BombermanGame.bombermanGame.getScore() > highScore) {
                         highScore = BombermanGame.bombermanGame.getScore();
                         try {
-                            Formatter f = new Formatter("res/data/highscore.txt");
+                            Formatter f = new Formatter("data/highscore.txt");
                             f.format(String.valueOf(highScore));
                             f.close();
                         } catch (Exception e) {
